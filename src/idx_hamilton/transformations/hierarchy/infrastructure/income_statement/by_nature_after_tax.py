@@ -1,0 +1,72 @@
+"""Definisi hierarki akun untuk:
+Entry Point : infrastructure
+Statement   : income_statement
+Variant     : by_nature_after_tax
+Berdasarkan  : IDX-rt_role-2020-01-01_3312000 (47 Calculation Arcs)
+"""
+
+from ... import AccountSpec, SignRule, AccountRole, AccountOrigin
+
+BY_NATURE_AFTER_TAX_HIERARCHY: tuple[AccountSpec, ...] = (
+    AccountSpec("CI.NCI", "ComprehensiveIncomeAttributableToNonControllingInterests", parent_code=None, sign_rule=SignRule.RAW, role=AccountRole.ALLOCATION, origin=AccountOrigin.REPORTED, target_code="CI"),
+    AccountSpec("CI.P", "ComprehensiveIncomeAttributableToParentEntity", parent_code=None, sign_rule=SignRule.RAW, role=AccountRole.ALLOCATION, origin=AccountOrigin.REPORTED, target_code="CI"),
+    AccountSpec("EPS.B.C", "BasicEarningsLossPerShareFromContinuingOperations", parent_code=None, sign_rule=SignRule.RAW, role=AccountRole.RATIO, origin=AccountOrigin.REPORTED),
+    AccountSpec("EPS.B.D", "BasicEarningsLossPerShareFromDiscontinuedOperations", parent_code=None, sign_rule=SignRule.RAW, role=AccountRole.RATIO, origin=AccountOrigin.REPORTED),
+    AccountSpec("EPS.D.C", "DilutedEarningsLossPerShareFromContinuingOperations", parent_code=None, sign_rule=SignRule.RAW, role=AccountRole.RATIO, origin=AccountOrigin.REPORTED),
+    AccountSpec("EPS.D.D", "DilutedEarningsLossPerShareFromDiscontinuedOperations", parent_code=None, sign_rule=SignRule.RAW, role=AccountRole.RATIO, origin=AccountOrigin.REPORTED),
+    AccountSpec("PL.NCI", "ProfitLossAttributableToNonControllingInterests", parent_code=None, sign_rule=SignRule.RAW, role=AccountRole.ALLOCATION, origin=AccountOrigin.REPORTED, target_code="PL"),
+    AccountSpec("PL.P", "ProfitLossAttributableToParentEntity", parent_code=None, sign_rule=SignRule.RAW, role=AccountRole.ALLOCATION, origin=AccountOrigin.REPORTED, target_code="PL"),
+    AccountSpec("CI", "ComprehensiveIncome", parent_code=None, sign_rule=SignRule.RAW, is_total=True),
+    AccountSpec("PL", "ProfitLoss", parent_code="CI", sign_rule=SignRule.RAW, is_total=True),
+    AccountSpec("PL.01", "ProfitLossFromDiscontinuedOperations", parent_code="PL", sign_rule=SignRule.RAW),
+    AccountSpec("PL.C", "ProfitLossFromContinuingOperations", parent_code="PL", sign_rule=SignRule.RAW, is_total=True),
+    AccountSpec("PL.C.EBT", "ProfitLossBeforeIncomeTax", parent_code="PL.C", sign_rule=SignRule.RAW, is_total=True),
+    AccountSpec("PL.C.EBT.01", "SalesAndRevenue", parent_code="PL.C.EBT", sign_rule=SignRule.ADD),
+    AccountSpec("PL.C.EBT.02", "OtherIncome", parent_code="PL.C.EBT", sign_rule=SignRule.RAW),
+    AccountSpec("PL.C.EBT.03", "ExplorationExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.04", "TollCollectionExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.05", "TollRoadServiceExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.06", "TollRoadMaintenanceExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.07", "JointOperationsExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.08", "ConstructionExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.09", "FlightOperationsExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.10", "InterconnectionExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.11", "TicketingSalesAndPromotionExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.12", "PassengerServicesExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.13", "UserChargesAndStationExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.14", "MaintenanceAndOverhaulExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.15", "TransportationOperationExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.16", "NetworkOperationExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.17", "HotelOperationExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.18", "EmployeeBenefitsExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.19", "DepreciationAndAmortisationExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.20", "AdditionReversalOfImpairmentLossRecognisedInProfitOrLoss", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.21", "OtherExpenses", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.22", "OtherGainsLosses", parent_code="PL.C.EBT", sign_rule=SignRule.RAW),
+    AccountSpec("PL.C.EBT.23", "FinanceIncome", parent_code="PL.C.EBT", sign_rule=SignRule.RAW),
+    AccountSpec("PL.C.EBT.24", "InterestAndFinanceCosts", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("PL.C.EBT.25", "ShareOfProfitLossOfAssociatesAccountedForUsingEquityMethod", parent_code="PL.C.EBT", sign_rule=SignRule.RAW),
+    AccountSpec("PL.C.EBT.26", "ShareOfProfitLossOfJointVenturesAccountedForUsingEquityMethod", parent_code="PL.C.EBT", sign_rule=SignRule.RAW),
+    AccountSpec("PL.C.01", "TaxBenefitExpenses", parent_code="PL.C", sign_rule=SignRule.RAW),
+    AccountSpec("OCI", "OtherComprehensiveIncomeAfterTax", parent_code="CI", sign_rule=SignRule.RAW, is_total=True),
+    AccountSpec("OCI.NR.AT", "OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossAfterTax", parent_code="OCI", sign_rule=SignRule.RAW, is_total=True),
+    AccountSpec("OCI.NR.AT.01", "OtherComprehensiveIncomeForGainsLossesOnRevaluationOfPropertyAndEquipmentAfterTax", parent_code="OCI.NR.AT", sign_rule=SignRule.RAW),
+    AccountSpec("OCI.NR.AT.02", "OtherComprehensiveIncomeForRemeasurementOfDefinedBenefitObligationAfterTax", parent_code="OCI.NR.AT", sign_rule=SignRule.RAW),
+    AccountSpec("OCI.NR.AT.03", "OtherAdjustmentsToOtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossAfterTax", parent_code="OCI.NR.AT", sign_rule=SignRule.RAW),
+    AccountSpec("OCI.RC.AT", "OtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossAfterTax", parent_code="OCI", sign_rule=SignRule.RAW, is_total=True),
+    AccountSpec("OCI.RC.AT.01", "GainsLossesOnExchangeDifferencesOnTranslationAfterTax", parent_code="OCI.RC.AT", sign_rule=SignRule.RAW),
+    AccountSpec("OCI.RC.AT.02", "ReclassificationAdjustmentsOnExchangeDifferencesOnTranslationAfterTax", parent_code="OCI.RC.AT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("OCI.RC.AT.03", "GainsLossesOnCashFlowHedgesAfterTax", parent_code="OCI.RC.AT", sign_rule=SignRule.RAW),
+    AccountSpec("OCI.RC.AT.04", "ReclassificationAdjustmentsOnCashFlowHedgesAfterTax", parent_code="OCI.RC.AT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("OCI.RC.AT.05", "CarryingAmountOfNonFinancialAssetLiabilityWhoseAcquisitionOrIncurrenceWasHedgedOnHighlyProbableForecastTransactionAdjustedFromEquityAfterTax", parent_code="OCI.RC.AT", sign_rule=SignRule.RAW),
+    AccountSpec("OCI.RC.AT.06", "GainsLossesOnHedgesOfNetInvestmentsInForeignOperationsAfterTax", parent_code="OCI.RC.AT", sign_rule=SignRule.RAW),
+    AccountSpec("OCI.RC.AT.07", "ReclassificationAdjustmentsOnHedgesOfNetInvestmentsInForeignOperationsAfterTax", parent_code="OCI.RC.AT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("OCI.RC.AT.08", "ShareOfOtherComprehensiveIncomeOfAssociatesAccountedForUsingEquityMethodAfterTax", parent_code="OCI.RC.AT", sign_rule=SignRule.RAW),
+    AccountSpec("OCI.RC.AT.09", "ShareOfOtherComprehensiveIncomeOfJointVenturesAccountedForUsingEquityMethodAfterTax", parent_code="OCI.RC.AT", sign_rule=SignRule.RAW),
+    AccountSpec("OCI.RC.AT.10", "OtherAdjustmentsToOtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossAfterTax", parent_code="OCI.RC.AT", sign_rule=SignRule.RAW),
+    AccountSpec("PL.C.EBT.FC", "FinanceCosts", parent_code="PL.C.EBT", sign_rule=SignRule.SUB_RAW),
+    AccountSpec("OCI.RC.AT.AFS_UNR", "UnrealisedGainsLossesOnChangesInFairValueOfAvailableForSaleFinancialAssetsAfterTax", parent_code="OCI.RC.AT", sign_rule=SignRule.RAW),
+    AccountSpec("OCI.RC.AT.AFS_REC", "ReclassificationAdjustmentsOnAvailableForSaleFinancialAssetsAfterTax", parent_code="OCI.RC.AT", sign_rule=SignRule.SUB_RAW),
+)
+
+__all__ = ["BY_NATURE_AFTER_TAX_HIERARCHY"]

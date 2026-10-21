@@ -1,0 +1,39 @@
+[project]
+name = "idx-hamilton"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [{ name = "Fikri Haikal", email = "kontak.haikal@outlook.com" }]
+requires-python = ">=3.14"
+dependencies = [
+    "apache-hamilton[sdk,ui,visualization]>=1.90.0",
+    "curl-cffi>=0.16.3",
+    "ipykernel>=7.4.0",
+    "ixbrlparse>=0.11.2",
+    "patito>=0.8.6",
+    "polars>=2.0.0",
+    "pytest",
+    "result>=0.17.0",
+    "resvg-py>=0.5.0",
+]
+
+[project.scripts]
+idx-hamilton = "idx_hamilton:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = ["pytest>=9.1.1", "ruff>=0.17.1"]
+
+[tool.ty.environment]
+python = ".venv"
+root = ["./src", "./tests", "./scripts"]
+
+[tool.ruff]
+force-exclude = true
+extend-exclude = [
+    "src/idx_hamilton/transformations/hierarchy/**/*.py",
+    ".scratch/**/*.py",
+]

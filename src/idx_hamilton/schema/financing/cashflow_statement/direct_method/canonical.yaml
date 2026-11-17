@@ -1,0 +1,17 @@
+$schema: ./canonical.extension.yaml
+entry_point: financing
+statement: cashflow_statement
+variant: direct_method
+mappings:
+- canonical_account: OperatingCashFlow
+  components:
+  - account: NetCashFlowsReceivedFromUsedInOperatingActivities
+    weight: 1
+- canonical_account: InvestingCashFlow
+  components:
+  - account: NetCashFlowsReceivedFromUsedInInvestingActivities
+    weight: 1
+- canonical_account: FinancingCashFlow
+  components:
+  - account: NetCashFlowsReceivedFromUsedInFinancingActivities
+    weight: 1

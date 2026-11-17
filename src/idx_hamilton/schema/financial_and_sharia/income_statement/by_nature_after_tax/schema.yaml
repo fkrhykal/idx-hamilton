@@ -1,0 +1,280 @@
+$schema: ./schema.extension.yaml
+entry_point: financial_and_sharia
+statement: income_statement
+variant: by_nature_after_tax
+chart_of_accounts:
+- account: ComprehensiveIncome
+  code: CI
+  is_total: true
+  children:
+  - account: ProfitLoss
+    code: PL
+    is_total: true
+    children:
+    - account: ProfitLossFromDiscontinuedOperations
+      code: PL.DISC
+    - account: ProfitLossFromContinuingOperations
+      code: PL.CONT
+      is_total: true
+      children:
+      - account: ProfitLossBeforeIncomeTax
+        code: PBT
+        is_total: true
+        children:
+        - account: ProfitFromOperation
+          code: PL.OPS
+          is_total: true
+          children:
+          - account: InterestIncome
+            code: PL.OPS.01
+          - account: InterestExpenses
+            code: PL.OPS.02
+            weight: -1
+          - account: RevenueFromFundManagementAsMudharib
+            code: PL.OPS.03
+          - account: ThirdPartiesShareOnReturnOfTemporarySyirkahFunds
+            code: PL.OPS.04
+          - account: RevenueFromInsurancePremiums
+            code: PL.OPS.05
+          - account: ReinsurancePremiums
+            code: PL.OPS.06
+            weight: -1
+          - account: RetrocessionPremiums
+            code: PL.OPS.07
+            weight: -1
+          - account: DecreaseIncreaseInUnearnedPremiums
+            code: PL.OPS.08
+          - account: DecreaseIncreaseInPremiumIncomeCededToReinsurancer
+            code: PL.OPS.09
+            weight: -1
+          - account: InsuranceCommissionIncome
+            code: PL.OPS.10
+          - account: NetInvestmentIncome
+            code: PL.OPS.11
+          - account: UjrahReceived
+            code: PL.OPS.12
+          - account: OtherInsuranceIncome
+            code: PL.OPS.13
+          - account: ClaimExpenses
+            code: PL.OPS.14
+            weight: -1
+          - account: ReinsuranceClaims
+            code: PL.OPS.15
+          - account: RetrocessionClaims
+            code: PL.OPS.16
+          - account: IncreaseDecreaseInEstimatedClaimsLiability
+            code: PL.OPS.17
+            weight: -1
+          - account: IncreaseDecreaseInLiabilityForFuturePolicyBenefit
+            code: PL.OPS.18
+            weight: -1
+          - account: IncreaseDecreaseInProvisionForLossesArisingFromLiabilityAdequacyTest
+            code: PL.OPS.19
+            weight: -1
+          - account: IncreaseDecreaseInInsuranceLiabilitiesCededToReinsurers
+            code: PL.OPS.20
+          - account: IncreaseDecreaseInLiabilitiesToPolicyholderInUnitLinkedContracts
+            code: PL.OPS.21
+            weight: -1
+          - account: InsuranceCommissionExpenses
+            code: PL.OPS.22
+            weight: -1
+          - account: UjrahPaid
+            code: PL.OPS.23
+            weight: -1
+          - account: AcquisitionCostsOfInsuranceContracts
+            code: PL.OPS.24
+            weight: -1
+          - account: OtherInsuranceExpenses
+            code: PL.OPS.25
+            weight: -1
+          - account: RevenueFromConsumerFinancing
+            code: PL.OPS.26
+          - account: RevenueFromFinanceLease
+            code: PL.OPS.27
+          - account: RevenueFromOperatingLease
+            code: PL.OPS.28
+          - account: RevenueFromFactoring
+            code: PL.OPS.29
+          - account: RevenueFromUnderwritingActivitiesAndSellingFees
+            code: PL.OPS.30
+          - account: RevenueFromFinancingTransactions
+            code: PL.OPS.31
+          - account: RevenueFromSecuritiesAdministrationService
+            code: PL.OPS.32
+          - account: RevenueFromInvestmentManagementServices
+            code: PL.OPS.33
+          - account: RevenueFromFinancialAdvisoryServices
+            code: PL.OPS.34
+          - account: RealisedGainsLossesOnTradingOfMarketableSecurities
+            code: PL.OPS.35
+          - account: GainsLossesOnChangesInFairValueOfMarketableSecurities
+            code: PL.OPS.36
+          - account: InvestmentsIncome
+            code: PL.OPS.37
+          - account: ProvisionsAndCommissionsIncomeFromTransactionsOtherThanLoan
+            code: PL.OPS.38
+          - account: RevenueFromTradingTransactions
+            code: PL.OPS.39
+          - account: DividendsIncome
+            code: PL.OPS.40
+          - account: RealisedGainsLossesFromDerivativeInstruments
+            code: PL.OPS.41
+          - account: RevenueFromRecoveryOfWrittenOffAssets
+            code: PL.OPS.42
+          - account: GainsLossesOnChangesInForeignExchangeRates
+            code: PL.OPS.43
+          - account: GainsLossesOnDisposalOfPropertyAndEquipment
+            code: PL.OPS.44
+          - account: GainsLossesOnDisposalOfForeclosedAssets
+            code: PL.OPS.45
+          - account: OtherOperatingIncome
+            code: PL.OPS.46
+          - account: RecoveryOfImpairmentLossesOfFinancialAssets
+            code: PL.OPS.47
+          - account: RecoveryOfImpairmentLossesOfFinancialAssetsFinanceLease
+            code: PL.OPS.48
+          - account: RecoveryOfImpairmentLossesOfFinancialAssetsConsumerFinancingReceivables
+            code: PL.OPS.49
+          - account: RecoveryOfImpairmentLossesOfNonfinancialAssets
+            code: PL.OPS.50
+          - account: RecoveryOfImpairmentLossesOfNonfinancialAssetsRepossessedCollaterals
+            code: PL.OPS.51
+          - account: RecoveryOfEstimatedLossesOfCommitmentsAndContingency
+            code: PL.OPS.52
+          - account: AllowancesForImpairmentLossesOnEarningsAssets
+            code: PL.OPS.53
+            weight: -1
+          - account: AllowancesForImpairmentLossesOnNonEarningsAssets
+            code: PL.OPS.54
+            weight: -1
+          - account: ReversalExpenseOfEstimatedLossesOnCommitmentsAndContingencies
+            code: PL.OPS.55
+          - account: GeneralAndAdministrativeExpenses
+            code: PL.OPS.56
+            weight: -1
+          - account: SellingExpenses
+            code: PL.OPS.57
+            weight: -1
+          - account: RentMaintenanceAndImprovementExpenses
+            code: PL.OPS.58
+            weight: -1
+          - account: OtherFeesAndCommissionsExpenses
+            code: PL.OPS.59
+            weight: -1
+          - account: OtherOperatingExpenses
+            code: PL.OPS.60
+            weight: -1
+        - account: NonOperatingIncome
+          code: PBT.02
+        - account: NonOperatingExpenses
+          code: PBT.03
+          weight: -1
+        - account: ShareOfProfitLossOfAssociatesAccountedForUsingEquityMethod
+          code: PBT.04
+        - account: ShareOfProfitLossOfJointVenturesAccountedForUsingEquityMethod
+          code: PBT.05
+      - account: TaxBenefitExpenses
+        code: TAX.BENEFIT
+  - account: OtherComprehensiveIncomeAfterTax
+    code: OCI
+    is_total: true
+- account: ProfitLoss
+  code: PL.ATTRIB
+  is_total: true
+  children:
+  - account: ProfitLossAttributableToParentEntity
+    code: PL.ATTRIB.PE
+  - account: ProfitLossAttributableToNonControllingInterests
+    code: PL.ATTRIB.NCI
+- account: ComprehensiveIncome
+  code: CI.ATTRIB
+  is_total: true
+  children:
+  - account: ComprehensiveIncomeAttributableToParentEntity
+    code: CI.ATTRIB.PE
+  - account: ComprehensiveIncomeAttributableToNonControllingInterests
+    code: CI.ATTRIB.NCI
+- account: BasicEarningsLossPerShareFromContinuingOperations
+  code: DISC.PL.01
+- account: BasicEarningsLossPerShareFromDiscontinuedOperations
+  code: DISC.PL.02
+- account: CarryingAmountOfNonFinancialAssetLiabilityWhoseAcquisitionOrIncurrenceWasHedgedOnHighlyProbableForecastTransactionAdjustedFromEquityAfterTax
+  code: DISC.PL.03
+- account: DilutedEarningsLossPerShareFromContinuingOperations
+  code: DISC.PL.04
+- account: DilutedEarningsLossPerShareFromDiscontinuedOperations
+  code: DISC.PL.05
+- account: GainsLossesOnCashFlowHedgesAfterTax
+  code: DISC.PL.06
+- account: GainsLossesOnExchangeDifferencesOnTranslationAfterTax
+  code: DISC.PL.07
+- account: GainsLossesOnHedgesOfNetInvestmentsInForeignOperationsAfterTax
+  code: DISC.PL.08
+- account: OtherAdjustmentsToOtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossAfterTax
+  code: DISC.PL.09
+- account: OtherAdjustmentsToOtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossAfterTax
+  code: DISC.PL.10
+- account: OtherComprehensiveIncomeForGainsLossesOnRevaluationOfPropertyAndEquipmentAfterTax
+  code: DISC.PL.11
+- account: OtherComprehensiveIncomeForRemeasurementOfDefinedBenefitObligationAfterTax
+  code: DISC.PL.12
+- account: OtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossAfterTax
+  code: DISC.PL.13
+- account: OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossAfterTax
+  code: DISC.PL.14
+- account: ReclassificationAdjustmentsOnAvailableForSaleFinancialAssetsAfterTax
+  code: DISC.PL.15
+- account: ReclassificationAdjustmentsOnCashFlowHedgesAfterTax
+  code: DISC.PL.16
+- account: ReclassificationAdjustmentsOnExchangeDifferencesOnTranslationAfterTax
+  code: DISC.PL.17
+- account: ReclassificationAdjustmentsOnFairValueThroughOtherComprehensiveIncomeFinancialAssetsAfterTax
+  code: DISC.PL.18
+- account: ReclassificationAdjustmentsOnHedgesOfNetInvestmentsInForeignOperationsAfterTax
+  code: DISC.PL.19
+- account: ShareOfOtherComprehensiveIncomeOfAssociatesAccountedForUsingEquityMethodAfterTax
+  code: DISC.PL.20
+- account: ShareOfOtherComprehensiveIncomeOfJointVenturesAccountedForUsingEquityMethodAfterTax
+  code: DISC.PL.21
+- account: UnrealisedGainsLossesOnChangesInFairValueOfAvailableForSaleFinancialAssetsAfterTax
+  code: DISC.PL.22
+- account: UnrealisedGainsLossesOnChangesInFairValueThroughOtherComprehensiveIncomeFinancialAssetsAfterTax
+  code: DISC.PL.23
+assertions:
+- assertion_id: comprehensive_income_operations_identity
+  description: ComprehensiveIncome - ProfitLoss - OtherComprehensiveIncomeAfterTax
+    = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ProfitLoss
+    weight: -1
+  - account: OtherComprehensiveIncomeAfterTax
+    weight: -1
+- assertion_id: profit_loss_attribution_identity
+  description: ProfitLoss - ProfitLossAttributableToParentEntity - ProfitLossAttributableToNonControllingInterests
+    = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ProfitLoss
+    weight: 1
+  - account: ProfitLossAttributableToParentEntity
+    weight: -1
+  - account: ProfitLossAttributableToNonControllingInterests
+    weight: -1
+- assertion_id: comprehensive_income_attribution_identity
+  description: ComprehensiveIncome - ComprehensiveIncomeAttributableToParentEntity
+    - ComprehensiveIncomeAttributableToNonControllingInterests = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ComprehensiveIncomeAttributableToParentEntity
+    weight: -1
+  - account: ComprehensiveIncomeAttributableToNonControllingInterests
+    weight: -1

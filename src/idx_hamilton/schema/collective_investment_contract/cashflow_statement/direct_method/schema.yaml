@@ -1,0 +1,115 @@
+$schema: ./schema.extension.yaml
+entry_point: collective_investment_contract
+statement: cashflow_statement
+variant: direct_method
+chart_of_accounts:
+- account: NetIncreaseDecreaseInCashAndCashEquivalents
+  code: CF.NET
+  is_total: true
+  children:
+  - account: NetCashFlowsReceivedFromUsedInOperatingActivities
+    code: CF.OPS
+    is_total: true
+    children:
+    - account: DividendsReceivedFromOperatingActivities
+      code: CF.OPS.007
+    - account: InterestsReceivedFromOperatingActivities
+      code: CF.OPS.009
+    - account: InterestsPaidFromOperatingActivities
+      code: CF.OPS.010
+      weight: -1
+    - account: IncomeTaxesRefundedPaidFromOperatingActivities
+      code: CF.OPS.011
+    - account: RepaymentPlacementOfRefundableDeposits
+      code: CF.OPS.013
+    - account: PaymentsForCorporateIncomeTax
+      code: CF.OPS.014
+      weight: -1
+    - account: OtherCashInflowsOutflowsFromOperatingActivities
+      code: CF.OPS.015
+    - account: ProceedsFromSalesOfEquityinstrumentPortfolios
+      code: CF.OPS.016
+    - account: PurchaseOfEquityInstrumentPortfolios
+      code: CF.OPS.017
+      weight: -1
+    - account: PaymentsForInvestmentExpenses
+      code: CF.OPS.018
+      weight: -1
+    - account: ReceiptsFromPaymentPoint
+      code: CF.OPS.019
+    - account: PaymentsOfPaymentPoint
+      code: CF.OPS.020
+      weight: -1
+    - account: ReceiptsFromMortgageLoans
+      code: CF.OPS.021
+    - account: PaymentsOfMortgageLoans
+      code: CF.OPS.022
+      weight: -1
+    - account: WithdrawalPlacementOfMoneyMarketInstruments
+      code: CF.OPS.023
+  - account: NetCashFlowsReceivedFromUsedInInvestingActivities
+    code: CF.INV
+    is_total: true
+    children:
+    - account: InterestsReceivedFromInvestingActivities
+      code: CF.INV.061
+    - account: InterestsPaidFromInvestingActivities
+      code: CF.INV.062
+      weight: -1
+    - account: IncomeTaxesRefundedPaidFromInvestingActivities
+      code: CF.INV.063
+    - account: OtherCashInflowsOutflowsFromInvestingActivities
+      code: CF.INV.064
+    - account: WithdrawalPlacementOfFinancialAssetsFairValueThroughOtherComprehensiveIncome
+      code: CF.INV.065
+    - account: PlacementOfFinancialAssetsAmortizedCostInvestments
+      code: CF.INV.066
+      weight: -1
+    - account: WithdrawalOfFinancialAssetsAmortizedCostInvestments
+      code: CF.INV.067
+    - account: WithdrawalPlacementOfTimeDeposits
+      code: CF.INV.068
+  - account: NetCashFlowsReceivedFromUsedInFinancingActivities
+    code: CF.FIN
+    is_total: true
+    children:
+    - account: DividendsPaidFromFinancingActivities
+      code: CF.FIN.055
+      weight: -1
+    - account: InterestsReceivedFromFinancingActivities
+      code: CF.FIN.056
+    - account: InterestsPaidFromFinancingActivities
+      code: CF.FIN.057
+      weight: -1
+    - account: IncomeTaxesRefundedPaidFromFinancingActivities
+      code: CF.FIN.058
+    - account: OtherCashInflowsOutflowsFromFinancingActivities
+      code: CF.FIN.059
+    - account: ProceedsFromSalesOfParticipationUnit
+      code: CF.FIN.060
+    - account: PaymentsForAcquisitionOfParticipationUnit
+      code: CF.FIN.061
+      weight: -1
+- account: CashAndCashEquivalentOfDeconsolidatedSubsidiaries
+  code: DISC.CF.01
+- account: CashAndCashEquivalentsCashFlows
+  code: DISC.CF.02
+- account: EffectOfExchangeRateChangesOnCashAndCashEquivalents
+  code: DISC.CF.03
+- account: OtherIncreaseDecreaseInCashAndCashEquivalents
+  code: DISC.CF.04
+assertions:
+- assertion_id: net_cash_flows_identity
+  description: NetIncreaseDecreaseInCashAndCashEquivalents must equal Operating +
+    Investing + Financing.
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: NetIncreaseDecreaseInCashAndCashEquivalents
+    weight: 1
+  - account: NetCashFlowsReceivedFromUsedInOperatingActivities
+    weight: -1
+  - account: NetCashFlowsReceivedFromUsedInInvestingActivities
+    weight: -1
+  - account: NetCashFlowsReceivedFromUsedInFinancingActivities
+    weight: -1

@@ -1,0 +1,164 @@
+$schema: ./schema.extension.yaml
+entry_point: securities
+statement: income_statement
+variant: by_function_after_tax
+chart_of_accounts:
+- account: ComprehensiveIncome
+  code: CI
+  is_total: true
+  children:
+  - account: ProfitLoss
+    code: PL
+    is_total: true
+    children:
+    - account: ProfitLossFromDiscontinuedOperations
+      code: PL.DISC
+    - account: ProfitLossFromContinuingOperations
+      code: PL.CONT
+      is_total: true
+      children:
+      - account: ProfitLossBeforeIncomeTax
+        code: PBT
+        is_total: true
+        children:
+        - account: IncomeFromBrokerageActivity
+          code: PBT.01
+        - account: IncomeFromUnderwritingActivitiesAndSellingFees
+          code: PBT.02
+        - account: IncomeFromFinancingTransactions
+          code: PBT.03
+        - account: IncomeFromSecuritiesAdministrationServices
+          code: PBT.04
+        - account: IncomeFromInvestmentManagementServices
+          code: PBT.05
+        - account: IncomeFromFinancialAdvisoryServices
+          code: PBT.06
+        - account: RealisedGainsLossesOnTradingOfMarketableSecurities
+          code: PBT.07
+        - account: GainsLossesOnChangesInFairValueOfMarketableSecurities
+          code: PBT.08
+        - account: DividendsIncome
+          code: PBT.09
+        - account: GeneralAndAdministrativeExpenses
+          code: PBT.10
+          weight: -1
+        - account: SellingExpenses
+          code: PBT.11
+          weight: -1
+        - account: FinanceIncome
+          code: PBT.12
+        - account: GainsLossesOnForeignExchangeTransactions
+          code: PBT.13
+        - account: FinalTaxExpenses
+          code: PBT.14
+          weight: -1
+        - account: OtherIncome
+          code: PBT.15
+        - account: OtherExpenses
+          code: PBT.16
+          weight: -1
+        - account: OtherGainsLosses
+          code: PBT.17
+        - account: FinanceCosts
+          code: PBT.18
+          weight: -1
+      - account: TaxBenefitExpenses
+        code: TAX.BENEFIT
+  - account: OtherComprehensiveIncomeAfterTax
+    code: OCI
+    is_total: true
+- account: ProfitLoss
+  code: PL.ATTRIB
+  is_total: true
+  children:
+  - account: ProfitLossAttributableToParentEntity
+    code: PL.ATTRIB.PE
+  - account: ProfitLossAttributableToNonControllingInterests
+    code: PL.ATTRIB.NCI
+- account: ComprehensiveIncome
+  code: CI.ATTRIB
+  is_total: true
+  children:
+  - account: ComprehensiveIncomeAttributableToParentEntity
+    code: CI.ATTRIB.PE
+  - account: ComprehensiveIncomeAttributableToNonControllingInterests
+    code: CI.ATTRIB.NCI
+- account: BasicEarningsLossPerShareFromContinuingOperations
+  code: DISC.PL.01
+- account: BasicEarningsLossPerShareFromDiscontinuedOperations
+  code: DISC.PL.02
+- account: CarryingAmountOfNonFinancialAssetLiabilityWhoseAcquisitionOrIncurrenceWasHedgedOnHighlyProbableForecastTransactionAdjustedFromEquityAfterTax
+  code: DISC.PL.03
+- account: DilutedEarningsLossPerShareFromContinuingOperations
+  code: DISC.PL.04
+- account: DilutedEarningsLossPerShareFromDiscontinuedOperations
+  code: DISC.PL.05
+- account: GainsLossesOnCashFlowHedgesAfterTax
+  code: DISC.PL.07
+- account: GainsLossesOnExchangeDifferencesOnTranslationAfterTax
+  code: DISC.PL.08
+- account: GainsLossesOnHedgesOfNetInvestmentsInForeignOperationsAfterTax
+  code: DISC.PL.09
+- account: OtherAdjustmentsToOtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossAfterTax
+  code: DISC.PL.10
+- account: OtherAdjustmentsToOtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossAfterTax
+  code: DISC.PL.11
+- account: OtherComprehensiveIncomeForGainsLossesOnRevaluationOfPropertyAndEquipmentAfterTax
+  code: DISC.PL.12
+- account: OtherComprehensiveIncomeForRemeasurementOfDefinedBenefitObligationAfterTax
+  code: DISC.PL.13
+- account: OtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossAfterTax
+  code: DISC.PL.14
+- account: OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossAfterTax
+  code: DISC.PL.15
+- account: ReclassificationAdjustmentsOnAvailableForSaleFinancialAssetsAfterTax
+  code: DISC.PL.16
+- account: ReclassificationAdjustmentsOnCashFlowHedgesAfterTax
+  code: DISC.PL.17
+- account: ReclassificationAdjustmentsOnExchangeDifferencesOnTranslationAfterTax
+  code: DISC.PL.18
+- account: ReclassificationAdjustmentsOnHedgesOfNetInvestmentsInForeignOperationsAfterTax
+  code: DISC.PL.19
+- account: ShareOfOtherComprehensiveIncomeOfAssociatesAccountedForUsingEquityMethodAfterTax
+  code: DISC.PL.20
+- account: ShareOfOtherComprehensiveIncomeOfJointVenturesAccountedForUsingEquityMethodAfterTax
+  code: DISC.PL.21
+- account: UnrealisedGainsLossesOnChangesInFairValueOfAvailableForSaleFinancialAssetsAfterTax
+  code: DISC.PL.22
+assertions:
+- assertion_id: comprehensive_income_operations_identity
+  description: ComprehensiveIncome - ProfitLoss - OtherComprehensiveIncomeAfterTax
+    = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ProfitLoss
+    weight: -1
+  - account: OtherComprehensiveIncomeAfterTax
+    weight: -1
+- assertion_id: profit_loss_attribution_identity
+  description: ProfitLoss - ProfitLossAttributableToParentEntity - ProfitLossAttributableToNonControllingInterests
+    = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ProfitLoss
+    weight: 1
+  - account: ProfitLossAttributableToParentEntity
+    weight: -1
+  - account: ProfitLossAttributableToNonControllingInterests
+    weight: -1
+- assertion_id: comprehensive_income_attribution_identity
+  description: ComprehensiveIncome - ComprehensiveIncomeAttributableToParentEntity
+    - ComprehensiveIncomeAttributableToNonControllingInterests = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ComprehensiveIncomeAttributableToParentEntity
+    weight: -1
+  - account: ComprehensiveIncomeAttributableToNonControllingInterests
+    weight: -1

@@ -1,0 +1,1018 @@
+# yaml-language-server: $schema=./base_ratio_schema.yaml
+$schema: ./base_ratio_schema.yaml
+ratios:
+  # ===========================================================================
+  # 1. UNIVERSAL SCOPE (9 Ratios — All 8 Entry Points)
+  # ===========================================================================
+  - ratio: roe_parent
+    code: PR.ROE.PE
+    label: "Return on Equity (ROE) — Pemilik Induk"
+    description: "Mengukur tingkat pengembalian laba bersih yang diatribusikan kepada pemilik entitas induk dari modal ekuitas entitas induk."
+    how_to_read: "Nilai 15% berarti setiap Rp 100 ekuitas induk menghasilkan laba bersih Rp 15. Semakin tinggi persentase, semakin efisien modal pemegang saham induk digunakan."
+    category: profitability
+    scope: universal
+    temporal_basis: flow_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: &universal_eps
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    numerator:
+      - account: NetIncomeAttributableToParent
+        weight: 1
+    denominator:
+      - account: EquityAttributableToParent
+        weight: 1
+
+  - ratio: roe_total
+    code: PR.ROE
+    label: "Return on Equity (ROE) — Total"
+    description: "Mengukur kemampuan total ekuitas perusahaan dalam menghasilkan total laba bersih periode berjalan."
+    how_to_read: "Nilai 12% menunjukkan efisiensi total modal menghasilkan keuntungan bersih sebesar 12%. Angka yang konsisten tinggi menunjukkan produktivitas modal yang kuat."
+    category: profitability
+    scope: universal
+    temporal_basis: flow_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *universal_eps
+    numerator:
+      - account: NetIncome
+        weight: 1
+    denominator:
+      - account: TotalEquity
+        weight: 1
+
+  - ratio: roa
+    code: PR.ROA
+    label: "Return on Assets (ROA)"
+    description: "Mengukur efisiensi perusahaan dalam mengelola seluruh aset yang dimiliki untuk menghasilkan laba bersih."
+    how_to_read: "Nilai 5% berarti setiap Rp 100 total aset menghasilkan laba bersih Rp 5. Berguna untuk membandingkan efisiensi operasional emiten dengan struktur modal berbeda."
+    category: profitability
+    scope: universal
+    temporal_basis: flow_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *universal_eps
+    numerator:
+      - account: NetIncome
+        weight: 1
+    denominator:
+      - account: TotalAssets
+        weight: 1
+
+  - ratio: pre_tax_roa
+    code: PR.ROA.PBT
+    label: "Pre-Tax Return on Assets (ROA Sebelum Pajak)"
+    description: "Mengukur profitabilitas aset sebelum memperhitungkan beban pajak penghasilan."
+    how_to_read: "Nilai 7% berarti setiap Rp 100 aset menghasilkan laba sebelum pajak sebesar Rp 7, mengisolasi dampak beban pajak terhadap kinerja operasional aset."
+    category: profitability
+    scope: universal
+    temporal_basis: flow_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *universal_eps
+    numerator:
+      - account: ProfitBeforeTax
+        weight: 1
+    denominator:
+      - account: TotalAssets
+        weight: 1
+
+  - ratio: effective_tax_rate
+    code: TX.ETR
+    label: "Effective Tax Rate (ETR)"
+    description: "Mengukur persentase beban pajak penghasilan riil yang ditanggung perusahaan terhadap laba sebelum pajak."
+    how_to_read: "Tarif 22% mencerminkan porsi laba sebelum pajak yang disisihkan untuk pajak. Nilai yang jauh di bawah tarif pajak badan statutory (22%) mengindikasikan fasilitas atau insentif pajak."
+    category: tax
+    scope: universal
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: neutral
+    applicable_entry_points: *universal_eps
+    numerator:
+      - account: IncomeTaxExpense
+        weight: -1
+    denominator:
+      - account: ProfitBeforeTax
+        weight: 1
+
+  - ratio: liabilities_to_assets
+    code: SV.LTA
+    label: "Debt to Assets Ratio (DAR)"
+    description: "Mengukur proporsi total liabilitas (utang) terhadap total aset perusahaan."
+    how_to_read: "Nilai 60% berarti 60% aset perusahaan didanai oleh utang. Semakin rendah rasio, semakin besar bantalan perlindungan bagi kreditor."
+    category: solvency
+    scope: universal
+    temporal_basis: stock_to_stock
+    unit: percent
+    polarity: lower_is_better
+    applicable_entry_points: *universal_eps
+    numerator:
+      - account: TotalLiabilities
+        weight: 1
+    denominator:
+      - account: TotalAssets
+        weight: 1
+
+  - ratio: equity_to_assets
+    code: SV.ETA
+    label: "Equity to Assets Ratio (EAR)"
+    description: "Mengukur proporsi total ekuitas pemegang saham terhadap total pendanaan aset perusahaan."
+    how_to_read: "Nilai 40% berarti 40% dari total aset didanai oleh ekuitas modal sendiri. Nilai yang lebih tinggi menunjukkan struktur permodalan yang lebih konservatif."
+    category: solvency
+    scope: universal
+    temporal_basis: stock_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *universal_eps
+    numerator:
+      - account: TotalEquity
+        weight: 1
+    denominator:
+      - account: TotalAssets
+        weight: 1
+
+  - ratio: cash_to_assets
+    code: LQ.CTA
+    label: "Cash to Assets Ratio"
+    description: "Mengukur likuiditas langsung melalui porsi kas dan setara kas terhadap total aset."
+    how_to_read: "Nilai 15% berarti kas dan instrumen setara kas mencakup 15% dari seluruh aset, mencerminkan likuiditas cadangan untuk operasional dan kewajiban darurat."
+    category: liquidity
+    scope: universal
+    temporal_basis: stock_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *universal_eps
+    numerator:
+      - account: CashAndCashEquivalents
+        weight: 1
+    denominator:
+      - account: TotalAssets
+        weight: 1
+
+  - ratio: ocf_to_net_income
+    code: CF.OCF.NI
+    label: "Operating Cash Flow to Net Income"
+    description: "Mengukur kualitas laba dengan membandingkan arus kas bersih operasi dengan laba bersih akuntansi."
+    how_to_read: "Nilai di atas 100% atau 1,0x menunjukkan laba bersih didukung secara nyata oleh arus kas masuk operasi (kualitas laba tinggi), sedangkan nilai di bawah 1,0x mengindikasikan laba masih tertahan dalam piutang atau persediaan."
+    category: cashflow
+    scope: universal
+    temporal_basis: flow_to_flow
+    unit: multiplier
+    polarity: higher_is_better
+    applicable_entry_points: *universal_eps
+    numerator:
+      - account: OperatingCashFlow
+        weight: 1
+    denominator:
+      - account: NetIncome
+        weight: 1
+
+  # ===========================================================================
+  # 2. REAL SECTOR SCOPE (22 Ratios — general, property, infrastructure)
+  # ===========================================================================
+  - ratio: gross_profit_margin
+    code: PR.GPM
+    label: "Gross Profit Margin (GPM)"
+    description: "Mengukur persentase laba kotor yang dihasilkan dari penjualan setelah dikurangi beban pokok pendapatan."
+    how_to_read: "Nilai 30% berarti dari setiap Rp 100 pendapatan, perusahaan menyisakan Rp 30 laba kotor sebelum menutupi beban usaha dan operasional."
+    category: profitability
+    scope: real_sector
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: &real_sector_eps
+      - general
+      - property
+      - infrastructure
+    numerator:
+      - account: GrossProfit
+        weight: 1
+    denominator:
+      - account: Revenue
+        weight: 1
+
+  - ratio: operating_profit_margin
+    code: PR.OPM
+    label: "Operating Profit Margin (OPM)"
+    description: "Mengukur persentase laba operasional (usaha) murni yang dihasilkan dari setiap rupiah pendapatan."
+    how_to_read: "Nilai 15% mencerminkan efisiensi operasional inti perusahaan, menghasilkan laba usaha Rp 15 per Rp 100 pendapatan sebelum bunga dan pajak."
+    category: profitability
+    scope: real_sector
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: OperatingProfit
+        weight: 1
+    denominator:
+      - account: Revenue
+        weight: 1
+
+  - ratio: pre_tax_profit_margin
+    code: PR.PTM
+    label: "Pre-Tax Profit Margin (EBT Margin)"
+    description: "Mengukur margin laba sebelum beban pajak penghasilan terhadap pendapatan total."
+    how_to_read: "Nilai 12% menunjukkan pendapatan yang tersisa sebesar 12% setelah memperhitungkan seluruh beban usaha, pendapatan/beban non-operasional, dan biaya keuangan."
+    category: profitability
+    scope: real_sector
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: ProfitBeforeTax
+        weight: 1
+    denominator:
+      - account: Revenue
+        weight: 1
+
+  - ratio: net_profit_margin
+    code: PR.NPM
+    label: "Net Profit Margin (NPM)"
+    description: "Mengukur persentase laba bersih akhir yang diatribusikan kepada entitas induk dari setiap rupiah pendapatan."
+    how_to_read: "Nilai 10% berarti setiap Rp 100 pendapatan menghasilkan laba bersih akhir sebesar Rp 10 bagi pemegang saham induk."
+    category: profitability
+    scope: real_sector
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: NetIncome
+        weight: 1
+    denominator:
+      - account: Revenue
+        weight: 1
+
+  - ratio: roce
+    code: PR.ROCE
+    label: "Return on Capital Employed (ROCE)"
+    description: "Return on Capital Employed: mengukur efisiensi laba operasi (EBIT) terhadap modal produktif jangka panjang (total aset dikurangi liabilitas jangka pendek)."
+    how_to_read: "Nilai 18% berarti modal produktif jangka panjang menghasilkan laba operasional sebesar 18%, melampaui biaya modal tertimbang (WACC) jika kinerjanya sehat."
+    category: profitability
+    scope: real_sector
+    temporal_basis: flow_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: OperatingProfit
+        weight: 1
+    denominator:
+      - account: TotalEquity
+        weight: 1
+      - account: ShortTermDebt
+        weight: 1
+      - account: LongTermDebt
+        weight: 1
+
+  - ratio: roic
+    code: PR.ROIC
+    label: "Return on Invested Capital (ROIC)"
+    description: "Return on Invested Capital: mengukur tingkat pengembalian laba operasi bersih terhadap total modal yang diinvestasikan (utang berbunga ditambah ekuitas)."
+    how_to_read: "Nilai 14% menunjukkan efektivitas pengembalian modal investasi inti sebesar 14% per tahun."
+    category: profitability
+    scope: real_sector
+    temporal_basis: flow_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: OperatingProfit
+        weight: 1
+      - account: IncomeTaxExpense
+        weight: 1
+    denominator:
+      - account: TotalEquity
+        weight: 1
+      - account: ShortTermDebt
+        weight: 1
+      - account: LongTermDebt
+        weight: 1
+      - account: CashAndCashEquivalents
+        weight: -1
+
+  - ratio: current_ratio
+    code: LQ.CR
+    label: "Current Ratio (Rasio Lancar)"
+    description: "Mengukur kemampuan aset lancar perusahaan untuk melunasi liabilitas jangka pendek (jatuh tempo di bawah satu tahun)."
+    how_to_read: "Nilai 1,5x berarti setiap Rp 1 liabilitas lancar dijamin oleh Rp 1,5 aset lancar; nilai di atas 1,0x mengindikasikan posisi likuiditas jangka pendek yang memadai."
+    category: liquidity
+    scope: real_sector
+    temporal_basis: stock_to_stock
+    unit: multiplier
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: CurrentAssets
+        weight: 1
+    denominator:
+      - account: CurrentLiabilities
+        weight: 1
+
+  - ratio: quick_ratio
+    code: LQ.QR
+    label: "Quick Ratio (Rasio Cepat)"
+    description: "Mengukur kemampuan likuiditas cepat (kas, efek lancar, dan piutang tanpa persediaan) dalam menutup liabilitas jangka pendek."
+    how_to_read: "Nilai 1,0x menunjukkan aset paling likuid perusahaan mampu menutup 100% utang jangka pendek tanpa bergantung pada penjualan persediaan fisik."
+    category: liquidity
+    scope: real_sector
+    temporal_basis: stock_to_stock
+    unit: multiplier
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: CurrentAssets
+        weight: 1
+      - account: Inventories
+        weight: -1
+    denominator:
+      - account: CurrentLiabilities
+        weight: 1
+
+  - ratio: cash_ratio
+    code: LQ.CASHR
+    label: "Cash Ratio (Rasio Kas)"
+    description: "Mengukur tingkat likuiditas paling konservatif dengan membandingkan kas dan setara kas secara langsung terhadap liabilitas jangka pendek."
+    how_to_read: "Nilai 0,4x atau 40% berarti kas tunai yang tersedia dapat melunasi langsung 40% dari total kewajiban jangka pendek tanpa menunggu penagihan piutang."
+    category: liquidity
+    scope: real_sector
+    temporal_basis: stock_to_stock
+    unit: multiplier
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: CashAndCashEquivalents
+        weight: 1
+    denominator:
+      - account: CurrentLiabilities
+        weight: 1
+
+  - ratio: working_capital_to_assets
+    code: LQ.WCTA
+    label: "Working Capital to Total Assets"
+    description: "Mengukur proporsi modal kerja bersih (aset lancar dikurangi liabilitas lancar) terhadap total aset perusahaan."
+    how_to_read: "Nilai 20% menunjukkan aset lancar bersih menyumbang 20% dari keseluruhan aset. Angka positif menandakan kapasitas cadangan likuiditas modal kerja."
+    category: liquidity
+    scope: real_sector
+    temporal_basis: stock_to_stock
+    unit: percent
+    polarity: neutral
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: CurrentAssets
+        weight: 1
+      - account: CurrentLiabilities
+        weight: -1
+    denominator:
+      - account: TotalAssets
+        weight: 1
+
+  - ratio: debt_to_equity
+    code: SV.DER
+    label: "Debt to Equity Ratio (DER)"
+    description: "Debt-to-Equity Ratio (DER): mengukur rasio total liabilitas atau utang berbunga terhadap ekuitas pemegang saham."
+    how_to_read: "Nilai 0,8x berarti kewajiban utang setara dengan 80% dari modal sendiri. Nilai di atas 1,0x menunjukkan ketergantungan modal pada pihak ketiga (leverage lebih tinggi)."
+    category: solvency
+    scope: real_sector
+    temporal_basis: stock_to_stock
+    unit: multiplier
+    polarity: lower_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: ShortTermDebt
+        weight: 1
+      - account: LongTermDebt
+        weight: 1
+    denominator:
+      - account: TotalEquity
+        weight: 1
+
+  - ratio: net_debt_to_equity
+    code: SV.NDER
+    label: "Net Debt to Equity Ratio"
+    description: "Mengukur leverage keuangan bersih (total utang dikurangi kas dan setara kas) relatif terhadap ekuitas pemegang saham."
+    how_to_read: "Nilai negatif mengindikasikan posisi net cash (kas melampaui total utang). Nilai positif 0,5x berarti utang bersih setelah kas setara 50% dari modal pemegang saham."
+    category: solvency
+    scope: real_sector
+    temporal_basis: stock_to_stock
+    unit: multiplier
+    polarity: lower_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: ShortTermDebt
+        weight: 1
+      - account: LongTermDebt
+        weight: 1
+      - account: CashAndCashEquivalents
+        weight: -1
+    denominator:
+      - account: TotalEquity
+        weight: 1
+
+  - ratio: liabilities_to_equity
+    code: SV.LER
+    label: "Total Liabilities to Equity (LER)"
+    description: "Mengukur perbandingan antara total seluruh kewajiban liabilitas perusahaan terhadap total ekuitas."
+    how_to_read: "Nilai 1,2x berarti setiap Rp 1 ekuitas diimbangi oleh Rp 1,2 kewajiban liabilitas total. Mengukur tingkat solvabilitas neraca secara menyeluruh."
+    category: solvency
+    scope: real_sector
+    temporal_basis: stock_to_stock
+    unit: multiplier
+    polarity: lower_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: TotalLiabilities
+        weight: 1
+    denominator:
+      - account: TotalEquity
+        weight: 1
+
+  - ratio: interest_coverage
+    code: SV.ICR
+    label: "Interest Coverage Ratio (ICR)"
+    description: "Mengukur kemampuan laba usaha (EBIT) dalam memenuhi beban bunga dan biaya keuangan utang."
+    how_to_read: "Nilai 5,0x berarti laba usaha mencukupi 5 kali pembayaran beban bunga; nilai di bawah 1,5x mengindikasikan risiko tekanan pembayaran kewajiban bunga."
+    category: solvency
+    scope: real_sector
+    temporal_basis: flow_to_flow
+    unit: multiplier
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: OperatingProfit
+        weight: 1
+    denominator:
+      - account: FinanceCosts
+        weight: 1
+
+  - ratio: ocf_to_total_debt
+    code: SV.OCF.DEBT
+    label: "Operating Cash Flow to Total Debt"
+    description: "Mengukur kemampuan arus kas operasi dalam melunasi seluruh kewajiban utang perusahaan."
+    how_to_read: "Nilai 0,3x atau 30% berarti arus kas operasional tahunan mampu menutupi 30% dari total utang; waktu pelunasan teoritis adalah sekitar 3,3 tahun."
+    category: solvency
+    scope: real_sector
+    temporal_basis: flow_to_stock
+    unit: multiplier
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: OperatingCashFlow
+        weight: 1
+    denominator:
+      - account: ShortTermDebt
+        weight: 1
+      - account: LongTermDebt
+        weight: 1
+
+  - ratio: asset_turnover
+    code: AC.ATO
+    label: "Total Asset Turnover (TATO)"
+    description: "Mengukur perputaran total aset dalam menghasilkan pendapatan usaha (efisiensi pemanfaatan aset)."
+    how_to_read: "Nilai 0,8x berarti setiap Rp 1 total aset menghasilkan pendapatan usaha sebesar Rp 0,80 per tahun. Semakin tinggi angka, semakin produktif aset menghasilkan perputaran omzet."
+    category: activity
+    scope: real_sector
+    temporal_basis: flow_to_stock
+    unit: multiplier
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: Revenue
+        weight: 1
+    denominator:
+      - account: TotalAssets
+        weight: 1
+
+  - ratio: fixed_asset_turnover
+    code: AC.FATO
+    label: "Fixed Asset Turnover (FATO)"
+    description: "Mengukur efisiensi perputaran aset tetap (pabrik, properti, dan peralatan produktif) dalam menghasilkan pendapatan."
+    how_to_read: "Nilai 2,5x menunjukkan setiap Rp 1 investasi pada aset tetap mampu menghasilkan Rp 2,50 pendapatan. Pada industri jasa nir-aset, nilai ini secara alamiah dapat sangat tinggi."
+    category: activity
+    scope: real_sector
+    temporal_basis: flow_to_stock
+    unit: multiplier
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: Revenue
+        weight: 1
+    denominator:
+      - account: PropertyPlantAndEquipment
+        weight: 1
+
+  - ratio: receivables_turnover
+    code: AC.ARTO
+    label: "Accounts Receivable Turnover"
+    description: "Mengukur frekuensi perputaran dan kecepatan konversi piutang usaha menjadi kas dalam satu periode."
+    how_to_read: "Nilai 6,0x berarti piutang berputar dan tertagih 6 kali dalam setahun (rata-rata penagihan 60 hari). Rasio tinggi menunjukkan penagihan yang disiplin."
+    category: activity
+    scope: real_sector
+    temporal_basis: flow_to_stock
+    unit: multiplier
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: Revenue
+        weight: 1
+    denominator:
+      - account: TradeReceivables
+        weight: 1
+
+  - ratio: inventory_turnover
+    code: AC.INVTO
+    label: "Inventory Turnover (Perputaran Persediaan)"
+    description: "Mengukur kecepatan perputaran persediaan barang dagang/produk jadi relatif terhadap beban pokok pendapatan."
+    how_to_read: "Nilai 4,0x berarti persediaan habis terjual dan diganti 4 kali per tahun (rata-rata 90 hari per siklus persediaan). Angka tinggi meminimalkan risiko barang usang."
+    category: activity
+    scope: real_sector
+    temporal_basis: flow_to_stock
+    unit: multiplier
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: CostOfSales
+        weight: 1
+    denominator:
+      - account: Inventories
+        weight: 1
+
+  - ratio: payables_turnover
+    code: AC.APTO
+    label: "Accounts Payable Turnover (Perputaran Utang)"
+    description: "Mengukur kecepatan pembayaran liabilitas utang usaha kepada pemasok relatif terhadap beban pokok pendapatan."
+    how_to_read: "Nilai 5,0x berarti utang usaha dilunasi rata-rata 5 kali setahun (periode pembayaran sekitar 73 hari). Menggambarkan daya tawar komersial terhadap pemasok."
+    category: activity
+    scope: real_sector
+    temporal_basis: flow_to_stock
+    unit: multiplier
+    polarity: neutral
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: CostOfSales
+        weight: 1
+    denominator:
+      - account: TradePayables
+        weight: 1
+
+  - ratio: free_cash_flow
+    code: CF.FCF
+    label: "Free Cash Flow (FCF)"
+    description: "Mengukur arus kas bebas yang dihasilkan dari operasi setelah dikurangi belanja modal (capex) untuk aset tetap."
+    how_to_read: "Nilai positif dalam rupiah menunjukkan sisa dana tunai riil yang dapat dialokasikan untuk pembagian dividen, pelunasan utang, atau ekspansi strategis."
+    category: cashflow
+    scope: real_sector
+    temporal_basis: flow
+    unit: currency
+    polarity: higher_is_better
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: OperatingCashFlow
+        weight: 1
+      - account: CapitalExpenditure
+        weight: -1
+    denominator: []
+
+  - ratio: capex_to_ocf
+    code: CF.CAPEX.OCF
+    label: "Capex to Operating Cash Flow"
+    description: "Mengukur porsi arus kas operasi yang diserap kembali untuk pengeluaran belanja modal (capex)."
+    how_to_read: "Nilai 40% berarti 40% dari kas masuk operasional diinvestasikan kembali ke aset tetap; nilai di atas 100% menunjukkan belanja modal melebihi kemampuan kas operasional mandiri."
+    category: cashflow
+    scope: real_sector
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: neutral
+    applicable_entry_points: *real_sector_eps
+    numerator:
+      - account: CapitalExpenditure
+        weight: 1
+    denominator:
+      - account: OperatingCashFlow
+        weight: 1
+
+  # ===========================================================================
+  # 3. FINANCIAL SECTOR COMMON SCOPE (6 Ratios — All 5 Financial Entry Points)
+  # ===========================================================================
+  - ratio: earning_assets_to_total_assets
+    code: FN.EATA
+    label: "Earning Assets to Total Assets"
+    description: "Mengukur proporsi aset produktif penghasil imbal hasil terhadap total aset (pada lembaga keuangan dan perbankan)."
+    how_to_read: "Nilai 85% berarti 85% aset dialokasikan pada instrumen produktif yang menghasilkan bunga atau margin (seperti kredit, efek, dan penempatan pasar uang)."
+    category: activity
+    scope: financial_sector
+    temporal_basis: stock_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: &financial_sector_eps
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    numerator:
+      - account: EarningAssets
+        weight: 1
+    denominator:
+      - account: TotalAssets
+        weight: 1
+
+  - ratio: financial_operating_margin
+    code: FN.OPM
+    label: "Operating Margin — Pembiayaan"
+    description: "Mengukur margin laba operasional lembaga keuangan relatif terhadap total pendapatan operasionalnya."
+    how_to_read: "Nilai 25% berarti lembaga keuangan menyisakan laba usaha sebesar 25% dari seluruh pendapatan operasional setelah menutupi beban bunga dan operasional."
+    category: profitability
+    scope: financial_sector
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *financial_sector_eps
+    numerator:
+      - account: NetFinancialOperatingIncome
+        weight: 1
+      - account: NonInterestOperatingExpenses
+        weight: -1
+    denominator:
+      - account: FinancialOperatingRevenue
+        weight: 1
+
+  - ratio: financial_pre_tax_margin
+    code: FN.PTM
+    label: "Pre-Tax Margin — Pembiayaan"
+    description: "Mengukur margin laba sebelum pajak pada lembaga perbankan atau keuangan terhadap pendapatan operasional."
+    how_to_read: "Nilai 20% menunjukkan porsi laba sebelum pajak sebesar 20% dari total pendapatan operasional lembaga keuangan."
+    category: profitability
+    scope: financial_sector
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *financial_sector_eps
+    numerator:
+      - account: ProfitBeforeTax
+        weight: 1
+    denominator:
+      - account: FinancialOperatingRevenue
+        weight: 1
+
+  - ratio: financial_net_margin
+    code: FN.NPM
+    label: "Net Profit Margin — Pembiayaan"
+    description: "Mengukur persentase laba bersih akhir lembaga keuangan dari total pendapatan operasional yang dihimpun."
+    how_to_read: "Nilai 18% berarti setiap Rp 100 pendapatan operasional institusi keuangan menghasilkan Rp 18 laba bersih bagi pemegang saham."
+    category: profitability
+    scope: financial_sector
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *financial_sector_eps
+    numerator:
+      - account: NetIncome
+        weight: 1
+    denominator:
+      - account: FinancialOperatingRevenue
+        weight: 1
+
+  - ratio: financial_cost_to_income
+    code: FN.CIR
+    label: "Cost to Income Ratio (CIR) — Pembiayaan"
+    description: "Cost-to-Income Ratio (CIR): mengukur rasio beban operasional non-bunga terhadap total pendapatan operasional pada sektor keuangan."
+    how_to_read: "Nilai 45% menunjukkan beban operasional menghabiskan 45% dari pendapatan lembaga keuangan. Semakin rendah persentase, semakin efisien struktur operasionalnya."
+    category: efficiency
+    scope: financial_sector
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: lower_is_better
+    applicable_entry_points: *financial_sector_eps
+    numerator:
+      - account: NonInterestOperatingExpenses
+        weight: 1
+    denominator:
+      - account: NetFinancialOperatingIncome
+        weight: 1
+
+  - ratio: gearing_ratio
+    code: FN.GEAR
+    label: "Gearing Ratio — Pembiayaan"
+    description: "Mengukur rasio utang keuangan berbunga terhadap basis total ekuitas perusahaan pembiayaan atau investasi."
+    how_to_read: "Nilai 2,0x berarti total utang berbunga adalah dua kali lipat modal ekuitas; indikator penting untuk memantau batas leverage statutori perusahaan pembiayaan."
+    category: solvency
+    scope: financial_sector
+    temporal_basis: stock_to_stock
+    unit: multiplier
+    polarity: lower_is_better
+    applicable_entry_points: *financial_sector_eps
+    numerator:
+      - account: TotalBorrowingsAndDebtIssued
+        weight: 1
+    denominator:
+      - account: TotalEquity
+        weight: 1
+
+  # ===========================================================================
+  # 4a. FINANCIAL BANKING & FINANCING SCOPE (8 Ratios)
+  # ===========================================================================
+  - ratio: net_interest_margin
+    code: BK.NIM
+    label: "Net Interest Margin (NIM)"
+    description: "Net Interest Margin (NIM): mengukur selisih antara pendapatan bunga bersih terhadap rata-rata atau total aset produktif perbankan."
+    how_to_read: "Nilai 5% berarti bank meraup marjin bunga bersih sebesar 5% dari seluruh aset produktif yang disalurkan ke nasabah atau pasar uang."
+    category: profitability
+    scope: financial_banking_and_financing
+    temporal_basis: flow_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: &banking_financing_eps
+      - financial_and_sharia
+      - financing
+    numerator:
+      - account: NetInterestAndShariaIncome
+        weight: 1
+    denominator:
+      - account: EarningAssets
+        weight: 1
+
+  - ratio: net_financing_margin
+    code: BK.NFM
+    label: "Net Financing Margin (NFM — Syariah)"
+    description: "Net Financing Margin: margin bagi hasil atau pembiayaan bersih pada perbankan dan multifinance syariah."
+    how_to_read: "Nilai 4,5% mencerminkan efektivitas penyaluran dana syariah dalam menghasilkan margin pendapatan bersih relatif terhadap total aset produktif."
+    category: profitability
+    scope: financial_banking_and_financing
+    temporal_basis: flow_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *banking_financing_eps
+    numerator:
+      - account: NetInterestAndShariaIncome
+        weight: 1
+    denominator:
+      - account: GrossLoansAndFinancing
+        weight: 1
+
+  - ratio: bank_cost_to_income
+    code: BK.CIR
+    label: "Cost to Income Ratio (CIR) — Perbankan"
+    description: "Mengukur perbandingan antara beban operasional overhead perbankan terhadap total pendapatan operasional bersih."
+    how_to_read: "Nilai 50% berarti 50% dari pendapatan perbankan terserap oleh beban operasional tenaga kerja, teknologi, dan administrasi umum."
+    category: efficiency
+    scope: financial_banking_and_financing
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: lower_is_better
+    applicable_entry_points: *banking_financing_eps
+    numerator:
+      - account: NonInterestOperatingExpenses
+        weight: 1
+    denominator:
+      - account: NetInterestAndShariaIncome
+        weight: 1
+      - account: NonInterestOperatingIncome
+        weight: 1
+
+  - ratio: bopo_ratio
+    code: BK.BOPO
+    label: "Beban Operasional thd Pendapatan Operasional (BOPO)"
+    description: "Rasio Beban Operasional terhadap Pendapatan Operasional (BOPO): tolok ukur standar efisiensi operasional perbankan di Indonesia."
+    how_to_read: "Nilai 75% berarti beban operasional mencakup 75% dari pendapatan operasional. Batas wajar industri umumnya di bawah 85%; nilai mendekati 100% menunjukkan inefisiensi."
+    category: efficiency
+    scope: financial_banking_and_financing
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: lower_is_better
+    applicable_entry_points: *banking_financing_eps
+    numerator:
+      - account: InterestAndShariaExpenses
+        weight: 1
+      - account: ImpairmentProvisionExpenses
+        weight: 1
+      - account: NonInterestOperatingExpenses
+        weight: 1
+    denominator:
+      - account: InterestAndShariaIncome
+        weight: 1
+      - account: NonInterestOperatingIncome
+        weight: 1
+
+  - ratio: cost_of_credit
+    code: BK.COC
+    label: "Cost of Credit (CoC)"
+    description: "Cost of Credit (CoC): mengukur persentase beban pencadangan kerugian penurunan nilai (CKPN) kredit terhadap total portofolio kredit."
+    how_to_read: "Nilai 1,5% berarti bank mencadangkan biaya risiko kredit macet sebesar 1,5% dari total baki debet kredit yang disalurkan."
+    category: asset_quality
+    scope: financial_banking_and_financing
+    temporal_basis: flow_to_stock
+    unit: percent
+    polarity: lower_is_better
+    applicable_entry_points: *banking_financing_eps
+    numerator:
+      - account: ImpairmentProvisionExpenses
+        weight: 1
+    denominator:
+      - account: GrossLoansAndFinancing
+        weight: 1
+
+  - ratio: loan_loss_reserve_ratio
+    code: BK.LLR
+    label: "Loan Loss Reserve (NPL Coverage)"
+    description: "Mengukur cakupan akumulasi cadangan kerugian penurunan nilai (CKPN) terhadap total penyaluran kredit (coverage ratio)."
+    how_to_read: "Nilai 3,5% menunjukkan saldo cadangan kerugian piutang mencakup 3,5% dari total portofolio kredit, sebagai perlindungan atas risiko gagal bayar debitur."
+    category: asset_quality
+    scope: financial_banking_and_financing
+    temporal_basis: stock_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *banking_financing_eps
+    numerator:
+      - account: AllowanceForImpairmentLosses
+        weight: 1
+    denominator:
+      - account: GrossLoansAndFinancing
+        weight: 1
+
+  - ratio: loan_to_deposit_ratio
+    code: BK.LDR
+    label: "Loan to Deposit Ratio (LDR / FDR)"
+    description: "Loan-to-Deposit Ratio (LDR): mengukur likuiditas perbankan dengan membandingkan total kredit yang disalurkan terhadap dana pihak ketiga (DPK)."
+    how_to_read: "Nilai 85% berarti 85% dana simpanan nasabah telah disalurkan kembali dalam bentuk kredit. Koridor sehat regulator umumnya berkisar antara 78% hingga 92%."
+    category: liquidity
+    scope: financial_banking_and_financing
+    temporal_basis: stock_to_stock
+    unit: percent
+    polarity: neutral
+    applicable_entry_points:
+      - financial_and_sharia
+    numerator:
+      - account: GrossLoansAndFinancing
+        weight: 1
+    denominator:
+      - account: CustomerDeposits
+        weight: 1
+      - account: TemporarySyirkahFunds
+        weight: 1
+
+  - ratio: casa_ratio
+    code: BK.CASA
+    label: "Current Account Savings Account (CASA Ratio)"
+    description: "Current Account and Savings Account (CASA) Ratio: mengukur porsi dana murah (giro dan tabungan) terhadap total dana pihak ketiga bank."
+    how_to_read: "Nilai 65% berarti 65% DPK bank berasal dari dana murah; angka tinggi menekan beban bunga bank (Cost of Funds) secara signifikan."
+    category: funding_structure
+    scope: financial_banking_and_financing
+    temporal_basis: stock_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points:
+      - financial_and_sharia
+    numerator:
+      - account: DemandAndSavingsDeposits
+        weight: 1
+    denominator:
+      - account: CustomerDeposits
+        weight: 1
+      - account: TemporarySyirkahFunds
+        weight: 1
+
+  # ===========================================================================
+  # 4b. FINANCIAL INSURANCE SCOPE (7 Ratios — insurance)
+  # ===========================================================================
+  - ratio: retention_ratio
+    code: IN.RET
+    label: "Net Retention Ratio (Retensi Sendiri)"
+    description: "Mengukur persentase premi asuransi yang ditahan sendiri oleh perusahaan asuransi setelah dikurangi premi reasuransi."
+    how_to_read: "Nilai 70% berarti perusahaan menanggung 70% risiko secara mandiri dan mengalihkan 30% sisanya kepada perusahaan reasuransi."
+    category: underwriting
+    scope: financial_insurance
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: neutral
+    applicable_entry_points: &insurance_eps
+      - insurance
+    numerator:
+      - account: NetPremiumIncome
+        weight: 1
+    denominator:
+      - account: GrossPremiumIncome
+        weight: 1
+
+  - ratio: loss_ratio
+    code: IN.LOSS
+    label: "Loss Ratio (Rasio Klaim)"
+    description: "Mengukur persentase beban klaim neto yang terjadi terhadap pendapatan premi neto perusahaan asuransi."
+    how_to_read: "Nilai 60% berarti dari setiap Rp 100 pendapatan premi yang diterima, Rp 60 dibayarkan untuk pemenuhan klaim pemegang polis."
+    category: underwriting
+    scope: financial_insurance
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: lower_is_better
+    applicable_entry_points: *insurance_eps
+    numerator:
+      - account: NetClaimExpenses
+        weight: 1
+    denominator:
+      - account: NetEarnedPremiums
+        weight: 1
+
+  - ratio: insurance_expense_ratio
+    code: IN.EXP
+    label: "Expense Ratio (Beban Operasional Asuransi)"
+    description: "Mengukur rasio beban akuisisi, komisi agen, dan operasional manajemen asuransi terhadap pendapatan premi neto."
+    how_to_read: "Nilai 25% menunjukkan beban akuisisi polis dan operasional menyerap 25% dari pendapatan premi neto yang dikumpulkan."
+    category: efficiency
+    scope: financial_insurance
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: lower_is_better
+    applicable_entry_points: *insurance_eps
+    numerator:
+      - account: UnderwritingAndAcquisitionExpenses
+        weight: 1
+      - account: NonInterestOperatingExpenses
+        weight: 1
+    denominator:
+      - account: NetEarnedPremiums
+        weight: 1
+
+  - ratio: combined_ratio
+    code: IN.COMB
+    label: "Combined Ratio (Rasio Kombinasi)"
+    description: "Combined Ratio: penjumlahan rasio klaim (loss ratio) dan rasio beban operasional (expense ratio) asuransi."
+    how_to_read: "Nilai di bawah 100% (misalnya 92%) menunjukkan underwriting asuransi menghasilkan laba (surplus underwriting); nilai di atas 100% menandakan kerugian underwriting teknis."
+    category: underwriting
+    scope: financial_insurance
+    temporal_basis: flow_to_flow
+    unit: percent
+    polarity: lower_is_better
+    applicable_entry_points: *insurance_eps
+    numerator:
+      - account: NetClaimExpenses
+        weight: 1
+      - account: UnderwritingAndAcquisitionExpenses
+        weight: 1
+      - account: NonInterestOperatingExpenses
+        weight: 1
+    denominator:
+      - account: NetEarnedPremiums
+        weight: 1
+
+  - ratio: investment_yield
+    code: IN.YIELD
+    label: "Investment Yield (Imbal Hasil Investasi)"
+    description: "Mengukur imbal hasil investasi tahunan dari pengelolaan portofolio aset investasi perusahaan asuransi."
+    how_to_read: "Nilai 6,5% mencerminkan tingkat imbalan hasil dari portofolio obligasi, saham, reksa dana, dan deposito yang dikelola perusahaan asuransi."
+    category: investment
+    scope: financial_insurance
+    temporal_basis: flow_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *insurance_eps
+    numerator:
+      - account: InvestmentIncome
+        weight: 1
+    denominator:
+      - account: TotalInvestmentAssets
+        weight: 1
+
+  - ratio: technical_reserve_to_equity
+    code: IN.TRE
+    label: "Technical Reserve to Equity"
+    description: "Mengukur perbandingan antara liabilitas cadangan teknis klaim polis dengan basis modal ekuitas perusahaan asuransi."
+    how_to_read: "Nilai 2,5x menunjukkan cadangan kewajiban klaim masa depan bernilai 2,5 kali modal sendiri; mengindikasikan tingkat leverage operasional asuransi."
+    category: solvency
+    scope: financial_insurance
+    temporal_basis: stock_to_stock
+    unit: multiplier
+    polarity: lower_is_better
+    applicable_entry_points: *insurance_eps
+    numerator:
+      - account: InsuranceContractLiabilities
+        weight: 1
+    denominator:
+      - account: TotalEquity
+        weight: 1
+
+  - ratio: investment_to_technical_reserve
+    code: IN.ITR
+    label: "Investment to Technical Reserve (Kecukupan Investasi)"
+    description: "Mengukur rasio kecukupan aset investasi likuid dalam menjamin liabilitas cadangan teknis premi dan klaim asuransi."
+    how_to_read: "Nilai 1,1x atau 110% berarti seluruh kewajiban klaim dan cadangan premi dijamin penuh (lebih dari 100%) oleh aset investasi yang likuid."
+    category: liquidity
+    scope: financial_insurance
+    temporal_basis: stock_to_stock
+    unit: percent
+    polarity: higher_is_better
+    applicable_entry_points: *insurance_eps
+    numerator:
+      - account: TotalInvestmentAssets
+        weight: 1
+    denominator:
+      - account: InsuranceContractLiabilities
+        weight: 1

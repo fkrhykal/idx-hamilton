@@ -1,0 +1,71 @@
+$schema: ./canonical.extension.yaml
+entry_point: general
+statement: income_statement
+variant: by_nature_before_tax
+mappings:
+- canonical_account: ProfitBeforeTax
+  components:
+  - account: ProfitLossBeforeIncomeTax
+    weight: 1
+- canonical_account: IncomeTaxExpense
+  components:
+  - account: TaxBenefitExpenses
+    weight: 1
+- canonical_account: NetIncome
+  components:
+  - account: ProfitLoss
+    weight: 1
+- canonical_account: NetIncomeAttributableToParent
+  components:
+  - account: ProfitLossAttributableToParentEntity
+    weight: 1
+- canonical_account: Revenue
+  components:
+  - account: SalesAndRevenue
+    weight: 1
+- canonical_account: OperatingProfit
+  components:
+  - account: SalesAndRevenue
+    weight: 1
+  - account: ProgramAndBroadcastingExpenses
+    weight: -1
+  - account: ExplorationExpenses
+    weight: -1
+  - account: TollCollectionExpenses
+    weight: -1
+  - account: TollRoadServiceExpenses
+    weight: -1
+  - account: TollRoadMaintenanceExpenses
+    weight: -1
+  - account: JointOperationsExpenses
+    weight: -1
+  - account: ConstructionExpenses
+    weight: -1
+  - account: FlightOperationsExpenses
+    weight: -1
+  - account: TicketingSalesAndPromotionExpenses
+    weight: -1
+  - account: PassengerServicesExpenses
+    weight: -1
+  - account: UserChargesAndStationExpenses
+    weight: -1
+  - account: MaintenanceAndOverhaulExpenses
+    weight: -1
+  - account: TransportationOperationExpenses
+    weight: -1
+  - account: NetworkOperationExpenses
+    weight: -1
+  - account: HotelOperationExpenses
+    weight: -1
+  - account: IncreaseDecreaseInInventoriesOfFinishedGoodsAndWorkInProgress
+    weight: -1
+  - account: RawMaterialsAndConsumablesUsed
+    weight: -1
+  - account: EmployeeBenefitsExpenses
+    weight: -1
+  - account: DepreciationAndAmortisationExpenses
+    weight: -1
+- canonical_account: FinanceCosts
+  components:
+  - account: InterestAndFinanceCosts
+    weight: 1

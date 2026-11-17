@@ -1,0 +1,107 @@
+$schema: ./canonical.extension.yaml
+entry_point: insurance
+statement: balance_statement
+variant: liquidity
+mappings:
+- canonical_account: TotalAssets
+  components:
+  - account: Assets
+    weight: 1
+- canonical_account: TotalLiabilities
+  components:
+  - account: Liabilities
+    weight: 1
+- canonical_account: TotalEquity
+  components:
+  - account: Equity
+    weight: 1
+- canonical_account: EquityAttributableToParent
+  components:
+  - account: EquityAttributableToEquityOwnersOfParentEntity
+    weight: 1
+- canonical_account: CashAndCashEquivalents
+  components:
+  - account: CashAndCashEquivalents
+    weight: 1
+- canonical_account: TotalInvestmentAssets
+  components:
+  - account: InvestmentsInTimeDeposits
+    weight: 1
+  - account: InvestmentsOnSecuritiesAndMutualFundsAtFairValueThroughProfitOrLoss
+    weight: 1
+  - account: InvestmentsOnFairValueThroughOtherComprehensiveIncomeSecurities
+    weight: 1
+  - account: InvestmentsOnAmortizedCostSecurities
+    weight: 1
+  - account: InvestmentsOnAvailableForSaleSecurities
+    weight: 1
+  - account: InvestmentsOnHeldToMaturitySecurities
+    weight: 1
+  - account: InvestmentsInShares
+    weight: 1
+  - account: OtherInvestments
+    weight: 1
+  - account: InvestmentsOfPolicyholderInUnitLinkedContracts
+    weight: 1
+  - account: InvestmentProperties
+    weight: 1
+- canonical_account: InsuranceContractLiabilities
+  components:
+  - account: InsuranceLiabilitiesOnUnearnedPremium
+    weight: 1
+  - account: InsuranceLiabilitiesOnEstimatedClaimsLiability
+    weight: 1
+  - account: InsuranceLiabilitiesForFuturePolicyBenefits
+    weight: 1
+  - account: ProvisionsForLossesArisingResultingFromLiabilityAdequacyTest
+    weight: 1
+  - account: LiabilitiesToPolicyholderInUnitLinkedContracts
+    weight: 1
+  - account: InsuranceLiabilitiesOnDeferredPremiumIncome
+    weight: 1
+  - account: ContractLiabilities
+    weight: 1
+- canonical_account: EarningAssets
+  components:
+  - account: InvestmentsInTimeDeposits
+    weight: 1
+  - account: InvestmentsOnSecuritiesAndMutualFundsAtFairValueThroughProfitOrLoss
+    weight: 1
+  - account: InvestmentsOnFairValueThroughOtherComprehensiveIncomeSecurities
+    weight: 1
+  - account: InvestmentsOnAmortizedCostSecurities
+    weight: 1
+  - account: InvestmentsOnAvailableForSaleSecurities
+    weight: 1
+  - account: InvestmentsOnHeldToMaturitySecurities
+    weight: 1
+  - account: InvestmentsInShares
+    weight: 1
+  - account: OtherInvestments
+    weight: 1
+  - account: InvestmentsOfPolicyholderInUnitLinkedContracts
+    weight: 1
+  - account: InvestmentProperties
+    weight: 1
+  - account: InvestmentIncomeReceivables
+    weight: 1
+  - account: PremiumReceivables
+    weight: 1
+  - account: ReinsuranceReceivables
+    weight: 1
+  - account: CoinsuranceReceivables
+    weight: 1
+  - account: RetrocessionReceivables
+    weight: 1
+  - account: ReinsuranceAssets
+    weight: 1
+  - account: RetrocessionAssets
+    weight: 1
+- canonical_account: TotalBorrowingsAndDebtIssued
+  components:
+  - account: FinanceLeaseLiabilities
+    weight: 1
+  - account: BondsPayable
+    weight: 1
+  - account: Sukuk
+    weight: 1

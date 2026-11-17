@@ -1,0 +1,438 @@
+$schema: ./schema.extension.yaml
+entry_point: financial_and_sharia
+statement: balance_statement
+variant: liquidity
+chart_of_accounts:
+- account: Assets
+  code: A
+  is_total: true
+  children:
+  - account: Cash
+    code: A.001
+  - account: RestrictedFunds
+    code: A.002
+  - account: CurrentAccountsWithBankIndonesia
+    code: A.003
+  - account: CurrentAccountsWithOtherBanksThirdParties
+    code: A.004
+  - account: CurrentAccountsWithOtherBanksRelatedParties
+    code: A.005
+  - account: AllowanceForImpairmentLossesForCurrentAccountsWithOtherBanks
+    code: A.006
+    weight: -1
+  - account: PlacementsWithBankIndonesiaAndOtherBanksThirdParties
+    code: A.007
+  - account: PlacementsWithBankIndonesiaAndOtherBanksRelatedParties
+    code: A.008
+  - account: AllowanceForImpairmentLossesForPlacementsWithOtherBanks
+    code: A.009
+    weight: -1
+  - account: InsuranceReceivablesThirdParties
+    code: A.010
+  - account: InsuranceReceivablesRelatedParties
+    code: A.011
+  - account: AllowanceForImpairmentLossesForInsuranceReceivables
+    code: A.012
+    weight: -1
+  - account: DeferredAcquisitionCosts
+    code: A.013
+  - account: DepositsToClearingAndSettlementGuaranteeInstitution
+    code: A.014
+  - account: MarketableSecuritiesThirdParties
+    code: A.015
+  - account: MarketableSecuritiesRelatedParties
+    code: A.016
+  - account: AllowanceForImpairmentLossesForMarketableSecurities
+    code: A.017
+    weight: -1
+  - account: InvestmentsOfPolicyholderInUnitLinkedContracts
+    code: A.018
+  - account: SecuritiesPurchasedUnderAgreementToResale
+    code: A.019
+  - account: BillsAndOtherReceivablesThirdParties
+    code: A.020
+  - account: BillsAndOtherReceivablesRelatedParties
+    code: A.021
+  - account: AllowanceForImpairmentLossesForBillsAndOtherReceivables
+    code: A.022
+    weight: -1
+  - account: AcceptanceReceivablesThirdParties
+    code: A.023
+  - account: AcceptanceReceivablesRelatedParties
+    code: A.024
+  - account: AllowanceForImpairmentLossesForAcceptanceReceivables
+    code: A.025
+    weight: -1
+  - account: DerivativeReceivablesThirdParties
+    code: A.026
+  - account: DerivativeReceivablesRelatedParties
+    code: A.027
+  - account: LoansThirdParties
+    code: A.028
+  - account: LoansRelatedParties
+    code: A.029
+  - account: AllowanceForImpairmentLossesForLoans
+    code: A.030
+    weight: -1
+  - account: ReceivablesFromClearingAndSettlementGuaranteeInstitution
+    code: A.031
+  - account: ReceivablesFromCustomersThirdParties
+    code: A.032
+  - account: ReceivablesFromCustomersRelatedParties
+    code: A.033
+  - account: AllowanceForImpairmentLossesForReceivablesFromCustomers
+    code: A.034
+    weight: -1
+  - account: MurabahahReceivablesThirdParties
+    code: A.035
+  - account: MurabahahReceivablesRelatedParties
+    code: A.036
+  - account: AllowanceForImpairmentLossesForMurabahahReceivables
+    code: A.037
+    weight: -1
+  - account: IstishnaReceivablesThirdParties
+    code: A.038
+  - account: IstishnaReceivablesRelatedParties
+    code: A.039
+  - account: AllowanceForImpairmentLossesForIstishnaReceivables
+    code: A.040
+    weight: -1
+  - account: IjarahReceivablesThirdParties
+    code: A.041
+  - account: IjarahReceivablesRelatedParties
+    code: A.042
+  - account: AllowanceForImpairmentLossesForIjarahReceivables
+    code: A.043
+    weight: -1
+  - account: ConsumerFinancingReceivablesThirdParties
+    code: A.044
+  - account: ConsumerFinancingReceivablesRelatedParties
+    code: A.045
+  - account: AllowanceForImpairmentLossesForConsumerFinancingReceivables
+    code: A.046
+    weight: -1
+  - account: QardhFundsThirdParties
+    code: A.047
+  - account: QardhFundsRelatedParties
+    code: A.048
+  - account: AllowanceForImpairmentLossesForQardhFunds
+    code: A.049
+    weight: -1
+  - account: MudharabahFinancingThirdParties
+    code: A.050
+  - account: MudharabahFinancingRelatedParties
+    code: A.051
+  - account: AllowanceForImpairmentLossesForMudharabahFinancing
+    code: A.052
+    weight: -1
+  - account: MusyarakahFinancingThirdParties
+    code: A.053
+  - account: MusyarakahFinancingRelatedParties
+    code: A.054
+  - account: AllowanceForImpairmentLossesForMusyarakahFinancing
+    code: A.055
+    weight: -1
+  - account: LeaseInvestmentsThirdParties
+    code: A.056
+  - account: LeaseInvestmentsRelatedParties
+    code: A.057
+  - account: LeaseInvestmentsGuaranteedResidualValue
+    code: A.058
+  - account: LeaseInvestmentsDeferredFinancingIncome
+    code: A.059
+  - account: LeaseInvestmentsGuaranteeDeposits
+    code: A.060
+  - account: AllowanceForImpairmentLossesForLeaseInvestments
+    code: A.061
+    weight: -1
+  - account: FactoringReceivablesThirdParties
+    code: A.062
+  - account: FactoringReceivablesRelatedParties
+    code: A.063
+  - account: FactoringReceivablesOnDeferredFactoringIncome
+    code: A.064
+  - account: AllowanceForImpairmentLossesForFactoringReceivables
+    code: A.065
+    weight: -1
+  - account: OtherReceivablesThirdParties
+    code: A.066
+  - account: OtherReceivablesRelatedParties
+    code: A.067
+  - account: AllowanceForImpairmentLossesForOtherReceivables
+    code: A.068
+    weight: -1
+  - account: OtherFinancialAssets
+    code: A.069
+  - account: GovernmentBonds
+    code: A.070
+  - account: NonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForSale
+    code: A.071
+  - account: NonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForDistributionToOwners
+    code: A.072
+  - account: Advances
+    code: A.073
+  - account: PrepaidExpenses
+    code: A.074
+  - account: Guarantees
+    code: A.075
+  - account: PrepaidTaxes
+    code: A.076
+  - account: ClaimsForTaxRefund
+    code: A.077
+  - account: DeferredTaxAssets
+    code: A.078
+  - account: InvestmentsAccountedForUsingEquityMethod
+    code: A.079
+  - account: InvestmentsInJointVentures
+    code: A.080
+  - account: InvestmentsInAssociates
+    code: A.081
+  - account: ReinsuranceAssets
+    code: A.082
+  - account: PostEmploymentBenefitAssets
+    code: A.083
+  - account: Goodwill
+    code: A.084
+  - account: IntangibleAssetsOtherThanGoodwill
+    code: A.085
+  - account: InvestmentProperties
+    code: A.086
+  - account: IjarahAssets
+    code: A.087
+  - account: PropertyPlantAndEquipment
+    code: A.088
+  - account: RightOfUseAssets
+    code: A.089
+  - account: ForeclosedAssets
+    code: A.090
+  - account: TaxAmnestyAssets
+    code: A.091
+  - account: OtherAssets
+    code: A.092
+  - account: PropertyAndEquipment
+    code: A.093
+  - account: InvestmentsInSubsidiaries
+    code: A.094
+- account: Liabilities
+  code: L
+  is_total: true
+  children:
+  - account: ObligationsDueImmediately
+    code: L.001
+  - account: UndistributedProfitSharing
+    code: L.002
+  - account: ShariaDeposits
+    code: L.003
+  - account: CurrentAccountsThirdParties
+    code: L.004
+  - account: CurrentAccountsRelatedParties
+    code: L.005
+  - account: WadiahDemandDepositsThirdParties
+    code: L.006
+  - account: WadiahDemandDepositsRelatedParties
+    code: L.007
+  - account: SavingsThirdParties
+    code: L.008
+  - account: SavingsRelatedParties
+    code: L.009
+  - account: WadiahSavingsThirdParties
+    code: L.010
+  - account: WadiahSavingsRelatedParties
+    code: L.011
+  - account: TimeDepositsThirdParties
+    code: L.012
+  - account: TimeDepositsRelatedParties
+    code: L.013
+  - account: WakalahDepositsThirdParties
+    code: L.014
+  - account: WakalahDepositsRelatedParties
+    code: L.015
+  - account: OtherBanksDeposits
+    code: L.016
+  - account: OtherBankdsDepositsRelatedParties
+    code: L.017
+  - account: SecuritiesSoldWithRepurchaseAgreement
+    code: L.018
+  - account: DerivativePayablesThirdParties
+    code: L.019
+  - account: DerivativePayablesRelatedParties
+    code: L.020
+  - account: InsurancePayables
+    code: L.021
+  - account: CoinsuranceLiabilities
+    code: L.022
+  - account: LiabilitiesToPolicyholderInUnitLinkedContracts
+    code: L.023
+  - account: InterestPayables
+    code: L.024
+  - account: AcceptancePayables
+    code: L.025
+  - account: AcceptanceLiabilitiesRelatedParties
+    code: L.026
+  - account: AccountsPayable
+    code: L.027
+  - account: AdvancesAndInstallments
+    code: L.028
+  - account: DividendsPayable
+    code: L.029
+  - account: DealerPayables
+    code: L.030
+  - account: BorrowingsThirdParties
+    code: L.031
+  - account: BorrowingsRelatedParties
+    code: L.032
+  - account: BorrowingsPayablesToClearingAndSettlementGuaranteeInstitution
+    code: L.033
+  - account: Bonds
+    code: L.034
+  - account: IjarahSukuk
+    code: L.035
+  - account: SubordinatedBonds
+    code: L.036
+  - account: MediumTermNotes
+    code: L.037
+  - account: OthersSecuritiesIssued
+    code: L.038
+  - account: InsuranceContractLiabilities
+    code: L.039
+  - account: SecuritiesCompanyPayables
+    code: L.040
+  - account: Provisions
+    code: L.041
+  - account: ContractLiabilities
+    code: L.042
+  - account: DeferredIncome
+    code: L.043
+  - account: FinanceLeaseLiabilities
+    code: L.044
+  - account: EstimatedLossesOnCommitmentsAndContingencies
+    code: L.045
+  - account: AccruedExpenses
+    code: L.046
+  - account: TaxesPayable
+    code: L.047
+  - account: DeferredTaxLiabilities
+    code: L.048
+  - account: TaxAmnestyLiabilities
+    code: L.049
+  - account: OtherLiabilities
+    code: L.050
+  - account: PostEmploymentBenefitObligations
+    code: L.051
+  - account: SubordinatedLoansThirdParties
+    code: L.052
+  - account: SubordinatedLoansRelatedParties
+    code: L.053
+  - account: OtherBanksDepositsThirdParties
+    code: L.054
+  - account: AcceptanceLiabilitiesThirdParties
+    code: L.055
+  - account: BondsPayable
+    code: L.056
+  - account: Sukuk
+    code: L.057
+  - account: MidTermLoans
+    code: L.058
+- account: TemporarySyirkahFunds
+  code: TSF
+  is_total: true
+  children:
+  - account: MudharabahCurrentAccountThirdParties
+    code: TSF.001
+  - account: MudharabahCurrentAccountRelatedParties
+    code: TSF.002
+  - account: MudharabahSavingDepositsThirdParties
+    code: TSF.003
+  - account: MudharabahSavingDepositsRelatedParties
+    code: TSF.004
+  - account: MudharabahTimeDepositsThirdParties
+    code: TSF.005
+  - account: MudharabahTimeDepositsRelatedParties
+    code: TSF.006
+  - account: MudharabahCurrentAccount
+    code: TSF.007
+  - account: MudharabahSavingDepositsUmmat
+    code: TSF.008
+  - account: MudharabahTimeDeposits
+    code: TSF.009
+  - account: InterbankMudharabahInvestments
+    code: TSF.010
+  - account: MudharabahSukuk
+    code: TSF.011
+  - account: SubordinatedMudharabahSukuk
+    code: TSF.012
+- account: Equity
+  code: E
+  is_total: true
+  children:
+  - account: EquityAttributableToEquityOwnersOfParentEntity
+    code: E.PE
+    is_total: true
+    children:
+    - account: CommonStocks
+      code: E.PE.001
+    - account: PreferredStocks
+      code: E.PE.002
+    - account: AdditionalPaidInCapital
+      code: E.PE.003
+    - account: TreasuryStocks
+      code: E.PE.004
+      weight: -1
+    - account: AdvancesInCapitalStock
+      code: E.PE.005
+    - account: StockOptions
+      code: E.PE.006
+    - account: TranslationAdjustment
+      code: E.PE.007
+    - account: RevaluationReserves
+      code: E.PE.008
+    - account: ReserveOfExchangeDifferencesOnTranslation
+      code: E.PE.009
+    - account: ReserveForChangesInFairValueOfFairValueThroughOtherComprehensiveIncomeFinancialAssets
+      code: E.PE.010
+    - account: ReserveOfGainsLossesFromInvestmentsInEquityInstruments
+      code: E.PE.011
+    - account: ReserveOfShareBasedPayments
+      code: E.PE.012
+    - account: ReserveOfCashFlowHedges
+      code: E.PE.013
+    - account: ReserveOfRemeasurementsOfDefinedBenefitPlans
+      code: E.PE.014
+    - account: OtherReserves
+      code: E.PE.015
+    - account: OtherComponentsOfEquity
+      code: E.PE.016
+    - account: GeneralAndLegalReserves
+      code: E.PE.017
+    - account: SpecificReserves
+      code: E.PE.018
+    - account: UnappropriatedRetainedEarnings
+      code: E.PE.019
+    - account: ReserveForChangesInFairValueOfAvailableForSaleFinancialAssets
+      code: E.PE.020
+    - account: DifferenceDueToChangesOfEquityInSubsidiaryAssociates
+      code: E.PE.021
+  - account: ProformaEquity
+    code: E.002
+  - account: NonControllingInterests
+    code: E.003
+- account: AccumulatedTabarrusFunds
+  code: TABARRU
+- account: LiabilitiesTemporarySyirkahFundsAndEquity
+  code: DISC.BS.01
+assertions:
+- assertion_id: balance_sheet_identity
+  description: Assets must balance with claims on assets.
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: Assets
+    weight: 1
+  - account: Liabilities
+    weight: -1
+  - account: TemporarySyirkahFunds
+    weight: -1
+  - account: AccumulatedTabarrusFunds
+    weight: -1
+  - account: Equity
+    weight: -1

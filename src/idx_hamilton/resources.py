@@ -20,7 +20,7 @@ class IdxHttpClient(HttpClient):
     def __init__(
         self,
         impersonate: str = DEFAULT_CHROME,
-        min_interval_seconds: float = 1.5,
+        min_interval_seconds: float = 2,
         timeout: int = 30,
     ):
         self._session = Session(

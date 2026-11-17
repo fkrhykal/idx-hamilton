@@ -1,0 +1,45 @@
+$schema: ./canonical.extension.yaml
+entry_point: property
+statement: income_statement
+variant: by_function_after_tax
+mappings:
+- canonical_account: ProfitBeforeTax
+  components:
+  - account: ProfitLossBeforeIncomeTax
+    weight: 1
+- canonical_account: IncomeTaxExpense
+  components:
+  - account: TaxBenefitExpenses
+    weight: 1
+- canonical_account: NetIncome
+  components:
+  - account: ProfitLoss
+    weight: 1
+- canonical_account: NetIncomeAttributableToParent
+  components:
+  - account: ProfitLossAttributableToParentEntity
+    weight: 1
+- canonical_account: Revenue
+  components:
+  - account: SalesAndRevenue
+    weight: 1
+- canonical_account: CostOfSales
+  components:
+  - account: CostOfSalesAndRevenue
+    weight: 1
+- canonical_account: GrossProfit
+  components:
+  - account: GrossProfit
+    weight: 1
+- canonical_account: OperatingProfit
+  components:
+  - account: GrossProfit
+    weight: 1
+  - account: SellingExpenses
+    weight: -1
+  - account: GeneralAndAdministrativeExpenses
+    weight: -1
+- canonical_account: FinanceCosts
+  components:
+  - account: InterestAndFinanceCosts
+    weight: 1

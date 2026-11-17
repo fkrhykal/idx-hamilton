@@ -1,0 +1,185 @@
+# yaml-language-server: $schema=http://json-schema.org/draft-07/schema#
+$schema: "http://json-schema.org/draft-07/schema#"
+title: "FinancialRatioCatalogSpecifications"
+description: "JSON Schema specification for declarative financial ratio formulas over canonical accounts."
+type: object
+required:
+  - ratios
+
+properties:
+  $schema:
+    type: string
+    description: "Relative path or URI referencing this schema definition."
+
+  ratios:
+    type: array
+    minItems: 1
+    description: "Ordered collection of financial ratio specifications."
+    items:
+      $ref: "#/definitions/RatioSpec"
+
+definitions:
+  RatioSpec:
+    type: object
+    required:
+      - ratio
+      - code
+      - category
+      - scope
+      - temporal_basis
+      - applicable_entry_points
+      - numerator
+    properties:
+      ratio:
+        type: string
+        description: "Unique identifier of the financial ratio."
+      code:
+        type: string
+        description: "Deterministic hierarchical ratio code (e.g., PR.ROE, LQ.CR, BK.NIM)."
+      label:
+        type: string
+        description: "Nama resmi rasio keuangan standar industri dalam bahasa manusia (human-readable title)."
+      category:
+        type: string
+        enum:
+          - profitability
+          - liquidity
+          - solvency
+          - activity
+          - cashflow
+          - efficiency
+          - asset_quality
+          - funding_structure
+          - underwriting
+          - investment
+          - tax
+      scope:
+        type: string
+        enum:
+          - universal
+          - real_sector
+          - financial_sector
+          - financial_banking_and_financing
+          - financial_insurance
+      temporal_basis:
+        type: string
+        enum:
+          - stock_to_stock
+          - flow_to_flow
+          - flow_to_stock
+          - flow
+      unit:
+        type: string
+        enum:
+          - percent
+          - multiplier
+          - currency
+        default: percent
+        description: "Unit measurement format for presentation: percent (%), multiplier (x), or currency (nominal IDR)."
+      polarity:
+        type: string
+        enum:
+          - higher_is_better
+          - lower_is_better
+          - neutral
+        default: higher_is_better
+        description: "Arah interpretasi nilai rasio keuangan: higher_is_better, lower_is_better, atau neutral."
+      description:
+        type: string
+        description: "Penjelasan konseptual rasio dalam bahasa Indonesia baku."
+      how_to_read:
+        type: string
+        description: "Panduan praktis cara membaca dan menginterpretasikan nilai rasio dalam bahasa Indonesia baku."
+      applicable_entry_points:
+        type: array
+        minItems: 1
+        items:
+          type: string
+          enum:
+            - general
+            - property
+            - infrastructure
+            - financial_and_sharia
+            - financing
+            - insurance
+            - securities
+            - collective_investment_contract
+      numerator:
+        type: array
+        minItems: 1
+        description: "Weighted canonical accounts forming the ratio numerator."
+        items:
+          $ref: "#/definitions/RatioComponentTerm"
+      denominator:
+        type: array
+        description: "Weighted canonical accounts forming the ratio denominator (empty for absolute flow metrics)."
+        items:
+          $ref: "#/definitions/RatioComponentTerm"
+
+  RatioComponentTerm:
+    type: object
+    required:
+      - account
+    properties:
+      account:
+        type: string
+        description: "Canonical account identifier defined in src/idx_hamilton/schema/canonical.yaml."
+        enum:
+          - TotalAssets
+          - TotalLiabilities
+          - TotalEquity
+          - EquityAttributableToParent
+          - CashAndCashEquivalents
+          - ProfitBeforeTax
+          - IncomeTaxExpense
+          - NetIncome
+          - NetIncomeAttributableToParent
+          - OperatingCashFlow
+          - InvestingCashFlow
+          - FinancingCashFlow
+          - CurrentAssets
+          - NonCurrentAssets
+          - CurrentLiabilities
+          - NonCurrentLiabilities
+          - TradeReceivables
+          - Inventories
+          - PropertyPlantAndEquipment
+          - TradePayables
+          - ShortTermDebt
+          - LongTermDebt
+          - Revenue
+          - CostOfSales
+          - GrossProfit
+          - OperatingProfit
+          - FinanceCosts
+          - CapitalExpenditure
+          - EarningAssets
+          - TotalBorrowingsAndDebtIssued
+          - FinancialOperatingRevenue
+          - DirectFinancialAndUnderwritingCosts
+          - NetFinancialOperatingIncome
+          - NonInterestOperatingExpenses
+          - GrossLoansAndFinancing
+          - AllowanceForImpairmentLosses
+          - CustomerDeposits
+          - TemporarySyirkahFunds
+          - DemandAndSavingsDeposits
+          - InterestAndShariaIncome
+          - InterestAndShariaExpenses
+          - NetInterestAndShariaIncome
+          - NonInterestOperatingIncome
+          - ImpairmentProvisionExpenses
+          - TotalInvestmentAssets
+          - InsuranceContractLiabilities
+          - GrossPremiumIncome
+          - NetPremiumIncome
+          - NetEarnedPremiums
+          - NetClaimExpenses
+          - UnderwritingAndAcquisitionExpenses
+          - InvestmentIncome
+      weight:
+        type: integer
+        enum: [1, -1]
+        default: 1
+        description: "Calculation weight multiplier: 1 for addition, -1 for subtraction."
+

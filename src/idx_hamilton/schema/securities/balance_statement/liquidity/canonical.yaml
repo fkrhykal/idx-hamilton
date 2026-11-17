@@ -1,0 +1,69 @@
+$schema: ./canonical.extension.yaml
+entry_point: securities
+statement: balance_statement
+variant: liquidity
+mappings:
+- canonical_account: TotalAssets
+  components:
+  - account: Assets
+    weight: 1
+- canonical_account: TotalLiabilities
+  components:
+  - account: Liabilities
+    weight: 1
+- canonical_account: TotalEquity
+  components:
+  - account: Equity
+    weight: 1
+- canonical_account: EquityAttributableToParent
+  components:
+  - account: EquityAttributableToEquityOwnersOfParentEntity
+    weight: 1
+- canonical_account: CashAndCashEquivalents
+  components:
+  - account: CashAndCashEquivalents
+    weight: 1
+- canonical_account: EarningAssets
+  components:
+  - account: DepositsToClearingAndSettlementGuaranteeInstitution
+    weight: 1
+  - account: ReceivablesFromClearingAndSettlementGuaranteeInstitution
+    weight: 1
+  - account: ReceivablesFromCustomersThirdParties
+    weight: 1
+  - account: ReceivablesFromCustomersRelatedParties
+    weight: 1
+  - account: ReceivablesFromBrokers
+    weight: 1
+  - account: MarginReceivables
+    weight: 1
+  - account: ReceivablesFromInvestmentManager
+    weight: 1
+  - account: ReceivablesFromUnderwritingAndAdvisoryServices
+    weight: 1
+  - account: MarketableSecurities
+    weight: 1
+  - account: SecuritiesPurchasedUnderAgreementToResale
+    weight: 1
+  - account: DerivativeFinancialAssets
+    weight: 1
+  - account: InvestmentProperties
+    weight: 1
+- canonical_account: TotalBorrowingsAndDebtIssued
+  components:
+  - account: NotesPayable
+    weight: 1
+  - account: MediumTermNotes
+    weight: 1
+  - account: BondsPayable
+    weight: 1
+  - account: SubordinatedBonds
+    weight: 1
+  - account: BankLoans
+    weight: 1
+  - account: Non-BankFinancialInstitutionsLoan
+    weight: 1
+  - account: SubordinatedLoans
+    weight: 1
+  - account: Sukuk
+    weight: 1

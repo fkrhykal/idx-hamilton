@@ -1,0 +1,193 @@
+$schema: ./schema.extension.yaml
+entry_point: general
+statement: income_statement
+variant: by_function_before_tax
+chart_of_accounts:
+- account: ComprehensiveIncome
+  code: CI
+  is_total: true
+  children:
+  - account: ProfitLoss
+    code: PL
+    is_total: true
+    children:
+    - account: ProfitLossFromDiscontinuedOperations
+      code: PL.DISC
+    - account: ProfitLossFromContinuingOperations
+      code: PL.CONT
+      is_total: true
+      children:
+      - account: ProfitLossBeforeIncomeTax
+        code: PBT
+        is_total: true
+        children:
+        - account: GrossProfit
+          code: GP
+          is_total: true
+          children:
+          - account: SalesAndRevenue
+            code: REV
+          - account: CostOfSalesAndRevenue
+            code: COS
+            weight: -1
+        - account: SellingExpenses
+          code: EXP.SELL
+          weight: -1
+        - account: FinalTaxExpenses
+          code: TAX.FINAL
+          weight: -1
+        - account: GeneralAndAdministrativeExpenses
+          code: EXP.GA
+          weight: -1
+        - account: FinanceIncome
+          code: INC.FIN
+        - account: DividendsIncome
+          code: INC.DIV
+        - account: InterestIncome
+          code: INC.INT
+        - account: InvestmentIncome
+          code: INC.INV
+        - account: InterestAndFinanceCosts
+          code: EXP.FIN
+          weight: -1
+          deprecated_tags:
+          - tag: FinanceCosts
+        - account: GainsLossesOnChangesInForeignExchangeRates
+          code: FX
+        - account: ShareOfProfitLossOfAssociatesAccountedForUsingEquityMethod
+          code: EQ.ASSOC
+        - account: ShareOfProfitLossOfJointVenturesAccountedForUsingEquityMethod
+          code: EQ.JV
+        - account: GainsLossesOnChangesInFairValueOfMarketableSecurities
+          code: MKT.FV
+        - account: RealisedGainsLossesOnTradingOfMarketableSecurities
+          code: MKT.REAL
+        - account: GainsLossesOnDerivativeFinancialInstruments
+          code: DERIV
+        - account: OtherIncome
+          code: INC.OTH
+        - account: OtherExpenses
+          code: EXP.OTH
+          weight: -1
+        - account: OtherGainsLosses
+          code: GL.OTH
+      - account: TaxBenefitExpenses
+        code: TAX.BENEFIT
+  - account: OtherComprehensiveIncomeAfterTax
+    code: OCI
+    is_total: true
+    children:
+    - account: OtherComprehensiveIncomeBeforeTax
+      code: OCI.BT
+      is_total: true
+      children:
+      - account: OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossBeforeTax
+        code: OCI.NO_RECLASS
+        is_total: true
+        children:
+        - account: OtherComprehensiveIncomeForGainsLossesOnRevaluationOfPropertyPlantAndEquipmentBeforeTax
+          code: OCI.NO_RECLASS.PPE
+        - account: OtherComprehensiveIncomeForRemeasurementOfDefinedBenefitObligationBeforeTax
+          code: OCI.NO_RECLASS.DBO
+        - account: OtherAdjustmentsToOtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossBeforeTax
+          code: OCI.NO_RECLASS.OTH
+      - account: OtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossBeforeTax
+        code: OCI.RECLASS
+        is_total: true
+        children:
+        - account: GainsLossesOnExchangeDifferencesOnTranslationBeforeTax
+          code: OCI.RECLASS.FX
+        - account: ReclassificationAdjustmentsOnExchangeDifferencesOnTranslationBeforeTax
+          code: OCI.RECLASS.ADJ_FX
+          weight: -1
+        - account: UnrealisedGainsLossesOnChangesInFairValueThroughOtherComprehensiveIncomeFinancialAssetsBeforeTax
+          code: OCI.RECLASS.FVOCI
+          deprecated_tags:
+          - tag: UnrealisedGainsLossesOnChangesInFairValueOfAvailableForSaleFinancialAssetsBeforeTax
+        - account: ReclassificationAdjustmentsOnFairValueThroughOtherComprehensiveIncomeFinancialAssetsBeforeTax
+          code: OCI.RECLASS.ADJ_FVOCI
+          weight: -1
+          deprecated_tags:
+          - tag: ReclassificationAdjustmentsOnAvailableForSaleFinancialAssetsBeforeTax
+        - account: GainsLossesOnCashFlowHedgesBeforeTax
+          code: OCI.RECLASS.CF_HEDGE
+        - account: ReclassificationAdjustmentsOnCashFlowHedgesBeforeTax
+          code: OCI.RECLASS.ADJ_CF_HEDGE
+          weight: -1
+        - account: CarryingAmountOfNonFinancialAssetLiabilityWhoseAcquisitionOrIncurrenceWasHedgedOnHighlyProbableForecastTransactionAdjustedFromEquityBeforeTax
+          code: OCI.RECLASS.HEDGE_ADJ_EQ
+        - account: GainsLossesOnHedgesOfNetInvestmentsInForeignOperationsBeforeTax
+          code: OCI.RECLASS.NET_INV_HEDGE
+        - account: ReclassificationAdjustmentsOnHedgesOfNetInvestmentsInForeignOperationsBeforeTax
+          code: OCI.RECLASS.ADJ_NET_INV
+          weight: -1
+        - account: ShareOfOtherComprehensiveIncomeOfAssociatesAccountedForUsingEquityMethodBeforeTax
+          code: OCI.RECLASS.EQ_ASSOC
+        - account: ShareOfOtherComprehensiveIncomeOfJointVenturesAccountedForUsingEquityMethodBeforeTax
+          code: OCI.RECLASS.EQ_JV
+        - account: OtherAdjustmentsToOtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossBeforeTax
+          code: OCI.RECLASS.OTH
+    - account: TaxOnOtherComprehensiveIncome
+      code: OCI.TAX
+      weight: -1
+- account: ProfitLoss
+  code: PL.ATTRIB
+  is_total: true
+  children:
+  - account: ProfitLossAttributableToParentEntity
+    code: PL.ATTRIB.PE
+  - account: ProfitLossAttributableToNonControllingInterests
+    code: PL.ATTRIB.NCI
+- account: ComprehensiveIncome
+  code: CI.ATTRIB
+  is_total: true
+  children:
+  - account: ComprehensiveIncomeAttributableToParentEntity
+    code: CI.ATTRIB.PE
+  - account: ComprehensiveIncomeAttributableToNonControllingInterests
+    code: CI.ATTRIB.NCI
+- account: BasicEarningsLossPerShareFromContinuingOperations
+  code: EPS.BASIC.CONT
+- account: BasicEarningsLossPerShareFromDiscontinuedOperations
+  code: EPS.BASIC.DISC
+- account: DilutedEarningsLossPerShareFromContinuingOperations
+  code: EPS.DILUTED.CONT
+- account: DilutedEarningsLossPerShareFromDiscontinuedOperations
+  code: EPS.DILUTED.DISC
+assertions:
+- assertion_id: comprehensive_income_operations_identity
+  description: ComprehensiveIncome - ProfitLoss - OtherComprehensiveIncomeAfterTax
+    = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ProfitLoss
+    weight: -1
+  - account: OtherComprehensiveIncomeAfterTax
+    weight: -1
+- assertion_id: profit_loss_attribution_identity
+  description: ProfitLoss - ProfitLossAttributableToParentEntity - ProfitLossAttributableToNonControllingInterests
+    = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ProfitLoss
+    weight: 1
+  - account: ProfitLossAttributableToParentEntity
+    weight: -1
+  - account: ProfitLossAttributableToNonControllingInterests
+    weight: -1
+- assertion_id: comprehensive_income_attribution_identity
+  description: ComprehensiveIncome - ComprehensiveIncomeAttributableToParentEntity
+    - ComprehensiveIncomeAttributableToNonControllingInterests = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ComprehensiveIncomeAttributableToParentEntity
+    weight: -1
+  - account: ComprehensiveIncomeAttributableToNonControllingInterests
+    weight: -1

@@ -1,0 +1,144 @@
+# yaml-language-server: $schema=http://json-schema.org/draft-07/schema#
+$schema: "http://json-schema.org/draft-07/schema#"
+title: "ChartOfAccountSpesifications"
+description: "JSON Schema specification for financial statement account hierarchy trees and reporting metadata."
+type: object
+required:
+  - statement
+  - variant
+  - entry_point
+
+oneOf:
+  - required: [chart_of_accounts]
+
+properties:
+  $schema:
+    type: string
+    description: "Relative path or URI referencing this schema definition."
+
+  statement:
+    type: string
+    description: "Financial statement category."
+    enum:
+      - balance_statement
+      - income_statement
+      - cashflow_statement
+
+  variant:
+    type: string
+    description: "Reporting presentation variant."
+    enum:
+      - liquidity
+      - current_and_non_current
+      - by_function_after_tax
+      - by_function_before_tax
+      - by_nature_after_tax
+      - by_nature_before_tax
+      - direct_method
+      - indirect_method
+
+  entry_point:
+    type: string
+    description: "IDX capital market industry taxonomy sector."
+    enum:
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - securities
+      - insurance
+      - financing
+      - collective_investment_contract
+
+  chart_of_accounts:
+    type: array
+    description: "Ordered collection of top-level root account nodes (Chart of Accounts)."
+    items:
+      $ref: "#/definitions/AccountNode"
+
+  assertions:
+    type: array
+    description: "Optional collection of validation assertions for the statement variant."
+    items:
+      $ref: "#/definitions/Assertion"
+
+definitions:
+  AccountNode:
+    type: object
+    properties:
+      account:
+        type: string
+        description: "Canonical account element name matching the IDX iXBRL taxonomy tag."
+
+      abstract:
+        type: string
+        description: "Conceptual grouping name for virtual/non-taxonomical category."
+
+      code:
+        type: string
+        description: "Deterministic hierarchical account code (e.g., A, A.01, CA.010)."
+
+      is_total:
+        type: boolean
+        description: "Indicates whether this account represents a major aggregate or balance identity."
+        default: false
+
+      weight:
+        type: integer
+        enum: [1, 0, -1]
+        default: 1
+        description: "Calculation weight multiplier for aggregation: 1 for addition, -1 for contra-accounts."
+
+      deprecated_tags:
+        type: array
+        items:
+          type: object
+          properties:
+            tag:
+              type: string
+
+      children:
+        type: array
+        description: "Nested leaf or subtotal child accounts aggregating into this node."
+        items:
+          $ref: "#/definitions/AccountNode"
+
+  Assertion:
+    type: object
+    required:
+      - assertion_id
+      - terms
+    properties:
+      assertion_id:
+        type: string
+        description: "Unique identifier for the assertion."
+      description:
+        type: string
+        description: "Human-readable description of the assertion."
+      terms:
+        type: array
+        description: "Weighted accounts in the identity equation."
+        items:
+          $ref: "#/definitions/AssertionTerm"
+      target:
+        type: number
+        default: 0.0
+        description: "Expected scalar result of the weighted sum (default: 0.0)."
+      tolerance:
+        type: number
+        default: 1.0
+        description: "Numerical absolute tolerance for floating point rounding."
+
+  AssertionTerm:
+    type: object
+    required:
+      - account
+      - weight
+    properties:
+      account:
+        type: string
+        description: "Canonical account element name matching the IDX iXBRL taxonomy tag."
+      weight:
+        type: integer
+        enum: [1, -1]
+        description: "Calculation multiplier: 1 for positive terms, -1 for negative terms."

@@ -1,0 +1,67 @@
+$schema: ./canonical.extension.yaml
+entry_point: collective_investment_contract
+statement: income_statement
+variant: by_nature_before_tax
+mappings:
+- canonical_account: ProfitBeforeTax
+  components:
+  - account: ProfitLossBeforeIncomeTax
+    weight: 1
+- canonical_account: IncomeTaxExpense
+  components:
+  - account: TaxBenefitExpenses
+    weight: 1
+- canonical_account: NetIncome
+  components:
+  - account: ProfitLoss
+    weight: 1
+- canonical_account: NetIncomeAttributableToParent
+  components:
+  - account: ProfitLoss
+    weight: 1
+- canonical_account: NonInterestOperatingExpenses
+  components:
+  - account: InvestmentManagementExpenses
+    weight: 1
+  - account: CustodianExpenses
+    weight: 1
+  - account: OtherExpenses
+    weight: 1
+- canonical_account: FinancialOperatingRevenue
+  components:
+  - &id001
+    account: InterestIncome
+    weight: 1
+  - &id002
+    account: DividendsIncome
+    weight: 1
+  - &id003
+    account: GainsLossesFromSecuritiesPortfolio
+    weight: 1
+  - &id004
+    account: EBAInterest
+    weight: 1
+  - &id005
+    account: SupportingServices
+    weight: 1
+  - &id006
+    account: OtherIncome
+    weight: 1
+- canonical_account: DirectFinancialAndUnderwritingCosts
+  components:
+  - account: InvestmentManagementExpenses
+    weight: 1
+  - account: CustodianExpenses
+    weight: 1
+- canonical_account: NetFinancialOperatingIncome
+  components:
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - account: InvestmentManagementExpenses
+    weight: -1
+  - account: CustodianExpenses
+    weight: -1

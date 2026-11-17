@@ -1,0 +1,737 @@
+canonical_accounts:
+  # ===========================================================================
+  # 1. Universal Canonical Accounts (12 Accounts: All 8 Entry Points)
+  # ===========================================================================
+  - canonical_account: TotalAssets
+    code: BS.A
+    scope: universal
+    statement: balance_statement
+    description: "Total aset konsolidasian (Assets)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - current_and_non_current
+      - liquidity
+
+  - canonical_account: TotalLiabilities
+    code: BS.L
+    scope: universal
+    statement: balance_statement
+    description: "Total liabilitas konsolidasian (Liabilities)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - current_and_non_current
+      - liquidity
+
+  - canonical_account: TotalEquity
+    code: BS.E
+    scope: universal
+    statement: balance_statement
+    description: "Total ekuitas konsolidasian (Equity atau NetAssets pada KIK)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - current_and_non_current
+      - liquidity
+
+  - canonical_account: EquityAttributableToParent
+    code: BS.E.PE
+    scope: universal
+    statement: balance_statement
+    description: "Ekuitas yang dapat diatribusikan kepada pemilik entitas induk (EquityAttributableToEquityOwnersOfParentEntity atau NetAssets pada KIK)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - current_and_non_current
+      - liquidity
+
+  - canonical_account: CashAndCashEquivalents
+    code: BS.CASH
+    scope: universal
+    statement: balance_statement
+    description: "Kas dan setara kas (termasuk kas dan giro pada Bank Indonesia serta bank lain pada institusi keuangan)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - current_and_non_current
+      - liquidity
+
+  - canonical_account: ProfitBeforeTax
+    code: IS.PBT
+    scope: universal
+    statement: income_statement
+    description: "Laba (rugi) sebelum pajak penghasilan (ProfitLossBeforeIncomeTax)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - by_function_after_tax
+      - by_function_before_tax
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  - canonical_account: IncomeTaxExpense
+    code: IS.TAX
+    scope: universal
+    statement: income_statement
+    description: "Manfaat (beban) pajak penghasilan (TaxBenefitExpenses)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - by_function_after_tax
+      - by_function_before_tax
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  - canonical_account: NetIncome
+    code: IS.PL
+    scope: universal
+    statement: income_statement
+    description: "Laba (rugi) bersih tahun/periode berjalan (ProfitLoss)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - by_function_after_tax
+      - by_function_before_tax
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  - canonical_account: NetIncomeAttributableToParent
+    code: IS.PL.PE
+    scope: universal
+    statement: income_statement
+    description: "Laba (rugi) bersih yang dapat diatribusikan ke entitas induk (ProfitLossAttributableToParentEntity atau ProfitLoss pada KIK)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - by_function_after_tax
+      - by_function_before_tax
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  - canonical_account: OperatingCashFlow
+    code: CF.OPS
+    scope: universal
+    statement: cashflow_statement
+    description: "Arus kas bersih dari aktivitas operasi (NetCashFlowsReceivedFromUsedInOperatingActivities)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - direct_method
+      - indirect_method
+
+  - canonical_account: InvestingCashFlow
+    code: CF.INV
+    scope: universal
+    statement: cashflow_statement
+    description: "Arus kas bersih dari aktivitas investasi (NetCashFlowsReceivedFromUsedInInvestingActivities)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - direct_method
+      - indirect_method
+
+  - canonical_account: FinancingCashFlow
+    code: CF.FIN
+    scope: universal
+    statement: cashflow_statement
+    description: "Arus kas bersih dari aktivitas pendanaan (NetCashFlowsReceivedFromUsedInFinancingActivities)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - direct_method
+      - indirect_method
+
+  # ===========================================================================
+  # 2. Real-Sector Canonical Accounts (16 Accounts: general, property, infrastructure)
+  # ===========================================================================
+  - canonical_account: CurrentAssets
+    code: BS.CA
+    scope: real_sector
+    statement: balance_statement
+    description: "Total aset lancar (CurrentAssets)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - current_and_non_current
+
+  - canonical_account: NonCurrentAssets
+    code: BS.NCA
+    scope: real_sector
+    statement: balance_statement
+    description: "Total aset tidak lancar (NonCurrentAssets)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - current_and_non_current
+
+  - canonical_account: CurrentLiabilities
+    code: BS.CL
+    scope: real_sector
+    statement: balance_statement
+    description: "Total liabilitas jangka pendek (CurrentLiabilities)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - current_and_non_current
+
+  - canonical_account: NonCurrentLiabilities
+    code: BS.NCL
+    scope: real_sector
+    statement: balance_statement
+    description: "Total liabilitas jangka panjang (NonCurrentLiabilities)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - current_and_non_current
+
+  - canonical_account: TradeReceivables
+    code: BS.AR
+    scope: real_sector
+    statement: balance_statement
+    description: "Piutang usaha pihak ketiga dan pihak berelasi."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - current_and_non_current
+      - liquidity
+
+  - canonical_account: Inventories
+    code: BS.INV
+    scope: real_sector
+    statement: balance_statement
+    description: "Persediaan lancar (termasuk aset real estat lancar dan persediaan ternak lancar)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - current_and_non_current
+      - liquidity
+
+  - canonical_account: PropertyPlantAndEquipment
+    code: BS.PPE
+    scope: real_sector
+    statement: balance_statement
+    description: "Aset tetap bersih (PropertyPlantAndEquipment / PropertyAndEquipment)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - current_and_non_current
+      - liquidity
+
+  - canonical_account: TradePayables
+    code: BS.AP
+    scope: real_sector
+    statement: balance_statement
+    description: "Utang usaha pihak ketiga dan pihak berelasi."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - current_and_non_current
+      - liquidity
+
+  - canonical_account: ShortTermDebt
+    code: BS.DEBT.ST
+    scope: real_sector
+    statement: balance_statement
+    description: "Pinjaman bank jangka pendek dan bagian lancar atas pinjaman/obligasi/sukuk/sewa pembiayaan jangka panjang."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - current_and_non_current
+      - liquidity
+
+  - canonical_account: LongTermDebt
+    code: BS.DEBT.LT
+    scope: real_sector
+    statement: balance_statement
+    description: "Pinjaman jangka panjang setelah dikurangi bagian jatuh tempo dalam satu tahun (bank, obligasi, sukuk, MTN, sewa pembiayaan)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - current_and_non_current
+      - liquidity
+
+  - canonical_account: Revenue
+    code: IS.REV
+    scope: real_sector
+    statement: income_statement
+    description: "Penjualan dan pendapatan usaha sektor riil (SalesAndRevenue)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - by_function_after_tax
+      - by_function_before_tax
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  - canonical_account: CostOfSales
+    code: IS.COS
+    scope: real_sector
+    statement: income_statement
+    description: "Beban pokok penjualan dan pendapatan (CostOfSalesAndRevenue)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - by_function_after_tax
+      - by_function_before_tax
+
+  - canonical_account: GrossProfit
+    code: IS.GP
+    scope: real_sector
+    statement: income_statement
+    description: "Laba kotor penjualan barang/jasa sektor riil (GrossProfit)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - by_function_after_tax
+      - by_function_before_tax
+
+  - canonical_account: OperatingProfit
+    code: IS.EBIT
+    scope: real_sector
+    statement: income_statement
+    description: "Laba usaha / operasi sebelum beban dan pendapatan keuangan (EBIT)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - by_function_after_tax
+      - by_function_before_tax
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  - canonical_account: FinanceCosts
+    code: IS.FIN.COST
+    scope: real_sector
+    statement: income_statement
+    description: "Beban bunga dan keuangan non-operasional atas utang pendanaan sektor riil (InterestAndFinanceCosts / FinanceCosts)."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - by_function_after_tax
+      - by_function_before_tax
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  - canonical_account: CapitalExpenditure
+    code: CF.CAPEX
+    scope: real_sector
+    statement: cashflow_statement
+    description: "Pengeluaran kas untuk perolehan aset tetap dan aset operasional jangka panjang pada aktivitas investasi sektor riil."
+    applicable_entry_points:
+      - general
+      - property
+      - infrastructure
+    applicable_variants:
+      - direct_method
+      - indirect_method
+
+  # ===========================================================================
+  # 3. Financial-Sector Common Canonical Accounts (6 Accounts: All 5 Financial Entry Points)
+  # ===========================================================================
+  - canonical_account: EarningAssets
+    code: BS.FIN.EA
+    scope: financial_sector
+    statement: balance_statement
+    description: "Total aset produktif dan portofolio investasi keuangan bruto (penempatan, efek-efek, reverse repo, kredit/pembiayaan, piutang efek/premi, dan investasi)."
+    applicable_entry_points:
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - liquidity
+
+  - canonical_account: TotalBorrowingsAndDebtIssued
+    code: BS.FIN.BORR
+    scope: financial_sector
+    statement: balance_statement
+    description: "Total pinjaman diterima, fasilitas bank/LKBB, repo, surat berharga diterbitkan (obligasi, sukuk, MTN, wesel bayar), dan pinjaman subordinasi pada institusi keuangan."
+    applicable_entry_points:
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - liquidity
+
+  - canonical_account: FinancialOperatingRevenue
+    code: IS.FIN.REV
+    scope: financial_sector
+    statement: income_statement
+    description: "Total pendapatan operasional bruto aktivitas utama lembaga keuangan (pendapatan bunga/syariah/pembiayaan, premi asuransi neto, fee/komisi sekuritas, dan hasil investasi)."
+    applicable_entry_points:
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - by_function_after_tax
+      - by_function_before_tax
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  - canonical_account: DirectFinancialAndUnderwritingCosts
+    code: IS.FIN.DC
+    scope: financial_sector
+    statement: income_statement
+    description: "Beban langsung pendanaan, intermediasi, dan pertanggungan lembaga keuangan (beban bunga/bagi hasil, beban klaim & underwriting asuransi, beban pendanaan/manajer investasi/kustodian)."
+    applicable_entry_points:
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - by_function_after_tax
+      - by_function_before_tax
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  - canonical_account: NetFinancialOperatingIncome
+    code: IS.FIN.NFI
+    scope: financial_sector
+    statement: income_statement
+    description: "Pendapatan operasional keuangan bersih setelah dikurangi beban langsung pendanaan/bunga/klaim (FinancialOperatingRevenue - DirectFinancialAndUnderwritingCosts)."
+    applicable_entry_points:
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - by_function_after_tax
+      - by_function_before_tax
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  - canonical_account: NonInterestOperatingExpenses
+    code: IS.FIN.OPEX
+    scope: financial_sector
+    statement: income_statement
+    description: "Beban operasional overhead lembaga keuangan (umum, administrasi, personalia, dan pemasaran di luar beban bunga/pendanaan dan beban klaim/pencadangan)."
+    applicable_entry_points:
+      - financial_and_sharia
+      - financing
+      - insurance
+      - securities
+      - collective_investment_contract
+    applicable_variants:
+      - by_function_after_tax
+      - by_function_before_tax
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  # ===========================================================================
+  # 4a. Financial Sub-Sector: Banking & Multifinance (10 Accounts: financial_and_sharia, financing)
+  # ===========================================================================
+  - canonical_account: GrossLoansAndFinancing
+    code: BS.FIN.LOAN
+    scope: financial_banking_and_financing
+    statement: balance_statement
+    description: "Total kredit yang diberikan dan piutang/pembiayaan syariah/multifinance bruto (sebelum dikurangi CKPN)."
+    applicable_entry_points:
+      - financial_and_sharia
+      - financing
+    applicable_variants:
+      - liquidity
+
+  - canonical_account: AllowanceForImpairmentLosses
+    code: BS.FIN.CKPN
+    scope: financial_banking_and_financing
+    statement: balance_statement
+    description: "Akumulasi cadangan kerugian penurunan nilai (CKPN) atas kredit dan piutang pembiayaan di neraca."
+    applicable_entry_points:
+      - financial_and_sharia
+      - financing
+    applicable_variants:
+      - liquidity
+
+  - canonical_account: CustomerDeposits
+    code: BS.FIN.DPK
+    scope: financial_banking_and_financing
+    statement: balance_statement
+    description: "Simpanan nasabah di dalam liabilitas (giro, tabungan, deposito berjangka konvensional dan wadiah/wakalah)."
+    applicable_entry_points:
+      - financial_and_sharia
+    applicable_variants:
+      - liquidity
+
+  - canonical_account: TemporarySyirkahFunds
+    code: BS.FIN.TSF
+    scope: financial_banking_and_financing
+    statement: balance_statement
+    description: "Dana Syirkah Temporer (TemporarySyirkahFunds)."
+    applicable_entry_points:
+      - financial_and_sharia
+    applicable_variants:
+      - liquidity
+
+  - canonical_account: DemandAndSavingsDeposits
+    code: BS.FIN.CASA
+    scope: financial_banking_and_financing
+    statement: balance_statement
+    description: "Total dana murah (CASA): penjumlahan giro dan tabungan (konvensional, wadiah, dan mudharabah)."
+    applicable_entry_points:
+      - financial_and_sharia
+    applicable_variants:
+      - liquidity
+
+  - canonical_account: InterestAndShariaIncome
+    code: IS.FIN.II
+    scope: financial_banking_and_financing
+    statement: income_statement
+    description: "Pendapatan bunga, pendapatan pengelolaan dana sebagai mudharib, dan pendapatan pembiayaan konsumen/sewa/anjak piutang."
+    applicable_entry_points:
+      - financial_and_sharia
+      - financing
+    applicable_variants:
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  - canonical_account: InterestAndShariaExpenses
+    code: IS.FIN.IE
+    scope: financial_banking_and_financing
+    statement: income_statement
+    description: "Beban bunga, beban pembiayaan, dan hak pihak ketiga atas bagi hasil dana syirkah temporer."
+    applicable_entry_points:
+      - financial_and_sharia
+      - financing
+    applicable_variants:
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  - canonical_account: NetInterestAndShariaIncome
+    code: IS.FIN.NII
+    scope: financial_banking_and_financing
+    statement: income_statement
+    description: "Pendapatan bunga dan pembiayaan syariah bersih (InterestAndShariaIncome - InterestAndShariaExpenses)."
+    applicable_entry_points:
+      - financial_and_sharia
+      - financing
+    applicable_variants:
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  - canonical_account: NonInterestOperatingIncome
+    code: IS.FIN.NOI
+    scope: financial_banking_and_financing
+    statement: income_statement
+    description: "Pendapatan operasional selain bunga (fee-based income, provisi, komisi, keuntungan transaksi surat berharga dan valas)."
+    applicable_entry_points:
+      - financial_and_sharia
+      - financing
+    applicable_variants:
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  - canonical_account: ImpairmentProvisionExpenses
+    code: IS.FIN.PROV
+    scope: financial_banking_and_financing
+    statement: income_statement
+    description: "Beban pembentukan penyisihan kerugian penurunan nilai (CKPN) atas aset produktif/keuangan periode berjalan."
+    applicable_entry_points:
+      - financial_and_sharia
+      - financing
+    applicable_variants:
+      - by_nature_after_tax
+      - by_nature_before_tax
+
+  # ===========================================================================
+  # 4b. Financial Sub-Sector: Insurance (8 Accounts: insurance)
+  # ===========================================================================
+  - canonical_account: TotalInvestmentAssets
+    code: BS.INS.INV
+    scope: financial_insurance
+    statement: balance_statement
+    description: "Total portofolio aset investasi perusahaan asuransi (deposito, efek-efek, reksa dana, saham, properti investasi)."
+    applicable_entry_points:
+      - insurance
+    applicable_variants:
+      - liquidity
+
+  - canonical_account: InsuranceContractLiabilities
+    code: BS.INS.LIAB
+    scope: financial_insurance
+    statement: balance_statement
+    description: "Total liabilitas kontrak asuransi (cadangan teknis: premi belum merupakan pendapatan, manfaat polis masa depan, estimasi klaim)."
+    applicable_entry_points:
+      - insurance
+    applicable_variants:
+      - liquidity
+
+  - canonical_account: GrossPremiumIncome
+    code: IS.INS.GWP
+    scope: financial_insurance
+    statement: income_statement
+    description: "Pendapatan premi asuransi bruto (RevenueFromInsurancePremiums)."
+    applicable_entry_points:
+      - insurance
+    applicable_variants:
+      - by_nature_after_tax
+
+  - canonical_account: NetPremiumIncome
+    code: IS.INS.NWP
+    scope: financial_insurance
+    statement: income_statement
+    description: "Pendapatan premi bersih setelah dikurangi premi reasuransi dan retrosesi."
+    applicable_entry_points:
+      - insurance
+    applicable_variants:
+      - by_nature_after_tax
+
+  - canonical_account: NetEarnedPremiums
+    code: IS.INS.NEP
+    scope: financial_insurance
+    statement: income_statement
+    description: "Pendapatan premi bersih yang telah menjadi hak periode berjalan (setelah penyesuaian kenaikan/penurunan premi belum merupakan pendapatan)."
+    applicable_entry_points:
+      - insurance
+    applicable_variants:
+      - by_nature_after_tax
+
+  - canonical_account: NetClaimExpenses
+    code: IS.INS.CLAIM
+    scope: financial_insurance
+    statement: income_statement
+    description: "Beban klaim bersih setelah dikurangi klaim reasuransi/retrosesi dan ditambah kenaikan kewajiban manfaat polis/estimasi klaim."
+    applicable_entry_points:
+      - insurance
+    applicable_variants:
+      - by_nature_after_tax
+
+  - canonical_account: UnderwritingAndAcquisitionExpenses
+    code: IS.INS.UWEX
+    scope: financial_insurance
+    statement: income_statement
+    description: "Beban komisi bersih, biaya akuisisi kontrak asuransi, ujrah dibayar, dan beban underwriting lainnya."
+    applicable_entry_points:
+      - insurance
+    applicable_variants:
+      - by_nature_after_tax
+
+  - canonical_account: InvestmentIncome
+    code: IS.INS.INV
+    scope: financial_insurance
+    statement: income_statement
+    description: "Pendapatan investasi bersih serta keuntungan/kerugian realisasi dan perubahan nilai wajar efek investasi asuransi."
+    applicable_entry_points:
+      - insurance
+    applicable_variants:
+      - by_nature_after_tax

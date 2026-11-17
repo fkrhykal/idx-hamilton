@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "string",
+  "enum": [
+    "ComprehensiveIncome",
+    "CustodianExpenses",
+    "DividendsIncome",
+    "EBAInterest",
+    "GainsLossesFromSecuritiesPortfolio",
+    "InterestIncome",
+    "InvestmentManagementExpenses",
+    "OtherComprehensiveIncomeAfterTax",
+    "OtherComprehensiveIncomeBeforeTax",
+    "OtherExpenses",
+    "OtherIncome",
+    "ProfitLoss",
+    "ProfitLossBeforeIncomeTax",
+    "SupportingServices",
+    "TaxBenefitExpenses",
+    "TaxOnOtherComprehensiveIncome"
+  ]
+}

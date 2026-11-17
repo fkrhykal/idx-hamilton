@@ -28,14 +28,6 @@ class MetadataItem(Model):
     property: str
     value: str
 
-    class c:
-        emiten_code: pl.Expr
-        year: pl.Expr
-        period: pl.Expr
-        context: pl.Expr
-        property: pl.Expr
-        value: pl.Expr
-
 
 class DeiMetadata(Model):
     emiten_code: str
@@ -49,41 +41,18 @@ class DeiMetadata(Model):
     CurrentPeriodStartDate: str
     CurrentPeriodEndDate: str
 
-    Sector: str | None = None
-    Subsector: str | None = None
-    Industry: str | None = None
-    Subindustry: str | None = None
+    Sector: str
+    Subsector: str
+
     TypeOfAuditorsOpinion: str | None = None
     CurrentYearAuditor: str | None = None
 
-    class c:
-        emiten_code: pl.Expr
-        year: pl.Expr
-        period: pl.Expr
-
-        EntityName: pl.Expr
-        EntityCode: pl.Expr
-        DescriptionOfPresentationCurrency: pl.Expr
-        TypeOfReportOnFinancialStatements: pl.Expr
-        CurrentPeriodStartDate: pl.Expr
-        CurrentPeriodEndDate: pl.Expr
-
-        Sector: pl.Expr
-        Subsector: pl.Expr
-        Industry: pl.Expr
-        Subindustry: pl.Expr
-        TypeOfAuditorsOpinion: pl.Expr
-        CurrentYearAuditor: pl.Expr
-
 
 def _get_dei_bytes(z: zipfile.ZipFile) -> bytes | None:
-    if "1000000.html" in z.NameToInfo:
-        return z.read("1000000.html")
-    if "inlineXBRL/1000000.html" in z.NameToInfo:
-        return z.read("inlineXBRL/1000000.html")
-    for name in z.namelist():
-        if name.endswith("1000000.html"):
-            return z.read(name)
+    if (name := "1000000.html") in set(z.namelist()):
+        return z.read(name)
+    if (name := "inlineXBRL/1000000.html") in z.NameToInfo:
+        return z.read(name)
     return None
 
 
@@ -95,7 +64,6 @@ def _parse_dei_filling(filling: IxbrlFilling) -> list[MetadataItem]:
             if not raw_bytes:
                 log.warning("[DEI_NOT_FOUND] %s", filling.zip_path)
                 return records
-
         normalized = (
             raw_bytes.replace(b"ix:nonnumeric", b"ix:nonNumeric")
             .replace(b"ix:nonfraction", b"ix:nonFraction")
@@ -181,25 +149,23 @@ def dei_metadata(
         return DeiMetadata.DataFrame()
 
     key_properties = [
-        "EntityName",
-        "EntityCode",
-        "Sector",
-        "Subsector",
-        "Industry",
-        "Subindustry",
-        "DescriptionOfPresentationCurrency",
-        "TypeOfReportOnFinancialStatements",
-        "TypeOfAuditorsOpinion",
-        "CurrentYearAuditor",
-        "CurrentPeriodStartDate",
-        "CurrentPeriodEndDate",
+        DeiMetadata.n.EntityName,
+        DeiMetadata.n.EntityCode,
+        DeiMetadata.n.Sector,
+        DeiMetadata.n.Subsector,
+        DeiMetadata.n.DescriptionOfPresentationCurrency,
+        DeiMetadata.n.TypeOfReportOnFinancialStatements,
+        DeiMetadata.n.TypeOfAuditorsOpinion,
+        DeiMetadata.n.CurrentYearAuditor,
+        DeiMetadata.n.CurrentPeriodStartDate,
+        DeiMetadata.n.CurrentPeriodEndDate,
     ]
 
     filtered = staged_dei_items.filter(pl.col("property").is_in(key_properties))
 
     pivoted = filtered.pivot(
         on="property",
-        index=["emiten_code", "year", "period"],
+        index=[DeiMetadata.n.emiten_code, DeiMetadata.n.year, DeiMetadata.n.period],
         values="value",
         aggregate_function="first",
     )

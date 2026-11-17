@@ -1,0 +1,539 @@
+$schema: ./schema.extension.yaml
+entry_point: general
+statement: cashflow_statement
+variant: indirect_method
+chart_of_accounts:
+- account: NetIncreaseDecreaseInCashAndCashEquivalents
+  code: CF.NET
+  is_total: true
+  children:
+  - account: NetCashFlowsReceivedFromUsedInOperatingActivities
+    code: CF.OPS
+    is_total: true
+    children:
+    - account: ProfitLoss
+      code: CF.OPS.001
+    - account: DepreciationAndAmortisationExpenses
+      code: CF.OPS.002
+    - account: DecreaseIncreaseFromNotesReceivable
+      code: CF.OPS.003
+    - account: DecreaseIncreaseFromShortTermInvestments
+      code: CF.OPS.004
+    - account: DecreaseIncreaseFromCurrentRestrictedFunds
+      code: CF.OPS.005
+    - account: DecreaseIncreaseFromCurrentFinancialAssetsAtFairValueThroughProfitOrLoss
+      code: CF.OPS.006
+    - account: DecreaseIncreaseFromCurrentFinancialAssetsAmortizedCostInvestments
+      code: CF.OPS.ADJ.05C
+    - account: DecreaseIncreaseFromCurrentFinancialAssetsFairValueThroughOtherComprehensiveIncome
+      code: CF.OPS.ADJ.05B
+    - account: DecreaseIncreaseFromOtherCurrentFinancialAssets
+      code: CF.OPS.009
+    - account: DecreaseIncreaseFromCurrentDerivativeFinancialAssets
+      code: CF.OPS.010
+    - account: DecreaseIncreaseFromTradeReceivablesThirdParties
+      code: CF.OPS.011
+    - account: DecreaseIncreaseFromTradeReceivablesRelatedParties
+      code: CF.OPS.012
+    - account: DecreaseIncreaseFromCurrentFinanceLeaseReceivables
+      code: CF.OPS.013
+    - account: DecreaseIncreaseFromRetentionReceivablesThirdParties
+      code: CF.OPS.014
+    - account: DecreaseIncreaseFromRetentionReceivablesRelatedParties
+      code: CF.OPS.015
+    - account: DecreaseIncreaseFromUnbilledReceivablesThirdParties
+      code: CF.OPS.016
+    - account: DecreaseIncreaseFromUnbilledReceivablesRelatedParties
+      code: CF.OPS.017
+    - account: DecreaseIncreaseFromReceivablesOnSubsidy
+      code: CF.OPS.018
+    - account: DecreaseIncreaseFromCurrentCustomerReceivablesThirdParties
+      code: CF.OPS.019
+    - account: DecreaseIncreaseFromCurrentCustomerReceivablesRelatedParties
+      code: CF.OPS.020
+    - account: DecreaseIncreaseFromMarginReceivables
+      code: CF.OPS.021
+    - account: DecreaseIncreaseFromReceivablesFromClearingAndSettlementGuaranteeInstitution
+      code: CF.OPS.022
+    - account: DecreaseIncreaseFromPremiumAndReinsuranceReceivables
+      code: CF.OPS.023
+    - account: DecreaseIncreaseFromDividendsAndInterestReceivables
+      code: CF.OPS.024
+    - account: DecreaseIncreaseFromOtherReceivablesThirdParties
+      code: CF.OPS.025
+    - account: DecreaseIncreaseFromOtherReceivablesRelatedParties
+      code: CF.OPS.026
+    - account: DecreaseIncreaseFromCurrentLivestockInventories
+      code: CF.OPS.027
+    - account: DecreaseIncreaseFromCurrentRealEstateAssets
+      code: CF.OPS.028
+    - account: DecreaseIncreaseFromCurrentInventories
+      code: CF.OPS.029
+    - account: DecreaseIncreaseFromInventories
+      code: CF.OPS.030
+    - account: DecreaseIncreaseFromCurrentPrepaidExpenses
+      code: CF.OPS.031
+    - account: DecreaseIncreaseFromCurrentAdvancesOnInvestments
+      code: CF.OPS.032
+    - account: DecreaseIncreaseFromCurrentAdvancesOnPurchaseOfPropertyPlantAndEquipment
+      code: CF.OPS.033
+    - account: DecreaseIncreaseFromOtherCurrentAdvances
+      code: CF.OPS.034
+    - account: DecreaseIncreaseFromCurrentPrepaidTaxes
+      code: CF.OPS.035
+    - account: DecreaseIncreaseFromCurrentClaimsForTaxRefund
+      code: CF.OPS.036
+    - account: DecreaseIncreaseFromCurrentDeferredStrippingCosts
+      code: CF.OPS.037
+    - account: DecreaseIncreaseFromCurrentDeferredMobilisationCosts
+      code: CF.OPS.038
+    - account: DecreaseIncreaseFromOtherCurrentNonFinancialAssets
+      code: CF.OPS.039
+    - account: DecreaseIncreaseFromNonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForSale
+      code: CF.OPS.040
+    - account: DecreaseIncreaseFromNonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForDistributionToOwners
+      code: CF.OPS.041
+    - account: DecreaseIncreaseFromCurrentAssets
+      code: CF.OPS.042
+    - account: IncreaseDecreaseFromShortTermLoans
+      code: CF.OPS.043
+    - account: IncreaseDecreaseFromTrustReceiptsPayables
+      code: CF.OPS.044
+    - account: IncreaseDecreaseFromTradePayablesThirdParties
+      code: CF.OPS.045
+    - account: IncreaseDecreaseFromTradePayablesRelatedParties
+      code: CF.OPS.046
+    - account: IncreaseDecreaseFromOtherPayablesThirdParties
+      code: CF.OPS.047
+    - account: IncreaseDecreaseFromOtherPayablesRelatedParties
+      code: CF.OPS.048
+    - account: IncreaseDecreaseFromCurrentAdvancesFromCustomersThirdParties
+      code: CF.OPS.049
+    - account: IncreaseDecreaseFromCurrentAdvancesFromCustomersRelatedParties
+      code: CF.OPS.050
+    - account: IncreaseDecreaseFromDividendsPayable
+      code: CF.OPS.051
+    - account: IncreaseDecreaseFromOtherCurrentFinancialLiabilities
+      code: CF.OPS.052
+    - account: IncreaseDecreaseFromCurrentAccruedExpenses
+      code: CF.OPS.053
+    - account: IncreaseDecreaseFromShortTermPostEmploymentBenefitObligations
+      code: CF.OPS.054
+    - account: IncreaseDecreaseFromTaxesPayable
+      code: CF.OPS.055
+    - account: IncreaseDecreaseFromExcisePayable
+      code: CF.OPS.056
+    - account: IncreaseDecreaseFromProjectPayables
+      code: CF.OPS.057
+    - account: IncreaseDecreaseFromPayablesToClearingAndSettlementGuaranteeInstitution
+      code: CF.OPS.058
+    - account: IncreaseDecreaseFromPayablesToCustomersThirdParties
+      code: CF.OPS.059
+    - account: IncreaseDecreaseFromPayablesToCustomersRelatedParties
+      code: CF.OPS.060
+    - account: IncreaseDecreaseFromReinsurancePayables
+      code: CF.OPS.061
+    - account: IncreaseDecreaseFromFactoringPayables
+      code: CF.OPS.062
+    - account: IncreaseDecreaseFromCurrentDeposits
+      code: CF.OPS.063
+    - account: IncreaseDecreaseFromCurrentUnearnedRevenue
+      code: CF.OPS.064
+    - account: IncreaseDecreaseFromDueToCustomersThirdParties
+      code: CF.OPS.065
+    - account: IncreaseDecreaseFromDueToCustomersRelatedParties
+      code: CF.OPS.066
+    - account: IncreaseDecreaseFromCurrentDeferredRevenue
+      code: CF.OPS.067
+    - account: IncreaseDecreaseFromCurrentProvisionsForOverlay
+      code: CF.OPS.068
+    - account: IncreaseDecreaseFromCurrentProvisionsForAircraftReturnAndMaintenanceFunds
+      code: CF.OPS.069
+    - account: IncreaseDecreaseFromCurrentProvisionsForInfrastructureDevelopmentPublicAndSocialFacilities
+      code: CF.OPS.070
+    - account: IncreaseDecreaseFromCurrentProvisionsForAssetDismantlingCosts
+      code: CF.OPS.071
+    - account: IncreaseDecreaseFromCurrentProvisionsForRestorationAndRehabilitation
+      code: CF.OPS.072
+    - account: IncreaseDecreaseFromOtherCurrentProvisions
+      code: CF.OPS.073
+    - account: IncreaseDecreaseFromShareBasedPaymentLiabilities
+      code: CF.OPS.074
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfBankLoans
+      code: CF.OPS.075
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfSecuredLoans
+      code: CF.OPS.076
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfUnsecuredLoans
+      code: CF.OPS.077
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfStepLoans
+      code: CF.OPS.078
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfLoansFromGovernmentOfTheRepublicOfIndonesia
+      code: CF.OPS.079
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfSubordinatedLoans
+      code: CF.OPS.080
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfJointOperationsLiabilities
+      code: CF.OPS.081
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfLandAcquisitionLiabilities
+      code: CF.OPS.082
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfConsumerFinancingPayables
+      code: CF.OPS.083
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfFinanceLeaseLiabilities
+      code: CF.OPS.084
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfElectricityPurchasePayables
+      code: CF.OPS.085
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfRetentionPayables
+      code: CF.OPS.086
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfNotesPayable
+      code: CF.OPS.087
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfBondsPayable
+      code: CF.OPS.088
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfSukuk
+      code: CF.OPS.089
+    - account: IncreaseDecreaseFromCurrentMaturitiesOfOtherBorrowings
+      code: CF.OPS.090
+    - account: IncreaseDecreaseFromCurrentDueToRelatedParties
+      code: CF.OPS.091
+    - account: IncreaseDecreaseFromCurrentDueToStockholders
+      code: CF.OPS.092
+    - account: IncreaseDecreaseFromShortTermDerivativeFinancialLiabilities
+      code: CF.OPS.093
+    - account: IncreaseDecreaseFromCurrentTaxAmnestyLiabilities
+      code: CF.OPS.094
+    - account: IncreaseDecreaseFromOtherCurrentNonFinancialLiabilities
+      code: CF.OPS.095
+    - account: IncreaseDecreaseFromLiabilitiesDirectlyAssociatedWithNonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForSaleOrAsHeldForDistributionToOwners
+      code: CF.OPS.096
+    - account: IncreaseDecreaseFromCurrentLiabilities
+      code: CF.OPS.097
+  - account: NetCashFlowsReceivedFromUsedInInvestingActivities
+    code: CF.INV
+    is_total: true
+    children:
+    - account: PaymentsForDeferredStrippingCosts
+      code: CF.INV.001
+      weight: -1
+    - account: PaymentsForDeferredMobilisationCosts
+      code: CF.INV.002
+      weight: -1
+    - account: PaymentsForDeferredCharges
+      code: CF.INV.003
+      weight: -1
+    - account: ReceiptsFromPaymentsForAircraftMaintenanceFunds
+      code: CF.INV.004
+    - account: PaymentsForAdvancesForPurchaseOfPropertyPlantAndEquipment
+      code: CF.INV.005
+      weight: -1
+    - account: ProceedsFromDisposalOfLivestockProduction
+      code: CF.INV.006
+    - account: PaymentsForAcquisitionOfLivestockProduction
+      code: CF.INV.007
+      weight: -1
+    - account: ProceedsFromDisposalOfIndustrialTimberPlantations
+      code: CF.INV.008
+    - account: PaymentsForAcquisitionOfIndustrialTimberPlantations
+      code: CF.INV.009
+      weight: -1
+    - account: ProceedsFromDisposalOfPlantationAssets
+      code: CF.INV.010
+    - account: PaymentsForAcquisitionOfPlantationAssets
+      code: CF.INV.011
+      weight: -1
+    - account: ProceedsFromDisposalOfPlasmaPlantations
+      code: CF.INV.012
+    - account: PaymentsForAcquisitionOfPlasmaPlantations
+      code: CF.INV.013
+      weight: -1
+    - account: ProceedsFromDisposalOfInvestmentProperties
+      code: CF.INV.014
+    - account: PaymentsForAcquisitionOfInvestmentProperties
+      code: CF.INV.015
+      weight: -1
+    - account: ProceedsFromDisposalOfPropertyPlantAndEquipment
+      code: CF.INV.016
+    - account: PaymentsForAcquisitionOfPropertyPlantAndEquipment
+      code: CF.INV.017
+      weight: -1
+    - account: ProceedsFromDisposalOfForeclosedAssets
+      code: CF.INV.018
+    - account: ProceedsFromDisposalOfOilAndGasAssets
+      code: CF.INV.019
+    - account: PaymentsForAcquisitionOfOilAndGasAssets
+      code: CF.INV.020
+      weight: -1
+    - account: ProceedsFromDisposalOfExplorationAndEvaluationAssets
+      code: CF.INV.021
+    - account: PaymentsForAcquisitionOfExplorationAndEvaluationAssets
+      code: CF.INV.022
+      weight: -1
+    - account: ProceedsFromDisposalOfTollRoadConcessionRights
+      code: CF.INV.023
+    - account: PaymentsForAcquisitionOfTollRoadConcessionRights
+      code: CF.INV.024
+      weight: -1
+    - account: ProceedsFromDisposalOfMiningProperties
+      code: CF.INV.025
+    - account: PaymentsForAcquisitionOfMiningProperties
+      code: CF.INV.026
+      weight: -1
+    - account: ProceedsFromDisposalOfIntangibleAssets
+      code: CF.INV.027
+    - account: PaymentsForAcquisitionOfIntangibleAssets
+      code: CF.INV.028
+      weight: -1
+    - account: ProceedsFromDisposalOfLandForDevelopment
+      code: CF.INV.029
+    - account: PaymentsForAcquisitionOfLandForDevelopment
+      code: CF.INV.030
+      weight: -1
+    - account: ProceedsFromDisposalOfOtherNonFinancialAssets
+      code: CF.INV.031
+    - account: PaymentsForAcquisitionOfOtherNonFinancialAssets
+      code: CF.INV.032
+      weight: -1
+    - account: WithdrawalPlacementOfShortTermInvestments
+      code: CF.INV.033
+    - account: WithdrawalPlacementOfFinancialAssetsAtFairValueThroughProfitOrLoss
+      code: CF.INV.034
+    - account: WithdrawalPlacementOfFinancialAssetsFairValueThroughOtherComprehensiveIncome
+      code: CF.INV.35
+    - account: WithdrawalPlacementOfRestrictedFundsFromInvestingActivities
+      code: CF.INV.036
+    - account: WithdrawalPlacementOfBondsAndOrSukuk
+      code: CF.INV.037
+    - account: PlacementOfFinancialAssetsAmortizedCostInvestments
+      code: CF.INV.38
+      weight: -1
+    - account: WithdrawalOfFinancialAssetsAmortizedCostInvestments
+      code: CF.INV.39
+    - account: ProceedsOnSaleOfFinancialAssets
+      code: CF.INV.040
+    - account: PaymentsToAcquireFinancialAssets
+      code: CF.INV.041
+      weight: -1
+    - account: ReceiptsFromFutureContractsForwardContractsOptionContractsAndSwapContracts
+      code: CF.INV.042
+    - account: PaymentsForFutureContractsForwardContractsOptionContractsAndSwapContracts
+      code: CF.INV.043
+      weight: -1
+    - account: PaymentsForAdvancesOnInvestments
+      code: CF.INV.044
+      weight: -1
+    - account: ReceiptsFromReceivablesFromRelatedParties
+      code: CF.INV.045
+    - account: PaymentsOfReceivablesFromRelatedParties
+      code: CF.INV.046
+      weight: -1
+    - account: ReceiptsFromReceivablesFromStockholders
+      code: CF.INV.047
+    - account: PaymentsOfReceivablesFromStockholders
+      code: CF.INV.048
+      weight: -1
+    - account: CashAdvancesAndLoansMadeToOtherPartiesOtherThanFinancingInstitutions
+      code: CF.INV.049
+      weight: -1
+    - account: CashReceiptsFromTheRepaymentOfAdvancesAndLoansMadeToOtherPartiesOtherThanFinancing
+      code: CF.INV.050
+    - account: ProceedsFromDisposalOfSubsidiaries
+      code: CF.INV.051
+    - account: PaymentsForAcquisitionOfSubsidiaries
+      code: CF.INV.052
+      weight: -1
+    - account: ProceedsFromSalesOfInterestsInSubsidiariesWithoutLossOfControlFromInvestingActivities
+      code: CF.INV.053
+    - account: PaymentsForAcquisitionOfAdditionalInterestsInSubsidiaries
+      code: CF.INV.054
+      weight: -1
+    - account: ProceedsFromSalesOfInterestsInJointVentures
+      code: CF.INV.055
+    - account: PaymentsForAcquisitionOfInterestsInJointVentures
+      code: CF.INV.056
+      weight: -1
+    - account: ProceedsFromSalesOfInterestsInAssociates
+      code: CF.INV.057
+    - account: PaymentsForAcquisitionOfInterestsInAssociates
+      code: CF.INV.058
+      weight: -1
+    - account: ProceedsFromDisposalOfNonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForSaleAndDiscontinuedOperations
+      code: CF.INV.059
+    - account: DividendsReceivedFromInvestingActivities
+      code: CF.INV.060
+    - account: InterestsReceivedFromInvestingActivities
+      code: CF.INV.061
+    - account: InterestsPaidFromInvestingActivities
+      code: CF.INV.062
+      weight: -1
+    - account: IncomeTaxesRefundedPaidFromInvestingActivities
+      code: CF.INV.063
+    - account: OtherCashInflowsOutflowsFromInvestingActivities
+      code: CF.INV.064
+  - account: NetCashFlowsReceivedFromUsedInFinancingActivities
+    code: CF.FIN
+    is_total: true
+    children:
+    - account: ProceedsFromBankLoans
+      code: CF.FIN.001
+    - account: PaymentsOfBankLoans
+      code: CF.FIN.002
+      weight: -1
+    - account: ProceedsFromNon-BankFinancialInstitutionLoan
+      code: CF.FIN.003
+    - account: PaymentsOfNon-BankFinancialInstitutionLoan
+      code: CF.FIN.004
+      weight: -1
+    - account: ProceedsFromSecuredLoans
+      code: CF.FIN.005
+    - account: PaymentsOfSecuredLoans
+      code: CF.FIN.006
+      weight: -1
+    - account: ProceedsFromUnsecuredLoans
+      code: CF.FIN.007
+    - account: PaymentsOfUnsecuredLoans
+      code: CF.FIN.008
+      weight: -1
+    - account: ProceedsFromStepLoans
+      code: CF.FIN.009
+    - account: PaymentsOfStepLoans
+      code: CF.FIN.010
+      weight: -1
+    - account: ProceedsFromLoanFromGovernmentOfTheRepublicOfIndonesia
+      code: CF.FIN.011
+    - account: PaymentsOfLoanFromGovernmentOfTheRepublicOfIndonesia
+      code: CF.FIN.012
+      weight: -1
+    - account: ProceedsFromSubordinatedLoans
+      code: CF.FIN.013
+    - account: PaymentsOfSubordinatedLoans
+      code: CF.FIN.014
+      weight: -1
+    - account: ProceedsFromJointOperationLiabilities
+      code: CF.FIN.015
+    - account: PaymentsOfJointOperationLiabilities
+      code: CF.FIN.016
+      weight: -1
+    - account: ProceedsFromConsumerFinancingPayables
+      code: CF.FIN.017
+    - account: PaymentsOfConsumerFinancingPayables
+      code: CF.FIN.018
+      weight: -1
+    - account: ProceedsFromFinanceLeaseLiabilities
+      code: CF.FIN.019
+    - account: PaymentsOfFinanceLeaseLiabilities
+      code: CF.FIN.020
+      weight: -1
+    - account: ProceedsFromElectricityPurchasePayables
+      code: CF.FIN.021
+    - account: PaymentsOfElectricityPurchasePayables
+      code: CF.FIN.022
+      weight: -1
+    - account: ProceedsFromRetentionPayables
+      code: CF.FIN.023
+    - account: PaymentsOfRetentionPayables
+      code: CF.FIN.024
+      weight: -1
+    - account: ProceedsFromNotesPayable
+      code: CF.FIN.025
+    - account: PaymentsOfNotesPayable
+      code: CF.FIN.026
+      weight: -1
+    - account: ProceedsFromMediumTermNotes
+      code: CF.FIN.027
+    - account: PaymentsOfMediumTermNotes
+      code: CF.FIN.028
+      weight: -1
+    - account: ProceedsFromBondsPayable
+      code: CF.FIN.029
+    - account: PaymentsOfBondsPayable
+      code: CF.FIN.030
+      weight: -1
+    - account: SubordinatedBondsIssued
+      code: CF.FIN.031
+    - account: PaymentsOfSubordinatedBonds
+      code: CF.FIN.032
+      weight: -1
+    - account: ProceedsFromSukuk
+      code: CF.FIN.033
+    - account: PaymentsOfSukuk
+      code: CF.FIN.034
+      weight: -1
+    - account: ProceedsFromOtherBorrowings
+      code: CF.FIN.035
+    - account: PaymentsOfOtherBorrowings
+      code: CF.FIN.036
+      weight: -1
+    - account: ProceedsFromConvertibleBondsIssuance
+      code: CF.FIN.037
+    - account: PaymentsOfConvertibleBonds
+      code: CF.FIN.038
+      weight: -1
+    - account: PaymentsOfBondsIssuanceCosts
+      code: CF.FIN.039
+      weight: -1
+    - account: WithdrawalPlacementOfRestrictedFundsFromFinancingActivities
+      code: CF.FIN.040
+    - account: ProceedsFromDueToRelatedParties
+      code: CF.FIN.041
+    - account: PaymentsOfDueToRelatedParties
+      code: CF.FIN.042
+      weight: -1
+    - account: ProceedsFromDueToStockholders
+      code: CF.FIN.043
+    - account: PaymentsOfDueToStockholders
+      code: CF.FIN.044
+      weight: -1
+    - account: ProceedsFromIssuanceOfCommonStocks
+      code: CF.FIN.045
+    - account: ProceedsFromIssuanceOfPreferredStocks
+      code: CF.FIN.046
+    - account: ProceedsFromIssuingOtherEquityInstruments
+      code: CF.FIN.047
+    - account: PaymentsOfStockIssuanceCosts
+      code: CF.FIN.048
+      weight: -1
+    - account: ProceedsFromSalesPurchasesOfTreasuryStocks
+      code: CF.FIN.049
+    - account: ProceedsFromEmployeeStockOptionsProgram
+      code: CF.FIN.050
+    - account: SettlementPlacementOfDerivativeTransactions
+      code: CF.FIN.051
+    - account: ProceedsFromSalesOfInterestsInSubsidiariesWithoutLossOfControlFromFinancingActivities
+      code: CF.FIN.052
+    - account: ProceedFromIncreaseOfNonControllingInterest
+      code: CF.FIN.053
+    - account: PaymentsForAcquisitionOfNoncontrollingInterestsInSubsidiaries
+      code: CF.FIN.054
+      weight: -1
+    - account: DividendsPaidFromFinancingActivities
+      code: CF.FIN.055
+      weight: -1
+    - account: InterestsReceivedFromFinancingActivities
+      code: CF.FIN.056
+    - account: InterestsPaidFromFinancingActivities
+      code: CF.FIN.057
+      weight: -1
+    - account: IncomeTaxesRefundedPaidFromFinancingActivities
+      code: CF.FIN.058
+    - account: OtherCashInflowsOutflowsFromFinancingActivities
+      code: CF.FIN.059
+- account: CashAndCashEquivalentOfDeconsolidatedSubsidiaries
+  code: CF.DISC.01
+- account: CashAndCashEquivalentsCashFlows
+  code: CF.DISC.02
+- account: EffectOfExchangeRateChangesOnCashAndCashEquivalents
+  code: CF.DISC.03
+- account: OtherIncreaseDecreaseInCashAndCashEquivalents
+  code: CF.DISC.04
+assertions:
+- assertion_id: net_cash_flows_identity
+  description: NetIncreaseDecreaseInCashAndCashEquivalents must equal Operating +
+    Investing + Financing.
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: NetIncreaseDecreaseInCashAndCashEquivalents
+    weight: 1
+  - account: NetCashFlowsReceivedFromUsedInOperatingActivities
+    weight: -1
+  - account: NetCashFlowsReceivedFromUsedInInvestingActivities
+    weight: -1
+  - account: NetCashFlowsReceivedFromUsedInFinancingActivities
+    weight: -1

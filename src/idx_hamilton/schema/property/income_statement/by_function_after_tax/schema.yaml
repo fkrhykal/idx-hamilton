@@ -1,0 +1,166 @@
+$schema: ./schema.extension.yaml
+entry_point: property
+statement: income_statement
+variant: by_function_after_tax
+chart_of_accounts:
+- account: ComprehensiveIncome
+  code: CI
+  is_total: true
+  children:
+  - account: ProfitLoss
+    code: PL
+    is_total: true
+    children:
+    - account: ProfitLossFromDiscontinuedOperations
+      code: PL.DISC
+    - account: ProfitLossFromContinuingOperations
+      code: PL.CONT
+      is_total: true
+      children:
+      - account: ProfitLossBeforeIncomeTax
+        code: PBT
+        is_total: true
+        children:
+        - account: GrossProfit
+          code: GP
+          is_total: true
+          children:
+          - account: SalesAndRevenue
+            code: REV
+          - account: CostOfSalesAndRevenue
+            code: COS
+            weight: -1
+        - account: SellingExpenses
+          code: EXP.SELL
+          weight: -1
+        - account: GeneralAndAdministrativeExpenses
+          code: EXP.GA
+          weight: -1
+        - account: FinanceIncome
+          code: INC.FIN
+        - account: InterestAndFinanceCosts
+          code: EXP.FIN
+          weight: -1
+          deprecated_tags:
+          - tag: FinanceCosts
+        - account: GainsLossesOnChangesInForeignExchangeRates
+          code: FX
+        - account: ShareOfProfitLossOfAssociatesAccountedForUsingEquityMethod
+          code: EQ.ASSOC
+        - account: ShareOfProfitLossOfJointVenturesAccountedForUsingEquityMethod
+          code: EQ.JV
+        - account: OtherIncome
+          code: INC.OTH
+        - account: OtherExpenses
+          code: EXP.OTH
+          weight: -1
+        - account: OtherGainsLosses
+          code: GL.OTH
+      - account: TaxBenefitExpenses
+        code: TAX.BENEFIT
+  - account: OtherComprehensiveIncomeAfterTax
+    code: OCI
+    is_total: true
+    children:
+    - account: OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossAfterTax
+      code: OCI.NO_RECLASS
+      is_total: true
+      children:
+      - account: OtherComprehensiveIncomeForGainsLossesOnRevaluationOfPropertyAndEquipmentAfterTax
+        code: OCI.NO_RECLASS.01
+      - account: OtherComprehensiveIncomeForRemeasurementOfDefinedBenefitObligationAfterTax
+        code: OCI.NO_RECLASS.02
+      - account: OtherAdjustmentsToOtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossAfterTax
+        code: OCI.NO_RECLASS.03
+    - account: OtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossAfterTax
+      code: OCI.RECLASS
+      is_total: true
+      children:
+      - account: GainsLossesOnExchangeDifferencesOnTranslationAfterTax
+        code: OCI.RECLASS.01
+      - account: ReclassificationAdjustmentsOnExchangeDifferencesOnTranslationAfterTax
+        code: OCI.RECLASS.02
+        weight: -1
+      - account: GainsLossesOnCashFlowHedgesAfterTax
+        code: OCI.RECLASS.03
+      - account: ReclassificationAdjustmentsOnCashFlowHedgesAfterTax
+        code: OCI.RECLASS.04
+        weight: -1
+      - account: CarryingAmountOfNonFinancialAssetLiabilityWhoseAcquisitionOrIncurrenceWasHedgedOnHighlyProbableForecastTransactionAdjustedFromEquityAfterTax
+        code: OCI.RECLASS.05
+      - account: GainsLossesOnHedgesOfNetInvestmentsInForeignOperationsAfterTax
+        code: OCI.RECLASS.06
+      - account: ReclassificationAdjustmentsOnHedgesOfNetInvestmentsInForeignOperationsAfterTax
+        code: OCI.RECLASS.07
+        weight: -1
+      - account: ShareOfOtherComprehensiveIncomeOfAssociatesAccountedForUsingEquityMethodAfterTax
+        code: OCI.RECLASS.08
+      - account: ShareOfOtherComprehensiveIncomeOfJointVenturesAccountedForUsingEquityMethodAfterTax
+        code: OCI.RECLASS.09
+      - account: OtherAdjustmentsToOtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossAfterTax
+        code: OCI.RECLASS.10
+- account: ProfitLoss
+  code: PL.ATTRIB
+  is_total: true
+  children:
+  - account: ProfitLossAttributableToParentEntity
+    code: PL.ATTRIB.PE
+  - account: ProfitLossAttributableToNonControllingInterests
+    code: PL.ATTRIB.NCI
+- account: ComprehensiveIncome
+  code: CI.ATTRIB
+  is_total: true
+  children:
+  - account: ComprehensiveIncomeAttributableToParentEntity
+    code: CI.ATTRIB.PE
+  - account: ComprehensiveIncomeAttributableToNonControllingInterests
+    code: CI.ATTRIB.NCI
+- account: BasicEarningsLossPerShareFromContinuingOperations
+  code: PROP.PL.DISC.01
+- account: BasicEarningsLossPerShareFromDiscontinuedOperations
+  code: PROP.PL.DISC.02
+- account: DilutedEarningsLossPerShareFromContinuingOperations
+  code: PROP.PL.DISC.04
+- account: DilutedEarningsLossPerShareFromDiscontinuedOperations
+  code: PROP.PL.DISC.05
+- account: ReclassificationAdjustmentsOnAvailableForSaleFinancialAssetsAfterTax
+  code: PROP.PL.DISC.10
+- account: UnrealisedGainsLossesOnChangesInFairValueOfAvailableForSaleFinancialAssetsAfterTax
+  code: PROP.PL.DISC.12
+assertions:
+- assertion_id: comprehensive_income_operations_identity
+  description: ComprehensiveIncome - ProfitLoss - OtherComprehensiveIncomeAfterTax
+    = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ProfitLoss
+    weight: -1
+  - account: OtherComprehensiveIncomeAfterTax
+    weight: -1
+- assertion_id: profit_loss_attribution_identity
+  description: ProfitLoss - ProfitLossAttributableToParentEntity - ProfitLossAttributableToNonControllingInterests
+    = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ProfitLoss
+    weight: 1
+  - account: ProfitLossAttributableToParentEntity
+    weight: -1
+  - account: ProfitLossAttributableToNonControllingInterests
+    weight: -1
+- assertion_id: comprehensive_income_attribution_identity
+  description: ComprehensiveIncome - ComprehensiveIncomeAttributableToParentEntity
+    - ComprehensiveIncomeAttributableToNonControllingInterests = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ComprehensiveIncomeAttributableToParentEntity
+    weight: -1
+  - account: ComprehensiveIncomeAttributableToNonControllingInterests
+    weight: -1

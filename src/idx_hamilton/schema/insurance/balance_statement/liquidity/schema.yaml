@@ -1,0 +1,210 @@
+$schema: ./schema.extension.yaml
+entry_point: insurance
+statement: balance_statement
+variant: liquidity
+chart_of_accounts:
+- account: Assets
+  code: A
+  is_total: true
+  children:
+  - account: CashAndCashEquivalents
+    code: A.001
+  - account: InvestmentIncomeReceivables
+    code: A.002
+  - account: PremiumReceivables
+    code: A.003
+  - account: ReinsuranceReceivables
+    code: A.004
+  - account: CoinsuranceReceivables
+    code: A.005
+  - account: RetrocessionReceivables
+    code: A.006
+  - account: OtherReceivables
+    code: A.007
+  - account: ReinsuranceAssets
+    code: A.008
+  - account: InvestmentsInTimeDeposits
+    code: A.009
+  - account: InvestmentsOnSecuritiesAndMutualFundsAtFairValueThroughProfitOrLoss
+    code: A.010
+  - account: InvestmentsOnFairValueThroughOtherComprehensiveIncomeSecurities
+    code: A.011
+  - account: InvestmentsOnAmortizedCostSecurities
+    code: A.012
+  - account: InvestmentsInShares
+    code: A.013
+  - account: OtherInvestments
+    code: A.014
+  - account: InvestmentsOfPolicyholderInUnitLinkedContracts
+    code: A.015
+  - account: PrepaidExpenses
+    code: A.016
+  - account: Guarantees
+    code: A.017
+  - account: PrepaidTaxes
+    code: A.018
+  - account: NonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForSale
+    code: A.019
+  - account: NonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForDistributionToOwners
+    code: A.020
+  - account: DeferredTaxAssets
+    code: A.021
+  - account: RetrocessionAssets
+    code: A.022
+  - account: DeferredAcquisitionCosts
+    code: A.023
+  - account: Goodwill
+    code: A.024
+  - account: IntangibleAssetsOtherThanGoodwill
+    code: A.025
+  - account: InvestmentProperties
+    code: A.026
+  - account: PropertyPlantAndEquipment
+    code: A.027
+  - account: RightOfUseAssets
+    code: A.028
+  - account: PostEmploymentBenefitAssets
+    code: A.029
+  - account: TaxAmnestyAssets
+    code: A.030
+  - account: OtherAssets
+    code: A.031
+  - account: PropertyAndEquipment
+    code: A.032
+  - account: InvestmentsOnAvailableForSaleSecurities
+    code: A.033
+  - account: InvestmentsOnHeldToMaturitySecurities
+    code: A.034
+- account: Liabilities
+  code: L
+  is_total: true
+  children:
+  - account: CoinsuranceLiabilities
+    code: L.001
+  - account: ReinsurancePayables
+    code: L.002
+  - account: CommissionPayables
+    code: L.003
+  - account: ClaimPayables
+    code: L.004
+  - account: RetrocessionPayables
+    code: L.005
+  - account: DividendsPayable
+    code: L.006
+  - account: TaxesPayable
+    code: L.007
+  - account: AccruedExpenses
+    code: L.008
+  - account: PremiumDeposits
+    code: L.009
+  - account: LiabilitiesDirectlyAssociatedWithNonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForSaleOrAsHeldForDistributionToOwners
+    code: L.010
+  - account: LiabilitiesToPolicyholderInUnitLinkedContracts
+    code: L.011
+  - account: InsuranceLiabilitiesOnUnearnedPremium
+    code: L.012
+  - account: InsuranceLiabilitiesOnEstimatedClaimsLiability
+    code: L.013
+  - account: InsuranceLiabilitiesForFuturePolicyBenefits
+    code: L.014
+  - account: ProvisionsForLossesArisingResultingFromLiabilityAdequacyTest
+    code: L.015
+  - account: DeferredTaxLiabilities
+    code: L.016
+  - account: PostEmploymentBenefitObligations
+    code: L.017
+  - account: TaxAmnestyLiabilities
+    code: L.018
+  - account: OtherLiabilities
+    code: L.019
+  - account: InsuranceLiabilitiesOnDeferredPremiumIncome
+    code: L.020
+  - account: ContractLiabilities
+    code: L.021
+  - account: FinanceLeaseLiabilities
+    code: L.022
+  - account: BondsPayable
+    code: L.023
+  - account: Sukuk
+    code: L.024
+  - account: UjrahLiabilities
+    code: L.025
+  - account: ZakatInstance
+    code: L.026
+- account: TemporarySyirkahFunds
+  code: TSF
+  is_total: true
+  children:
+  - account: AccumulatedTabarrusFunds
+    code: TSF.001
+  - account: MudharabahTemporarySyirkahFunds
+    code: TSF.002
+- account: Equity
+  code: E
+  is_total: true
+  children:
+  - account: EquityAttributableToEquityOwnersOfParentEntity
+    code: E.PE
+    is_total: true
+    children:
+    - account: CommonStocks
+      code: E.PE.001
+    - account: PreferredStocks
+      code: E.PE.002
+    - account: AdditionalPaidInCapital
+      code: E.PE.003
+    - account: TreasuryStocks
+      code: E.PE.004
+      weight: -1
+    - account: AdvancesInCapitalStock
+      code: E.PE.005
+    - account: StockOptions
+      code: E.PE.006
+    - account: TranslationAdjustment
+      code: E.PE.007
+    - account: RevaluationReserves
+      code: E.PE.008
+    - account: ReserveOfExchangeDifferencesOnTranslation
+      code: E.PE.009
+    - account: ReserveForChangesInFairValueOfFairValueThroughOtherComprehensiveIncomeFinancialAssets
+      code: E.PE.010
+    - account: ReserveOfGainsLossesFromInvestmentsInEquityInstruments
+      code: E.PE.011
+    - account: ReserveOfShareBasedPayments
+      code: E.PE.012
+    - account: ReserveOfCashFlowHedges
+      code: E.PE.013
+    - account: ReserveOfRemeasurementsOfDefinedBenefitPlans
+      code: E.PE.014
+    - account: OtherReserves
+      code: E.PE.015
+    - account: DifferenceDueToChangesOfEquityInSubsidiaryAssociates
+      code: E.PE.016
+    - account: OtherComponentsOfEquity
+      code: E.PE.017
+    - account: AppropriatedRetainedEarnings
+      code: E.PE.018
+    - account: UnappropriatedRetainedEarnings
+      code: E.PE.019
+    - account: ReserveForChangesInFairValueOfAvailableForSaleFinancialAssets
+      code: E.PE.020
+  - account: ProformaEquity
+    code: E.002
+  - account: NonControllingInterests
+    code: E.003
+- account: LiabilitiesTabarruFundsAndEquity
+  code: DISC.BS.01
+assertions:
+- assertion_id: balance_sheet_identity
+  description: Assets must balance with claims on assets.
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: Assets
+    weight: 1
+  - account: Liabilities
+    weight: -1
+  - account: TemporarySyirkahFunds
+    weight: -1
+  - account: Equity
+    weight: -1

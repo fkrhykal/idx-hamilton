@@ -1,0 +1,93 @@
+$schema: ./schema.extension.yaml
+entry_point: collective_investment_contract
+statement: balance_statement
+variant: liquidity
+chart_of_accounts:
+- account: Assets
+  code: A
+  is_total: true
+  children:
+  - account: CashAndCashEquivalents
+    code: A.06
+  - account: DeferredTaxAssets
+    code: A.09
+  - account: Guarantees
+    code: A.12
+  - account: InterestReceivables
+    code: A.14
+  - account: InvestmentsInTimeDeposits
+    code: A.15
+  - account: MortgagesReceivable
+    code: A.18
+  - account: OtherAssets
+    code: A.23
+  - account: OtherReceivables
+    code: A.25
+  - account: PrepaidExpenses
+    code: A.28
+  - account: PrepaidTaxes
+    code: A.29
+  - account: SecuritiesPortfolioInEquityInstruments
+    code: A.31
+  - account: SecuritiesPortfolioInMoneyMarketInstruments
+    code: A.32
+  - account: Sukuk
+    code: A.33
+- account: Liabilities
+  code: L
+  is_total: true
+  children:
+  - account: AccountsPayable
+    code: L.01
+  - account: AccruedExpenses
+    code: L.02
+  - account: BankLoans
+    code: L.04
+  - account: BondsPayable
+    code: L.05
+  - account: ContractLiabilities
+    code: L.07
+  - account: DebtCertificateOfKIKEBA
+    code: L.08
+  - account: DeferredTaxLiabilities
+    code: L.10
+  - account: DividendsPayable
+    code: L.11
+  - account: InterestPayables
+    code: L.13
+  - account: NotesPayable
+    code: L.22
+  - account: OtherLiabilities
+    code: L.24
+  - account: PaymentPoint
+    code: L.27
+  - account: TaxesPayable
+    code: L.34
+  - account: UnearnedRevenue
+    code: L.35
+- account: NetAssets
+  code: NA
+  is_total: true
+  children:
+  - account: NetAssetsAttributableToParticipationUnitHolders
+    code: NA.20
+  - account: RetainedEarningsDeficit
+    code: NA.30
+- account: LiabilitiesAndNetAssets
+  code: CIC.BS.DISC.01
+- account: NetAssetsAttributableToUnitHoldersPerInvestmentUnit
+  code: CIC.BS.DISC.02
+- account: OutstandingInvestmentUnits
+  code: CIC.BS.DISC.03
+assertions:
+- assertion_id: balance_sheet_identity
+  description: Assets must equal Liabilities plus NetAssets.
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: Assets
+    weight: 1
+  - account: Liabilities
+    weight: -1
+  - account: NetAssets
+    weight: -1

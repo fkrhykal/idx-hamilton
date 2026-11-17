@@ -1,0 +1,140 @@
+# yaml-language-server: $schema=http://json-schema.org/draft-07/schema#
+$schema: "http://json-schema.org/draft-07/schema#"
+title: "PartitionCanonicalAccountMappings"
+description: "JSON Schema specification for partition-level canonical account mappings to IDX XBRL taxonomy elements."
+type: object
+required:
+  - entry_point
+  - statement
+  - variant
+  - mappings
+
+properties:
+  $schema:
+    type: string
+    description: "Relative path or URI referencing this schema definition."
+
+  entry_point:
+    type: string
+    description: "IDX capital market industry taxonomy sector."
+    enum:
+      - general
+      - property
+      - infrastructure
+      - financial_and_sharia
+      - securities
+      - insurance
+      - financing
+      - collective_investment_contract
+
+  statement:
+    type: string
+    description: "Financial statement category."
+    enum:
+      - balance_statement
+      - income_statement
+      - cashflow_statement
+
+  variant:
+    type: string
+    description: "Reporting presentation variant."
+    enum:
+      - liquidity
+      - current_and_non_current
+      - by_function_after_tax
+      - by_function_before_tax
+      - by_nature_after_tax
+      - by_nature_before_tax
+      - direct_method
+      - indirect_method
+
+  mappings:
+    type: array
+    description: "Ordered collection of canonical account mappings for this statement variant."
+    items:
+      $ref: "#/definitions/CanonicalMapping"
+
+definitions:
+  CanonicalMapping:
+    type: object
+    required:
+      - canonical_account
+      - components
+    properties:
+      canonical_account:
+        type: string
+        description: "Abstract canonical account identifier defined in src/idx_hamilton/schema/canonical.yaml."
+        enum:
+          - TotalAssets
+          - TotalLiabilities
+          - TotalEquity
+          - EquityAttributableToParent
+          - CashAndCashEquivalents
+          - ProfitBeforeTax
+          - IncomeTaxExpense
+          - NetIncome
+          - NetIncomeAttributableToParent
+          - OperatingCashFlow
+          - InvestingCashFlow
+          - FinancingCashFlow
+          - CurrentAssets
+          - NonCurrentAssets
+          - CurrentLiabilities
+          - NonCurrentLiabilities
+          - TradeReceivables
+          - Inventories
+          - PropertyPlantAndEquipment
+          - TradePayables
+          - ShortTermDebt
+          - LongTermDebt
+          - Revenue
+          - CostOfSales
+          - GrossProfit
+          - OperatingProfit
+          - FinanceCosts
+          - CapitalExpenditure
+          - EarningAssets
+          - GrossLoansAndFinancing
+          - AllowanceForImpairmentLosses
+          - CustomerDeposits
+          - TemporarySyirkahFunds
+          - DemandAndSavingsDeposits
+          - TotalBorrowingsAndDebtIssued
+          - InterestAndShariaIncome
+          - InterestAndShariaExpenses
+          - NetInterestAndShariaIncome
+          - NonInterestOperatingIncome
+          - ImpairmentProvisionExpenses
+          - NonInterestOperatingExpenses
+          - TotalInvestmentAssets
+          - InsuranceContractLiabilities
+          - GrossPremiumIncome
+          - NetPremiumIncome
+          - NetEarnedPremiums
+          - NetClaimExpenses
+          - UnderwritingAndAcquisitionExpenses
+          - InvestmentIncome
+          - FinancialOperatingRevenue
+          - DirectFinancialAndUnderwritingCosts
+          - NetFinancialOperatingIncome
+      components:
+        type: array
+        minItems: 1
+        description: "Weighted XBRL taxonomy accounts aggregating into this canonical account."
+        items:
+          $ref: "#/definitions/CanonicalComponent"
+
+  CanonicalComponent:
+    type: object
+    required:
+      - account
+    properties:
+      account:
+        type: string
+        description: "Canonical account element name matching the IDX iXBRL taxonomy tag in schema.yaml."
+      weight:
+        type: integer
+        enum: [1, -1]
+        default: 1
+        description: "Calculation weight multiplier: 1 for addition, -1 for subtraction."
+

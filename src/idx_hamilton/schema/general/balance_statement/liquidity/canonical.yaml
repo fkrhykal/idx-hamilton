@@ -1,0 +1,91 @@
+$schema: ./canonical.extension.yaml
+entry_point: general
+statement: balance_statement
+variant: liquidity
+mappings:
+- canonical_account: TotalAssets
+  components:
+  - account: Assets
+    weight: 1
+- canonical_account: TotalLiabilities
+  components:
+  - account: Liabilities
+    weight: 1
+- canonical_account: TotalEquity
+  components:
+  - account: Equity
+    weight: 1
+- canonical_account: EquityAttributableToParent
+  components:
+  - account: EquityAttributableToEquityOwnersOfParentEntity
+    weight: 1
+- canonical_account: CashAndCashEquivalents
+  components:
+  - account: CashAndCashEquivalents
+    weight: 1
+- canonical_account: TradeReceivables
+  components:
+  - account: TradeReceivablesThirdParties
+    weight: 1
+  - account: TradeReceivablesRelatedParties
+    weight: 1
+- canonical_account: Inventories
+  components:
+  - account: Inventories
+    weight: 1
+  - account: LivestockInventories
+    weight: 1
+  - account: RealEstateAssets
+    weight: 1
+- canonical_account: PropertyPlantAndEquipment
+  components:
+  - account: PropertyPlantAndEquipment
+    weight: 1
+- canonical_account: TradePayables
+  components:
+  - account: TradePayablesThirdParties
+    weight: 1
+  - account: TradePayablesRelatedParties
+    weight: 1
+- canonical_account: ShortTermDebt
+  components:
+  - account: ShortTermLoans
+    weight: 1
+  - account: ShortTermNonBankLoans
+    weight: 1
+  - account: TrustReceiptsPayables
+    weight: 1
+- canonical_account: LongTermDebt
+  components:
+  - account: BankLoans
+    weight: 1
+  - account: Non-BankFinancialInstitutionsLoan
+    weight: 1
+  - account: StepLoans
+    weight: 1
+  - account: SecuredLoans
+    weight: 1
+  - account: UnsecuredLoans
+    weight: 1
+  - account: LoansFromGovernmentOfTheRepublicOfIndonesia
+    weight: 1
+  - account: SubordinatedLoans
+    weight: 1
+  - account: ConsumerFinancingPayables
+    weight: 1
+  - account: FinanceLeaseLiabilities
+    weight: 1
+  - account: NotesPayable
+    weight: 1
+  - account: MediumTermNotes
+    weight: 1
+  - account: BondsPayable
+    weight: 1
+  - account: Sukuk
+    weight: 1
+  - account: SubordinatedBonds
+    weight: 1
+  - account: OtherBorrowings
+    weight: 1
+  - account: ConvertibleBonds
+    weight: 1

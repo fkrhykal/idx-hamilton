@@ -1,0 +1,39 @@
+$schema: http://json-schema.org/draft-07/schema#
+allOf:
+- $ref: ../../../base_canonical_schema.yaml
+properties:
+  entry_point:
+    const: infrastructure
+  statement:
+    const: balance_statement
+  variant:
+    const: current_and_non_current
+  mappings:
+    type: array
+    items:
+      type: object
+      properties:
+        canonical_account:
+          enum:
+          - TotalAssets
+          - TotalLiabilities
+          - TotalEquity
+          - EquityAttributableToParent
+          - CashAndCashEquivalents
+          - CurrentAssets
+          - NonCurrentAssets
+          - CurrentLiabilities
+          - NonCurrentLiabilities
+          - TradeReceivables
+          - Inventories
+          - PropertyPlantAndEquipment
+          - TradePayables
+          - ShortTermDebt
+          - LongTermDebt
+        components:
+          type: array
+          items:
+            type: object
+            properties:
+              account:
+                $ref: ./account.schema.json

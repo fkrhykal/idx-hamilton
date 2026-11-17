@@ -1,0 +1,197 @@
+$schema: ./schema.extension.yaml
+entry_point: infrastructure
+statement: income_statement
+variant: by_nature_after_tax
+chart_of_accounts:
+- account: ComprehensiveIncome
+  code: CI
+  is_total: true
+  children:
+  - account: ProfitLoss
+    code: PL
+    is_total: true
+    children:
+    - account: ProfitLossFromDiscontinuedOperations
+      code: PL.DISC
+    - account: ProfitLossFromContinuingOperations
+      code: PL.CONT
+      is_total: true
+      children:
+      - account: ProfitLossBeforeIncomeTax
+        code: PBT
+        is_total: true
+        children:
+        - account: SalesAndRevenue
+          code: PBT.01
+        - account: OtherIncome
+          code: PBT.02
+        - account: ExplorationExpenses
+          code: PBT.03
+          weight: -1
+        - account: TollCollectionExpenses
+          code: PBT.04
+          weight: -1
+        - account: TollRoadServiceExpenses
+          code: PBT.05
+          weight: -1
+        - account: TollRoadMaintenanceExpenses
+          code: PBT.06
+          weight: -1
+        - account: JointOperationsExpenses
+          code: PBT.07
+          weight: -1
+        - account: ConstructionExpenses
+          code: PBT.08
+          weight: -1
+        - account: FlightOperationsExpenses
+          code: PBT.09
+          weight: -1
+        - account: InterconnectionExpenses
+          code: PBT.10
+          weight: -1
+        - account: TicketingSalesAndPromotionExpenses
+          code: PBT.11
+          weight: -1
+        - account: PassengerServicesExpenses
+          code: PBT.12
+          weight: -1
+        - account: UserChargesAndStationExpenses
+          code: PBT.13
+          weight: -1
+        - account: MaintenanceAndOverhaulExpenses
+          code: PBT.14
+          weight: -1
+        - account: TransportationOperationExpenses
+          code: PBT.15
+          weight: -1
+        - account: NetworkOperationExpenses
+          code: PBT.16
+          weight: -1
+        - account: HotelOperationExpenses
+          code: PBT.17
+          weight: -1
+        - account: EmployeeBenefitsExpenses
+          code: PBT.18
+          weight: -1
+        - account: DepreciationAndAmortisationExpenses
+          code: PBT.19
+          weight: -1
+        - account: AdditionReversalOfImpairmentLossRecognisedInProfitOrLoss
+          code: PBT.20
+          weight: -1
+        - account: OtherExpenses
+          code: PBT.21
+          weight: -1
+        - account: OtherGainsLosses
+          code: PBT.22
+        - account: FinanceIncome
+          code: PBT.23
+        - account: InterestAndFinanceCosts
+          code: PBT.24
+          weight: -1
+          deprecated_tags:
+          - tag: FinanceCosts
+        - account: ShareOfProfitLossOfAssociatesAccountedForUsingEquityMethod
+          code: PBT.25
+        - account: ShareOfProfitLossOfJointVenturesAccountedForUsingEquityMethod
+          code: PBT.26
+      - account: TaxBenefitExpenses
+        code: TAX.BENEFIT
+  - account: OtherComprehensiveIncomeAfterTax
+    code: OCI
+    is_total: true
+- account: ProfitLoss
+  code: PL.ATTRIB
+  is_total: true
+  children:
+  - account: ProfitLossAttributableToParentEntity
+    code: PL.ATTRIB.PE
+  - account: ProfitLossAttributableToNonControllingInterests
+    code: PL.ATTRIB.NCI
+- account: ComprehensiveIncome
+  code: CI.ATTRIB
+  is_total: true
+  children:
+  - account: ComprehensiveIncomeAttributableToParentEntity
+    code: CI.ATTRIB.PE
+  - account: ComprehensiveIncomeAttributableToNonControllingInterests
+    code: CI.ATTRIB.NCI
+- account: BasicEarningsLossPerShareFromContinuingOperations
+  code: INFRA.PL.DISC.01
+- account: BasicEarningsLossPerShareFromDiscontinuedOperations
+  code: INFRA.PL.DISC.02
+- account: CarryingAmountOfNonFinancialAssetLiabilityWhoseAcquisitionOrIncurrenceWasHedgedOnHighlyProbableForecastTransactionAdjustedFromEquityAfterTax
+  code: INFRA.PL.DISC.03
+- account: DilutedEarningsLossPerShareFromContinuingOperations
+  code: INFRA.PL.DISC.04
+- account: DilutedEarningsLossPerShareFromDiscontinuedOperations
+  code: INFRA.PL.DISC.05
+- account: GainsLossesOnCashFlowHedgesAfterTax
+  code: INFRA.PL.DISC.07
+- account: GainsLossesOnExchangeDifferencesOnTranslationAfterTax
+  code: INFRA.PL.DISC.08
+- account: GainsLossesOnHedgesOfNetInvestmentsInForeignOperationsAfterTax
+  code: INFRA.PL.DISC.09
+- account: OtherAdjustmentsToOtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossAfterTax
+  code: INFRA.PL.DISC.10
+- account: OtherAdjustmentsToOtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossAfterTax
+  code: INFRA.PL.DISC.11
+- account: OtherComprehensiveIncomeForGainsLossesOnRevaluationOfPropertyAndEquipmentAfterTax
+  code: INFRA.PL.DISC.12
+- account: OtherComprehensiveIncomeForRemeasurementOfDefinedBenefitObligationAfterTax
+  code: INFRA.PL.DISC.13
+- account: OtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossAfterTax
+  code: INFRA.PL.DISC.14
+- account: OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossAfterTax
+  code: INFRA.PL.DISC.15
+- account: ReclassificationAdjustmentsOnAvailableForSaleFinancialAssetsAfterTax
+  code: INFRA.PL.DISC.16
+- account: ReclassificationAdjustmentsOnCashFlowHedgesAfterTax
+  code: INFRA.PL.DISC.17
+- account: ReclassificationAdjustmentsOnExchangeDifferencesOnTranslationAfterTax
+  code: INFRA.PL.DISC.18
+- account: ReclassificationAdjustmentsOnHedgesOfNetInvestmentsInForeignOperationsAfterTax
+  code: INFRA.PL.DISC.19
+- account: ShareOfOtherComprehensiveIncomeOfAssociatesAccountedForUsingEquityMethodAfterTax
+  code: INFRA.PL.DISC.20
+- account: ShareOfOtherComprehensiveIncomeOfJointVenturesAccountedForUsingEquityMethodAfterTax
+  code: INFRA.PL.DISC.21
+- account: UnrealisedGainsLossesOnChangesInFairValueOfAvailableForSaleFinancialAssetsAfterTax
+  code: INFRA.PL.DISC.22
+assertions:
+- assertion_id: comprehensive_income_operations_identity
+  description: ComprehensiveIncome - ProfitLoss - OtherComprehensiveIncomeAfterTax
+    = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ProfitLoss
+    weight: -1
+  - account: OtherComprehensiveIncomeAfterTax
+    weight: -1
+- assertion_id: profit_loss_attribution_identity
+  description: ProfitLoss - ProfitLossAttributableToParentEntity - ProfitLossAttributableToNonControllingInterests
+    = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ProfitLoss
+    weight: 1
+  - account: ProfitLossAttributableToParentEntity
+    weight: -1
+  - account: ProfitLossAttributableToNonControllingInterests
+    weight: -1
+- assertion_id: comprehensive_income_attribution_identity
+  description: ComprehensiveIncome - ComprehensiveIncomeAttributableToParentEntity
+    - ComprehensiveIncomeAttributableToNonControllingInterests = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ComprehensiveIncomeAttributableToParentEntity
+    weight: -1
+  - account: ComprehensiveIncomeAttributableToNonControllingInterests
+    weight: -1

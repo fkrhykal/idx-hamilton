@@ -6,15 +6,15 @@ readme = "README.md"
 authors = [{ name = "Fikri Haikal", email = "kontak.haikal@outlook.com" }]
 requires-python = ">=3.14"
 dependencies = [
-    "apache-hamilton[sdk,ui,visualization]>=1.90.0",
+    "apache-hamilton[lsp,sdk,ui,visualization]>=1.90.0",
     "curl-cffi>=0.16.3",
     "ipykernel>=7.4.0",
     "ixbrlparse>=0.11.2",
     "patito>=0.8.6",
     "polars>=2.0.0",
     "pytest",
+    "pyyaml>=6.0.3",
     "result>=0.17.0",
-    "resvg-py>=0.5.0",
 ]
 
 [project.scripts]

@@ -1,0 +1,73 @@
+$schema: ./schema.extension.yaml
+entry_point: collective_investment_contract
+statement: income_statement
+variant: by_nature_before_tax
+chart_of_accounts:
+- account: ComprehensiveIncome
+  code: CI
+  is_total: true
+  children:
+  - account: ProfitLoss
+    code: PL
+    is_total: true
+    children:
+    - account: ProfitLossBeforeIncomeTax
+      code: PBT
+      is_total: true
+      children:
+      - account: InterestIncome
+        code: PBT.01
+      - account: DividendsIncome
+        code: PBT.02
+      - account: GainsLossesFromSecuritiesPortfolio
+        code: PBT.03
+      - account: OtherIncome
+        code: PBT.04
+      - account: EBAInterest
+        code: PBT.05
+      - account: SupportingServices
+        code: PBT.06
+      - account: InvestmentManagementExpenses
+        code: PBT.07
+        weight: -1
+      - account: CustodianExpenses
+        code: PBT.08
+        weight: -1
+      - account: OtherExpenses
+        code: PBT.09
+        weight: -1
+    - account: TaxBenefitExpenses
+      code: TAX.BENEFIT
+  - account: OtherComprehensiveIncomeAfterTax
+    code: OCI
+    is_total: true
+    children:
+    - account: OtherComprehensiveIncomeBeforeTax
+      code: OCI.BT
+    - account: TaxOnOtherComprehensiveIncome
+      code: OCI.TAX
+      weight: -1
+assertions:
+- assertion_id: comprehensive_income_operations_identity
+  description: ComprehensiveIncome - ProfitLoss - OtherComprehensiveIncomeAfterTax = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ProfitLoss
+    weight: -1
+  - account: OtherComprehensiveIncomeAfterTax
+    weight: -1
+- assertion_id: profit_loss_operations_identity
+  description: ProfitLoss - ProfitLossBeforeIncomeTax - TaxBenefitExpenses = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ProfitLoss
+    weight: 1
+  - account: ProfitLossBeforeIncomeTax
+    weight: -1
+  - account: TaxBenefitExpenses
+    weight: -1
+

@@ -1,0 +1,169 @@
+$schema: ./schema.extension.yaml
+entry_point: infrastructure
+statement: income_statement
+variant: by_function_before_tax
+chart_of_accounts:
+- account: ComprehensiveIncome
+  code: CI
+  is_total: true
+  children:
+  - account: ProfitLoss
+    code: PL
+    is_total: true
+    children:
+    - account: ProfitLossFromDiscontinuedOperations
+      code: PL.DISC
+    - account: ProfitLossFromContinuingOperations
+      code: PL.CONT
+      is_total: true
+      children:
+      - account: ProfitLossBeforeIncomeTax
+        code: PBT
+        is_total: true
+        children:
+        - account: GrossProfit
+          code: GP
+          is_total: true
+          children:
+          - account: SalesAndRevenue
+            code: GP.01
+          - account: CostOfSalesAndRevenue
+            code: GP.02
+            weight: -1
+        - account: SellingExpenses
+          code: PBT.02
+          weight: -1
+        - account: InterconnectionExpenses
+          code: PBT.03
+          weight: -1
+        - account: GeneralAndAdministrativeExpenses
+          code: PBT.04
+          weight: -1
+        - account: FinanceIncome
+          code: PBT.05
+        - account: InterestAndFinanceCosts
+          code: PBT.06
+          weight: -1
+          deprecated_tags:
+          - tag: FinanceCosts
+        - account: GainsLossesOnChangesInForeignExchangeRates
+          code: PBT.07
+        - account: ShareOfProfitLossOfAssociatesAccountedForUsingEquityMethod
+          code: PBT.08
+        - account: ShareOfProfitLossOfJointVenturesAccountedForUsingEquityMethod
+          code: PBT.09
+        - account: GainsLossesOnDerivativeFinancialInstruments
+          code: PBT.10
+        - account: OtherIncome
+          code: PBT.11
+        - account: OtherExpenses
+          code: PBT.12
+          weight: -1
+        - account: OtherGainsLosses
+          code: PBT.13
+      - account: TaxBenefitExpenses
+        code: TAX.BENEFIT
+  - account: OtherComprehensiveIncomeAfterTax
+    code: OCI
+    is_total: true
+    children:
+    - account: OtherComprehensiveIncomeBeforeTax
+      code: OCI.BT
+    - account: TaxOnOtherComprehensiveIncome
+      code: OCI.TAX
+      weight: -1
+- account: ProfitLoss
+  code: PL.ATTRIB
+  is_total: true
+  children:
+  - account: ProfitLossAttributableToParentEntity
+    code: PL.ATTRIB.PE
+  - account: ProfitLossAttributableToNonControllingInterests
+    code: PL.ATTRIB.NCI
+- account: ComprehensiveIncome
+  code: CI.ATTRIB
+  is_total: true
+  children:
+  - account: ComprehensiveIncomeAttributableToParentEntity
+    code: CI.ATTRIB.PE
+  - account: ComprehensiveIncomeAttributableToNonControllingInterests
+    code: CI.ATTRIB.NCI
+- account: BasicEarningsLossPerShareFromContinuingOperations
+  code: INFRA.PL.DISC.01
+- account: BasicEarningsLossPerShareFromDiscontinuedOperations
+  code: INFRA.PL.DISC.02
+- account: CarryingAmountOfNonFinancialAssetLiabilityWhoseAcquisitionOrIncurrenceWasHedgedOnHighlyProbableForecastTransactionAdjustedFromEquityBeforeTax
+  code: INFRA.PL.DISC.03
+- account: DilutedEarningsLossPerShareFromContinuingOperations
+  code: INFRA.PL.DISC.04
+- account: DilutedEarningsLossPerShareFromDiscontinuedOperations
+  code: INFRA.PL.DISC.05
+- account: GainsLossesOnCashFlowHedgesBeforeTax
+  code: INFRA.PL.DISC.07
+- account: GainsLossesOnExchangeDifferencesOnTranslationBeforeTax
+  code: INFRA.PL.DISC.08
+- account: GainsLossesOnHedgesOfNetInvestmentsInForeignOperationsBeforeTax
+  code: INFRA.PL.DISC.09
+- account: OtherAdjustmentsToOtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossBeforeTax
+  code: INFRA.PL.DISC.10
+- account: OtherAdjustmentsToOtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossBeforeTax
+  code: INFRA.PL.DISC.11
+- account: OtherComprehensiveIncomeForGainsLossesOnRevaluationOfPropertyAndEquipmentBeforeTax
+  code: INFRA.PL.DISC.13
+- account: OtherComprehensiveIncomeForRemeasurementOfDefinedBenefitObligationBeforeTax
+  code: INFRA.PL.DISC.14
+- account: OtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossBeforeTax
+  code: INFRA.PL.DISC.15
+- account: OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossBeforeTax
+  code: INFRA.PL.DISC.16
+- account: ReclassificationAdjustmentsOnAvailableForSaleFinancialAssetsBeforeTax
+  code: INFRA.PL.DISC.17
+- account: ReclassificationAdjustmentsOnCashFlowHedgesBeforeTax
+  code: INFRA.PL.DISC.18
+- account: ReclassificationAdjustmentsOnExchangeDifferencesOnTranslationBeforeTax
+  code: INFRA.PL.DISC.19
+- account: ReclassificationAdjustmentsOnHedgesOfNetInvestmentsInForeignOperationsBeforeTax
+  code: INFRA.PL.DISC.20
+- account: ShareOfOtherComprehensiveIncomeOfAssociatesAccountedForUsingEquityMethodBeforeTax
+  code: INFRA.PL.DISC.21
+- account: ShareOfOtherComprehensiveIncomeOfJointVenturesAccountedForUsingEquityMethodBeforeTax
+  code: INFRA.PL.DISC.22
+- account: UnrealisedGainsLossesOnChangesInFairValueOfAvailableForSaleFinancialAssetsBeforeTax
+  code: INFRA.PL.DISC.24
+assertions:
+- assertion_id: comprehensive_income_operations_identity
+  description: ComprehensiveIncome - ProfitLoss - OtherComprehensiveIncomeAfterTax
+    = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ProfitLoss
+    weight: -1
+  - account: OtherComprehensiveIncomeAfterTax
+    weight: -1
+- assertion_id: profit_loss_attribution_identity
+  description: ProfitLoss - ProfitLossAttributableToParentEntity - ProfitLossAttributableToNonControllingInterests
+    = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ProfitLoss
+    weight: 1
+  - account: ProfitLossAttributableToParentEntity
+    weight: -1
+  - account: ProfitLossAttributableToNonControllingInterests
+    weight: -1
+- assertion_id: comprehensive_income_attribution_identity
+  description: ComprehensiveIncome - ComprehensiveIncomeAttributableToParentEntity
+    - ComprehensiveIncomeAttributableToNonControllingInterests = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ComprehensiveIncomeAttributableToParentEntity
+    weight: -1
+  - account: ComprehensiveIncomeAttributableToNonControllingInterests
+    weight: -1

@@ -1,0 +1,87 @@
+$schema: ./canonical.extension.yaml
+entry_point: securities
+statement: income_statement
+variant: by_function_before_tax
+mappings:
+- canonical_account: ProfitBeforeTax
+  components:
+  - account: ProfitLossBeforeIncomeTax
+    weight: 1
+- canonical_account: IncomeTaxExpense
+  components:
+  - account: TaxBenefitExpenses
+    weight: 1
+- canonical_account: NetIncome
+  components:
+  - account: ProfitLoss
+    weight: 1
+- canonical_account: NetIncomeAttributableToParent
+  components:
+  - account: ProfitLossAttributableToParentEntity
+    weight: 1
+- canonical_account: NonInterestOperatingExpenses
+  components:
+  - account: GeneralAndAdministrativeExpenses
+    weight: 1
+  - account: SellingExpenses
+    weight: 1
+  - account: OtherExpenses
+    weight: 1
+- canonical_account: FinancialOperatingRevenue
+  components:
+  - &id001
+    account: IncomeFromBrokerageActivity
+    weight: 1
+  - &id002
+    account: IncomeFromUnderwritingActivitiesAndSellingFees
+    weight: 1
+  - &id003
+    account: IncomeFromFinancingTransactions
+    weight: 1
+  - &id004
+    account: IncomeFromSecuritiesAdministrationServices
+    weight: 1
+  - &id005
+    account: IncomeFromInvestmentManagementServices
+    weight: 1
+  - &id006
+    account: IncomeFromFinancialAdvisoryServices
+    weight: 1
+  - &id007
+    account: RealisedGainsLossesOnTradingOfMarketableSecurities
+    weight: 1
+  - &id008
+    account: GainsLossesOnChangesInFairValueOfMarketableSecurities
+    weight: 1
+  - &id009
+    account: DividendsIncome
+    weight: 1
+  - &id010
+    account: FinanceIncome
+    weight: 1
+  - &id011
+    account: GainsLossesOnForeignExchangeTransactions
+    weight: 1
+- canonical_account: DirectFinancialAndUnderwritingCosts
+  components:
+  - account: FinanceCosts
+    weight: 1
+  - account: FinalTaxExpenses
+    weight: 1
+- canonical_account: NetFinancialOperatingIncome
+  components:
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - *id008
+  - *id009
+  - *id010
+  - *id011
+  - account: FinanceCosts
+    weight: -1
+  - account: FinalTaxExpenses
+    weight: -1

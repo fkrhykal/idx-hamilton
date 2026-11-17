@@ -1,0 +1,276 @@
+$schema: ./schema.extension.yaml
+entry_point: financing
+statement: income_statement
+variant: by_nature_before_tax
+chart_of_accounts:
+- account: ComprehensiveIncome
+  code: CI
+  is_total: true
+  children:
+  - account: ProfitLoss
+    code: PL
+    is_total: true
+    children:
+    - account: ProfitLossFromDiscontinuedOperations
+      code: PL.DISC
+    - account: ProfitLossFromContinuingOperations
+      code: PL.CONT
+      is_total: true
+      children:
+      - account: ProfitLossBeforeIncomeTax
+        code: PBT
+        is_total: true
+        children:
+        - account: InterestAndFinanceIncome
+          code: PBT.01
+        - account: IncomeFromGuarantee
+          code: PBT.02
+        - account: IncomeFromMurabahahAndIstishna
+          code: PBT.03
+        - account: IncomeFromRevenueSharing
+          code: PBT.04
+        - account: IncomeFromIjarah
+          code: PBT.05
+        - account: IncomeFromConsumerFinancing
+          code: PBT.06
+        - account: IncomeFromFinanceLease
+          code: PBT.07
+        - account: IncomeFromFactoring
+          code: PBT.08
+        - account: IncomeFromOperatingLease
+          code: PBT.09
+        - account: GuaranteePremiums
+          code: PBT.10
+        - account: IncomeFromInsurancePremiums
+          code: PBT.11
+        - account: ReinsurancePremiums
+          code: PBT.12
+          weight: -1
+        - account: RetrocessionPremiums
+          code: PBT.13
+          weight: -1
+        - account: DecreaseIncreaseInUnearnedPremiums
+          code: PBT.14
+        - account: DecreaseIncreaseInPremiumIncomeCededToReinsurancer
+          code: PBT.15
+          weight: -1
+        - account: InsuranceCommissionIncome
+          code: PBT.16
+        - account: UjrahReceived
+          code: PBT.17
+        - account: RealisedGainsLossesOnTradingOfFinancialAssets
+          code: PBT.18
+        - account: UnrealisedGainsLossesOnTradingOfFinancialAssets
+          code: PBT.19
+        - account: AdministrationIncome
+          code: PBT.20
+        - account: IncomeFromProvisionsAndCommissions
+          code: PBT.21
+        - account: DividendsIncome
+          code: PBT.22
+        - account: RealisedGainsLossesFromDerivativeInstruments
+          code: PBT.23
+        - account: IncomeFromRecoveryOfWrittenOffAssets
+          code: PBT.24
+        - account: GainsLossesOnChangesInForeignExchangeRates
+          code: PBT.25
+        - account: GainsLossesOnDisposalOfPropertyAndEquipment
+          code: PBT.26
+        - account: GainsLossesOnDisposalOfForeclosedAssets
+          code: PBT.27
+        - account: GainsLossesOnDisposalOfIjarahAssets
+          code: PBT.28
+        - account: RecoveryOfImpairmentLosses
+          code: PBT.29
+        - account: ShareOfProfitLossOfAssociatesAccountedForUsingEquityMethod
+          code: PBT.30
+        - account: ShareOfProfitLossOfJointVenturesAccountedForUsingEquityMethod
+          code: PBT.31
+        - account: OtherIncome
+          code: PBT.32
+        - account: OtherGains
+          code: PBT.33
+        - account: RevenueSharingExpenses
+          code: PBT.34
+          weight: -1
+        - account: ClaimExpenses
+          code: PBT.35
+          weight: -1
+        - account: ReinsuranceClaims
+          code: PBT.36
+        - account: RetrocessionClaims
+          code: PBT.37
+        - account: IncreaseDecreaseInEstimatedClaimsLiability
+          code: PBT.38
+          weight: -1
+        - account: IncreaseDecreaseInLiabilityForFuturePolicyBenefit
+          code: PBT.39
+          weight: -1
+        - account: IncreaseDecreaseInProvisionForLossesArisingFromLiabilityAdequacyTest
+          code: PBT.40
+          weight: -1
+        - account: IncreaseDecreaseInInsuranceLiabilitiesCededToReinsurers
+          code: PBT.41
+        - account: IncreaseDecreaseInLiabilitiesToPolicyholderInUnitLinkedContracts
+          code: PBT.42
+          weight: -1
+        - account: InsuranceCommissionExpenses
+          code: PBT.43
+          weight: -1
+        - account: OtherUnderwritingExpenses
+          code: PBT.44
+          weight: -1
+        - account: UjrahPaid
+          code: PBT.45
+          weight: -1
+        - account: AcquisitionCostsOfInsuranceContracts
+          code: PBT.46
+          weight: -1
+        - account: InterestAndFinanceCosts
+          code: PBT.47
+          weight: -1
+          deprecated_tags:
+          - tag: FinanceCosts
+        - account: InterestExpenses
+          code: PBT.47b
+          weight: -1
+        - account: ProvisionForImpairmentLosses
+          code: PBT.48
+          weight: -1
+        - account: SellingExpenses
+          code: PBT.49
+          weight: -1
+        - account: SalaryAndEmployeeBenefitExpenses
+          code: PBT.50
+          weight: -1
+        - account: GeneralAndAdministrativeExpenses
+          code: PBT.51
+          weight: -1
+        - account: DepreciationOfInvestmentPropertyLeaseAssetsPropertyAndEquipmentForeclosedAssetsAndIjarahAssets
+          code: PBT.52
+          weight: -1
+        - account: OtherExpenses
+          code: PBT.53
+          weight: -1
+        - account: OtherLosses
+          code: PBT.54
+          weight: -1
+      - account: TaxBenefitExpenses
+        code: TAX.BENEFIT
+  - account: OtherComprehensiveIncomeAfterTax
+    code: OCI
+    is_total: true
+    children:
+    - account: OtherComprehensiveIncomeBeforeTax
+      code: OCI.BT
+      is_total: true
+      children:
+      - account: OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossBeforeTax
+        code: OCI.NO_RECLASS
+        is_total: true
+        children:
+        - account: OtherComprehensiveIncomeForGainsLossesOnRevaluationOfPropertyAndEquipmentBeforeTax
+          code: OCI.NO_RECLASS.PPE
+        - account: OtherComprehensiveIncomeForRemeasurementOfDefinedBenefitObligationBeforeTax
+          code: OCI.NO_RECLASS.DBO
+        - account: OtherAdjustmentsToOtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossBeforeTax
+          code: OCI.NO_RECLASS.OTH
+      - account: OtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossBeforeTax
+        code: OCI.RECLASS
+        is_total: true
+        children:
+        - account: GainsLossesOnExchangeDifferencesOnTranslationBeforeTax
+          code: OCI.RECLASS.FX
+        - account: ReclassificationAdjustmentsOnExchangeDifferencesOnTranslationBeforeTax
+          code: OCI.RECLASS.ADJ_FX
+          weight: -1
+        - account: UnrealisedGainsLossesOnChangesInFairValueThroughOtherComprehensiveIncomeFinancialAssetsBeforeTax
+          code: OCI.RECLASS.FVOCI
+          deprecated_tags:
+          - tag: UnrealisedGainsLossesOnChangesInFairValueOfAvailableForSaleFinancialAssetsBeforeTax
+        - account: ReclassificationAdjustmentsOnFairValueThroughOtherComprehensiveIncomeFinancialAssetsBeforeTax
+          code: OCI.RECLASS.ADJ_FVOCI
+          weight: -1
+          deprecated_tags:
+          - tag: ReclassificationAdjustmentsOnAvailableForSaleFinancialAssetsBeforeTax
+        - account: GainsLossesOnCashFlowHedgesBeforeTax
+          code: OCI.RECLASS.CF_HEDGE
+        - account: ReclassificationAdjustmentsOnCashFlowHedgesBeforeTax
+          code: OCI.RECLASS.ADJ_CF_HEDGE
+          weight: -1
+        - account: CarryingAmountOfNonFinancialAssetLiabilityWhoseAcquisitionOrIncurrenceWasHedgedOnHighlyProbableForecastTransactionAdjustedFromEquityBeforeTax
+          code: OCI.RECLASS.HEDGE_ADJ_EQ
+        - account: GainsLossesOnHedgesOfNetInvestmentsInForeignOperationsBeforeTax
+          code: OCI.RECLASS.NET_INV_HEDGE
+        - account: ReclassificationAdjustmentsOnHedgesOfNetInvestmentsInForeignOperationsBeforeTax
+          code: OCI.RECLASS.ADJ_NET_INV
+          weight: -1
+        - account: ShareOfOtherComprehensiveIncomeOfAssociatesAccountedForUsingEquityMethodBeforeTax
+          code: OCI.RECLASS.EQ_ASSOC
+        - account: ShareOfOtherComprehensiveIncomeOfJointVenturesAccountedForUsingEquityMethodBeforeTax
+          code: OCI.RECLASS.EQ_JV
+        - account: OtherAdjustmentsToOtherComprehensiveIncomeThatMayBeReclassifiedToProfitOrLossBeforeTax
+          code: OCI.RECLASS.OTH
+    - account: TaxOnOtherComprehensiveIncome
+      code: OCI.TAX
+      weight: -1
+- account: ProfitLoss
+  code: PL.ATTRIB
+  is_total: true
+  children:
+  - account: ProfitLossAttributableToParentEntity
+    code: PL.ATTRIB.PE
+  - account: ProfitLossAttributableToNonControllingInterests
+    code: PL.ATTRIB.NCI
+- account: ComprehensiveIncome
+  code: CI.ATTRIB
+  is_total: true
+  children:
+  - account: ComprehensiveIncomeAttributableToParentEntity
+    code: CI.ATTRIB.PE
+  - account: ComprehensiveIncomeAttributableToNonControllingInterests
+    code: CI.ATTRIB.NCI
+- account: BasicEarningsLossPerShareFromContinuingOperations
+  code: EPS.BASIC.CONT
+- account: BasicEarningsLossPerShareFromDiscontinuedOperations
+  code: EPS.BASIC.DISC
+- account: DilutedEarningsLossPerShareFromContinuingOperations
+  code: EPS.DILUTED.CONT
+- account: DilutedEarningsLossPerShareFromDiscontinuedOperations
+  code: EPS.DILUTED.DISC
+assertions:
+- assertion_id: comprehensive_income_operations_identity
+  description: ComprehensiveIncome - ProfitLoss - OtherComprehensiveIncomeAfterTax = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ProfitLoss
+    weight: -1
+  - account: OtherComprehensiveIncomeAfterTax
+    weight: -1
+- assertion_id: profit_loss_attribution_identity
+  description: ProfitLoss - ProfitLossAttributableToParentEntity - ProfitLossAttributableToNonControllingInterests
+    = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ProfitLoss
+    weight: 1
+  - account: ProfitLossAttributableToParentEntity
+    weight: -1
+  - account: ProfitLossAttributableToNonControllingInterests
+    weight: -1
+- assertion_id: comprehensive_income_attribution_identity
+  description: ComprehensiveIncome - ComprehensiveIncomeAttributableToParentEntity
+    - ComprehensiveIncomeAttributableToNonControllingInterests = 0
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: ComprehensiveIncome
+    weight: 1
+  - account: ComprehensiveIncomeAttributableToParentEntity
+    weight: -1
+  - account: ComprehensiveIncomeAttributableToNonControllingInterests
+    weight: -1

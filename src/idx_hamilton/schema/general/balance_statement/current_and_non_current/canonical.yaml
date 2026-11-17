@@ -1,0 +1,135 @@
+$schema: ./canonical.extension.yaml
+entry_point: general
+statement: balance_statement
+variant: current_and_non_current
+mappings:
+- canonical_account: TotalAssets
+  components:
+  - account: Assets
+    weight: 1
+- canonical_account: TotalLiabilities
+  components:
+  - account: Liabilities
+    weight: 1
+- canonical_account: TotalEquity
+  components:
+  - account: Equity
+    weight: 1
+- canonical_account: EquityAttributableToParent
+  components:
+  - account: EquityAttributableToEquityOwnersOfParentEntity
+    weight: 1
+- canonical_account: CashAndCashEquivalents
+  components:
+  - account: CashAndCashEquivalents
+    weight: 1
+- canonical_account: CurrentAssets
+  components:
+  - account: CurrentAssets
+    weight: 1
+- canonical_account: NonCurrentAssets
+  components:
+  - account: NonCurrentAssets
+    weight: 1
+- canonical_account: CurrentLiabilities
+  components:
+  - account: CurrentLiabilities
+    weight: 1
+- canonical_account: NonCurrentLiabilities
+  components:
+  - account: NonCurrentLiabilities
+    weight: 1
+- canonical_account: TradeReceivables
+  components:
+  - account: TradeReceivablesThirdParties
+    weight: 1
+  - account: TradeReceivablesRelatedParties
+    weight: 1
+- canonical_account: Inventories
+  components:
+  - account: CurrentInventories
+    weight: 1
+  - account: CurrentLivestockInventories
+    weight: 1
+  - account: CurrentRealEstateAssets
+    weight: 1
+- canonical_account: PropertyPlantAndEquipment
+  components:
+  - account: PropertyPlantAndEquipment
+    weight: 1
+- canonical_account: TradePayables
+  components:
+  - account: TradePayablesThirdParties
+    weight: 1
+  - account: TradePayablesRelatedParties
+    weight: 1
+- canonical_account: ShortTermDebt
+  components:
+  - account: ShortTermBankLoans
+    weight: 1
+  - account: TrustReceiptsPayables
+    weight: 1
+  - account: CurrentMaturitiesOfBankLoans
+    weight: 1
+  - account: CurrentMaturitiesOfNon-BankFinancialInstitutionsLoan
+    weight: 1
+  - account: CurrentMaturitiesOfSecuredLoans
+    weight: 1
+  - account: CurrentMaturitiesOfUnsecuredLoans
+    weight: 1
+  - account: CurrentMaturitiesOfStepLoans
+    weight: 1
+  - account: CurrentMaturitiesOfLoansFromGovernmentOfTheRepublicOfIndonesia
+    weight: 1
+  - account: CurrentMaturitiesOfSubordinatedLoans
+    weight: 1
+  - account: CurrentMaturitiesOfConsumerFinancingPayables
+    weight: 1
+  - account: CurrentMaturitiesOfFinanceLeaseLiabilities
+    weight: 1
+  - account: CurrentMaturitiesOfNotesPayable
+    weight: 1
+  - account: CurrentMaturitiesOfMediumTermNotes
+    weight: 1
+  - account: CurrentMaturitiesOfBondsPayable
+    weight: 1
+  - account: CurrentMaturitiesOfSukuk
+    weight: 1
+  - account: CurrentMaturitiesOfSubordinatedBonds
+    weight: 1
+  - account: CurrentMaturitiesOfOtherBorrowings
+    weight: 1
+- canonical_account: LongTermDebt
+  components:
+  - account: LongTermBankLoans
+    weight: 1
+  - account: LongTermNon-BankFinancialInstitutionsLoan
+    weight: 1
+  - account: LongTermStepLoans
+    weight: 1
+  - account: LongTermSecuredLoans
+    weight: 1
+  - account: LongTermUnsecuredLoans
+    weight: 1
+  - account: LongTermLoansFromGovernmentOfTheRepublicOfIndonesia
+    weight: 1
+  - account: LongTermSubordinatedLoans
+    weight: 1
+  - account: LongTermConsumerFinancingPayables
+    weight: 1
+  - account: LongTermFinanceLeaseLiabilities
+    weight: 1
+  - account: LongTermNotesPayable
+    weight: 1
+  - account: LongTermMediumTermNotes
+    weight: 1
+  - account: LongTermBondsPayable
+    weight: 1
+  - account: LongTermSukuk
+    weight: 1
+  - account: LongTermSubordinatedBonds
+    weight: 1
+  - account: LongTermOtherBorrowings
+    weight: 1
+  - account: ConvertibleBonds
+    weight: 1

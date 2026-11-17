@@ -1,0 +1,32 @@
+$schema: http://json-schema.org/draft-07/schema#
+allOf:
+- $ref: ../../../base_canonical_schema.yaml
+properties:
+  entry_point:
+    const: collective_investment_contract
+  statement:
+    const: income_statement
+  variant:
+    const: by_nature_before_tax
+  mappings:
+    type: array
+    items:
+      type: object
+      properties:
+        canonical_account:
+          enum:
+          - ProfitBeforeTax
+          - IncomeTaxExpense
+          - NetIncome
+          - NetIncomeAttributableToParent
+          - FinancialOperatingRevenue
+          - DirectFinancialAndUnderwritingCosts
+          - NetFinancialOperatingIncome
+          - NonInterestOperatingExpenses
+        components:
+          type: array
+          items:
+            type: object
+            properties:
+              account:
+                $ref: ./account.schema.json

@@ -2,8 +2,8 @@ import patito as pt
 import polars as pl
 
 
-class _ColumnAccessor:
-    def __init__(self, model_cls: type[pt.Model]):
+class _ColumnAccessor[T: pt.Model]:
+    def __init__(self, model_cls: type[T]):
         self._model_cls = model_cls
 
     def __getattr__(self, name: str) -> pl.Expr:
@@ -14,8 +14,8 @@ class _ColumnAccessor:
         raise AttributeError(f"'{self._model_cls.__name__}' has no column '{name}'")
 
 
-class _NameAccessor:
-    def __init__(self, model_cls: type[pt.Model]):
+class _NameAccessor[T: pt.Model]:
+    def __init__(self, model_cls: type[T]):
         self._model_cls = model_cls
 
     def __getattr__(self, name: str) -> str:
@@ -26,21 +26,21 @@ class _NameAccessor:
         raise AttributeError(f"'{self._model_cls.__name__}' has no name '{name}'")
 
 
-class Model(pt.Model):
+class Model(
+    pt.Model,
+):
     @classmethod
     def __pydantic_init_subclass__(cls, **kwargs):
         super().__pydantic_init_subclass__(**kwargs)
 
-        if hasattr(cls, "c") and isinstance(cls.c, type):
+        if not hasattr(cls, "c") or not isinstance(cls.c, type):
+            cls.c = _ColumnAccessor(cls)
+        else:
             for field_name in cls.model_fields:
                 setattr(cls.c, field_name, pl.col(field_name))
 
-        if hasattr(cls, "n") and isinstance(cls.n, type):
+        if not hasattr(cls, "n") or not isinstance(cls.n, type):
+            cls.n = _NameAccessor(cls)
+        else:
             for field_name in cls.model_fields:
                 setattr(cls.n, field_name, field_name)
-
-        elif not hasattr(cls, "c"):
-            cls.c = _ColumnAccessor(cls)
-
-        elif not hasattr(cls, "n"):
-            cls.n = _NameAccessor(cls)

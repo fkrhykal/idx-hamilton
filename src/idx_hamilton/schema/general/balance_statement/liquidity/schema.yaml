@@ -1,0 +1,364 @@
+$schema: ./schema.extension.yaml
+entry_point: general
+statement: balance_statement
+variant: liquidity
+chart_of_accounts:
+- account: Assets
+  code: A
+  is_total: true
+  children:
+  - account: CashAndCashEquivalents
+    code: A.001
+  - account: NotesReceivable
+    code: A.002
+  - account: ShortTermInvestments
+    code: A.003
+  - account: FinancialAssetsAtFairValueThroughProfitOrLoss
+    code: A.004
+  - account: FinancialAssetsFairValueThroughOtherComprehensiveIncome
+    code: A.FVOCI
+    deprecated_tags:
+    - tag: FinancialAssetsAvailableForSale
+  - account: FinancialAssetsAmortizedCost
+    code: A.AC
+    deprecated_tags:
+    - tag: FinancialAssetsHeldToMaturity
+  - account: OtherFinancialAssets
+    code: A.007
+  - account: DerivativeFinancialAssets
+    code: A.008
+  - account: TradeReceivablesThirdParties
+    code: A.009
+  - account: TradeReceivablesRelatedParties
+    code: A.010
+  - account: RetentionReceivablesThirdParties
+    code: A.011
+  - account: RetentionReceivablesRelatedParties
+    code: A.012
+  - account: UnbilledReceivablesThirdParties
+    code: A.013
+  - account: UnbilledReceivablesRelatedParties
+    code: A.014
+  - account: ReceivablesOnSubsidy
+    code: A.015
+  - account: CustomerReceivablesThirdParties
+    code: A.016
+  - account: CustomerReceivablesRelatedParties
+    code: A.017
+  - account: MarginReceivables
+    code: A.018
+  - account: ReceivablesFromClearingAndSettlementGuaranteeInstitution
+    code: A.019
+  - account: PremiumAndReinsuranceReceivables
+    code: A.020
+  - account: DividendsAndInterestReceivables
+    code: A.021
+  - account: OtherReceivablesThirdParties
+    code: A.022
+  - account: OtherReceivablesRelatedParties
+    code: A.023
+  - account: LivestockInventories
+    code: A.024
+  - account: RealEstateAssets
+    code: A.025
+  - account: Inventories
+    code: A.026
+  - account: PrepaidExpenses
+    code: A.027
+  - account: Guarantees
+    code: A.028
+  - account: FinanceLeaseReceivables
+    code: A.029
+  - account: PrepaidTaxes
+    code: A.030
+  - account: ClaimsForTaxRefund
+    code: A.031
+  - account: DeferredStrippingCosts
+    code: A.032
+  - account: DeferredMobilisationCosts
+    code: A.033
+  - account: NonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForSale
+    code: A.034
+  - account: NonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForDistributionToOwners
+    code: A.035
+  - account: RestrictedFunds
+    code: A.036
+  - account: AircraftMaintenanceReserveFunds
+    code: A.037
+  - account: ReceivablesFromRelatedParties
+    code: A.038
+  - account: ReceivablesFromStockholders
+    code: A.039
+  - account: InvestmentsAccountedForUsingEquityMethod
+    code: A.040
+  - account: InvestmentsInJointVentures
+    code: A.041
+  - account: InvestmentsInAssociates
+    code: A.042
+  - account: AdvancesOnInvestments
+    code: A.043
+  - account: AdvancesOnPurchaseOfPropertyPlantAndEquipment
+    code: A.044
+  - account: OtherAdvances
+    code: A.045
+  - account: DeferredTaxAssets
+    code: A.046
+  - account: LivestockProduction
+    code: A.047
+  - account: IndustrialTimberPlantationsMature
+    code: A.048
+  - account: IndustrialTimberPlantationsImmature
+    code: A.049
+  - account: PlantationAssetsMature
+    code: A.050
+  - account: PlantationAssetsImmature
+    code: A.051
+  - account: BiologicalAssets
+    code: A.052
+  - account: PlasmaPlantations
+    code: A.053
+  - account: ReinsuranceAssets
+    code: A.054
+  - account: InvestmentProperties
+    code: A.055
+  - account: UndevelopedLand
+    code: A.056
+  - account: PropertyPlantAndEquipment
+    code: A.057
+  - account: RightOfUseAssets
+    code: A.058
+  - account: IjarahAssets
+    code: A.059
+  - account: ForeclosedAssets
+    code: A.060
+  - account: OilAndGasAssets
+    code: A.061
+  - account: ExplorationAndEvaluationAssets
+    code: A.062
+  - account: TollRoadConcessionRights
+    code: A.063
+  - account: MiningProperties
+    code: A.064
+  - account: DeferredChargesOnLandrights
+    code: A.065
+  - account: DeferredChargesOnExplorationAndDevelopmentExpenditures
+    code: A.066
+  - account: DeferredChargesOnCostOnForest
+    code: A.067
+  - account: DeferredChargesOnEnvironmentalAndReclamationExpenditures
+    code: A.068
+  - account: OtherDeferredCharges
+    code: A.069
+  - account: PostEmploymentBenefitAssets
+    code: A.070
+  - account: Goodwill
+    code: A.071
+  - account: IntangibleAssetsOtherThanGoodwill
+    code: A.072
+  - account: TaxAmnestyAssets
+    code: A.073
+  - account: OtherNonFinancialAssets
+    code: A.074
+- account: Liabilities
+  code: L
+  is_total: true
+  children:
+  - account: ShortTermLoans
+    code: L.001
+  - account: TrustReceiptsPayables
+    code: L.002
+  - account: TradePayablesThirdParties
+    code: L.003
+  - account: TradePayablesRelatedParties
+    code: L.004
+  - account: OtherPayablesThirdParties
+    code: L.005
+  - account: OtherPayablesRelatedParties
+    code: L.006
+  - account: AdvancesFromCustomersThirdParties
+    code: L.007
+  - account: AdvancesFromCustomersRelatedParties
+    code: L.008
+  - account: DividendsPayable
+    code: L.009
+  - account: OtherFinancialLiabilities
+    code: L.010
+  - account: AccruedExpenses
+    code: L.011
+  - account: TaxesPayable
+    code: L.012
+  - account: ExcisePayable
+    code: L.013
+  - account: ProjectPayables
+    code: L.014
+  - account: PayablesToClearingAndSettlementGuaranteeInstitution
+    code: L.015
+  - account: PayablesToCustomersThirdParties
+    code: L.016
+  - account: PayablesToCustomersRelatedParties
+    code: L.017
+  - account: ReinsurancePayables
+    code: L.018
+  - account: FactoringPayables
+    code: L.019
+  - account: Deposits
+    code: L.020
+  - account: UnearnedRevenue
+    code: L.021
+  - account: DueToCustomersThirdParties
+    code: L.022
+  - account: DueToCustomersRelatedParties
+    code: L.023
+  - account: DeferredRevenue
+    code: L.024
+  - account: ProvisionsForOverlay
+    code: L.025
+  - account: ProvisionsForAircraftReturnAndMaintenanceFunds
+    code: L.026
+  - account: ProvisionsForInfrastructureDevelopmentPublicAndSocialFacilities
+    code: L.027
+  - account: ProvisionsForAssetDismantlingCosts
+    code: L.028
+  - account: ProvisionsForRestorationAndRehabilitation
+    code: L.029
+  - account: OtherProvisions
+    code: L.030
+  - account: ShareBasedPaymentLiabilities
+    code: L.031
+  - account: ContractLiabilities
+    code: L.032
+  - account: LiabilitiesDirectlyAssociatedWithNonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForSaleOrAsHeldForDistributionToOwners
+    code: L.033
+  - account: DueToRelatedParties
+    code: L.034
+  - account: DueToStockholders
+    code: L.035
+  - account: DerivativeFinancialLiabilities
+    code: L.036
+  - account: DeferredTaxLiabilities
+    code: L.037
+  - account: BankLoans
+    code: L.038
+  - account: StepLoans
+    code: L.039
+  - account: SecuredLoans
+    code: L.040
+  - account: UnsecuredLoans
+    code: L.041
+  - account: LoansFromGovernmentOfTheRepublicOfIndonesia
+    code: L.042
+  - account: SubordinatedLoans
+    code: L.043
+  - account: JointOperationsLiabilities
+    code: L.044
+  - account: LandAcquisitionLiabilities
+    code: L.045
+  - account: ConsumerFinancingPayables
+    code: L.046
+  - account: FinanceLeaseLiabilities
+    code: L.047
+  - account: ElectricityPurchasePayables
+    code: L.048
+  - account: RetentionPayables
+    code: L.049
+  - account: NotesPayable
+    code: L.050
+  - account: BondsPayable
+    code: L.051
+  - account: Sukuk
+    code: L.052
+  - account: SubordinatedBonds
+    code: L.053
+  - account: OtherBorrowings
+    code: L.054
+  - account: ConvertibleBonds
+    code: L.055
+  - account: AccruedStrippingCosts
+    code: L.056
+  - account: LiabilitiesToPolicyholders
+    code: L.057
+  - account: PostEmploymentBenefitObligations
+    code: L.058
+  - account: TaxAmnestyLiabilities
+    code: L.059
+  - account: OtherNonFinancialLiabilities
+    code: L.060
+  - account: Non-BankFinancialInstitutionsLoan
+    code: L.061
+  - account: MediumTermNotes
+    code: L.062
+  - account: CoinsuranceLiabilities
+    code: L.063
+  - account: InsuranceContractLiabilities
+    code: L.068
+- account: Equity
+  code: E
+  is_total: true
+  children:
+  - account: EquityAttributableToEquityOwnersOfParentEntity
+    code: E.001
+    is_total: true
+    children:
+    - account: CommonStocks
+      code: E.001.001
+    - account: PreferredStocks
+      code: E.001.002
+    - account: AdditionalPaidInCapital
+      code: E.001.003
+    - account: TreasuryStocks
+      code: E.001.004
+      weight: -1
+    - account: AdvancesInCapitalStock
+      code: E.001.005
+    - account: StockOptions
+      code: E.001.006
+    - account: TranslationAdjustment
+      code: E.001.007
+    - account: RevaluationReserves
+      code: E.001.008
+    - account: ReserveOfExchangeDifferencesOnTranslation
+      code: E.001.009
+    - account: ReserveForChangesInFairValueOfFairValueThroughOtherComprehensiveIncomeFinancialAssets
+      code: E.PE.090
+      deprecated_tags:
+      - tag: ReserveForChangesInFairValueOfAvailableForSaleFinancialAssets
+    - account: ReserveOfGainsLossesFromInvestmentsInEquityInstruments
+      code: E.001.011
+    - account: ReserveOfShareBasedPayments
+      code: E.001.012
+    - account: ReserveOfCashFlowHedges
+      code: E.001.013
+    - account: ReserveOfRemeasurementsOfDefinedBenefitPlans
+      code: E.001.014
+    - account: OtherReserves
+      code: E.001.015
+    - account: DifferenceDueToChangesOfEquityInSubsidiaryAssociates
+      code: E.001.016
+    - account: OtherComponentsOfEquity
+      code: E.001.017
+    - account: AppropriatedRetainedEarnings
+      code: E.001.018
+    - account: UnappropriatedRetainedEarnings
+      code: E.001.019
+  - account: ProformaEquity
+    code: E.002
+  - account: NonControllingInterests
+    code: E.003
+- account: InvestmentsInSubsidiaries
+  code: DISC.01
+- account: LiabilitiesAndEquity
+  code: DISC.02
+- account: ShortTermNonBankLoans
+  code: DISC.03
+assertions:
+- assertion_id: balance_sheet_identity
+  description: Assets must equal Liabilities plus Equity.
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: Assets
+    weight: 1
+  - account: Liabilities
+    weight: -1
+  - account: Equity
+    weight: -1

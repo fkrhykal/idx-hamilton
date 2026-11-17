@@ -1,0 +1,36 @@
+$schema: http://json-schema.org/draft-07/schema#
+allOf:
+- $ref: ../../../base_canonical_schema.yaml
+properties:
+  entry_point:
+    const: financial_and_sharia
+  statement:
+    const: balance_statement
+  variant:
+    const: liquidity
+  mappings:
+    type: array
+    items:
+      type: object
+      properties:
+        canonical_account:
+          enum:
+          - TotalAssets
+          - TotalLiabilities
+          - TotalEquity
+          - EquityAttributableToParent
+          - CashAndCashEquivalents
+          - EarningAssets
+          - TotalBorrowingsAndDebtIssued
+          - GrossLoansAndFinancing
+          - AllowanceForImpairmentLosses
+          - CustomerDeposits
+          - TemporarySyirkahFunds
+          - DemandAndSavingsDeposits
+        components:
+          type: array
+          items:
+            type: object
+            properties:
+              account:
+                $ref: ./account.schema.json

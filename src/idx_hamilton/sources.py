@@ -19,8 +19,6 @@ log = logging.getLogger(__name__)
 
 type Period = Literal["TW1", "TW2", "TW3", "Audit"]
 
-type EmitenType = Literal["s", "o"]
-
 
 class Extension(StrEnum):
     ZIP = ".zip"
@@ -33,7 +31,6 @@ class Extension(StrEnum):
 class ReportQuery:
     year: int
     period: Period
-    emiten_type: EmitenType
 
 
 @dataclass(frozen=True)
@@ -89,18 +86,16 @@ class FinancialReportURL(BaseModel):
 def report_queries(
     years: tuple[int, ...] = (2021, 2022, 2023, 2024, 2025, 2026),
     periods: tuple[Period, ...] = ("TW1", "TW2", "TW3", "Audit"),
-    emiten_types: tuple[EmitenType, ...] = ("s",),
 ) -> list[ReportQuery]:
-    return [
-        ReportQuery(year=y, period=p, emiten_type=e)
-        for y, p, e in product(years, periods, emiten_types)
-    ]
+    return [ReportQuery(year=y, period=p) for y, p in product(years, periods)]
 
 
 def financial_report_urls(
     report_queries: list[ReportQuery], idx_http_client: HttpClient
 ) -> list[tuple[ReportQuery, FinancialReportURL]]:
     cache_dir = Path(".data/sources/financial_report_url")
+
+    cache_dir.mkdir(exist_ok=True, parents=True)
 
     cached: dict[str, Path] = {
         f.stem: f
@@ -111,7 +106,7 @@ def financial_report_urls(
     report_urls = []
 
     for q in report_queries:
-        filename = f"{q.year}_{q.period}_{q.emiten_type}"
+        filename = f"{q.year}_{q.period}"
 
         cached_file = cached.get(filename)
         if cached_file and cached_file.stat().st_size > 0:
@@ -122,7 +117,7 @@ def financial_report_urls(
 
         target_file = cache_dir.joinpath(filename).with_suffix(Extension.JSON)
 
-        url = f"https://www.idx.co.id/primary/ListedCompany/GetFinancialReport?indexFrom=1&pageSize=99999&year={q.year}&reportType=rdf&EmitenType={q.emiten_type}&periode={q.period}"
+        url = f"https://www.idx.co.id/primary/ListedCompany/GetFinancialReport?indexFrom=1&pageSize=99999&year={q.year}&reportType=rdf&EmitenType=s&periode={q.period}"
         response = idx_http_client.get(url)
 
         if not response.ok:

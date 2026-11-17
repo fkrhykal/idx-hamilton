@@ -1,0 +1,2117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matriks Heatmap Rasio Keuangan Emiten BEI (2025 Audit – 2026 TW3)</title>
+  <script src="ratios_data.js"></script>
+  <style>
+    :root {
+      --background: #fafafa;
+      --foreground: #09090b;
+      --card: #ffffff;
+      --card-foreground: #09090b;
+      --muted: #f4f4f5;
+      --muted-foreground: #71717a;
+      --border: #e4e4e7;
+      --input: #e4e4e7;
+      --ring: #18181b;
+      --primary: #18181b;
+      --primary-foreground: #fafafa;
+      --secondary: #f4f4f5;
+      --secondary-foreground: #18181b;
+      --success: #16a34a;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --radius: 0.5rem;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--foreground);
+      background: var(--background);
+      line-height: 1.45;
+      padding: 24px 32px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .header {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--foreground);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .header p {
+      color: var(--muted-foreground);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 20px;
+      align-items: flex-end;
+      background: var(--card);
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin-bottom: 18px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .control-group label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted-foreground);
+    }
+    select {
+      padding: 0 10px;
+      font-size: 12px;
+      height: 32px;
+      border: 1px solid var(--input);
+      border-radius: 6px;
+      background: var(--card);
+      color: var(--foreground);
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    select:focus {
+      border-color: var(--ring);
+      box-shadow: 0 0 0 1px var(--ring);
+    }
+    #ratioSelect { min-width: 300px; font-weight: 600; }
+    #sectorSelect { min-width: 160px; }
+    #subsectorSelect { min-width: 170px; }
+    #emitenSelect { min-width: 150px; }
+
+    /* Custom Selection Dropdown (Shadcn-UI Popover/Listbox style) */
+    .cselect-wrapper {
+      position: relative;
+      user-select: none;
+    }
+    .cselect-wrapper[data-for="ratioSelect"] { min-width: 310px; }
+    .cselect-wrapper[data-for="sectorSelect"] { min-width: 160px; }
+    .cselect-wrapper[data-for="subsectorSelect"] { min-width: 170px; }
+    .cselect-wrapper[data-for="emitenSelect"] { min-width: 150px; }
+    .cselect-wrapper[data-for="rankingPeriodSelect"] { min-width: 110px; }
+
+    .cselect-trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      height: 32px;
+      padding: 0 10px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--foreground);
+      background: var(--card);
+      border: 1px solid var(--input);
+      border-radius: 6px;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+    }
+    .cselect-trigger:focus, .cselect-wrapper.open .cselect-trigger {
+      border-color: var(--ring);
+      box-shadow: 0 0 0 1px var(--ring);
+    }
+    .cselect-wrapper[data-for="rankingPeriodSelect"] .cselect-trigger {
+      height: 28px;
+      font-size: 11.5px;
+      padding: 0 8px;
+    }
+    .cselect-value {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+    .cselect-chevron {
+      color: var(--muted-foreground);
+      flex-shrink: 0;
+      transition: transform 0.15s ease;
+    }
+    .cselect-wrapper.open .cselect-chevron {
+      transform: rotate(180deg);
+    }
+    .cselect-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      min-width: 100%;
+      width: max-content;
+      max-width: 420px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09), 0 1px 3px rgba(0, 0, 0, 0.04);
+      z-index: 100;
+      padding: 4px;
+      display: none;
+    }
+    .cselect-wrapper.open .cselect-dropdown {
+      display: block;
+      animation: cselectFadeIn 0.12s ease-out;
+    }
+    @keyframes cselectFadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .cselect-wrapper[data-for="rankingPeriodSelect"] .cselect-dropdown {
+      left: auto;
+      right: 0;
+    }
+    .cselect-wrapper[data-for="emitenSelect"] .cselect-dropdown {
+      left: auto;
+      right: 0;
+    }
+    .cselect-search-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 8px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4px;
+    }
+    .cselect-search-icon {
+      color: var(--muted-foreground);
+      flex-shrink: 0;
+    }
+    .cselect-filter-input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 11.5px;
+      color: var(--foreground);
+      width: 100%;
+      font-family: inherit;
+    }
+    .cselect-options {
+      max-height: 240px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .cselect-group-header {
+      font-size: 9.5px;
+      font-weight: 600;
+      color: var(--muted-foreground);
+      padding: 6px 8px 3px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .cselect-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 5px 8px;
+      font-size: 11.5px;
+      color: var(--foreground);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.1s ease;
+    }
+    .cselect-option:hover, .cselect-option.focused {
+      background: var(--muted);
+    }
+    .cselect-option.selected {
+      font-weight: 600;
+      background: #f4f4f5;
+    }
+    .cselect-check {
+      color: var(--foreground);
+      opacity: 0;
+      flex-shrink: 0;
+    }
+    .cselect-option.selected .cselect-check {
+      opacity: 1;
+    }
+    .cselect-empty {
+      padding: 12px 8px;
+      font-size: 11.5px;
+      color: var(--muted-foreground);
+      text-align: center;
+    }
+
+    .meta-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+      transition: border-color 0.15s ease;
+    }
+    .card:hover {
+      border-color: #d4d4d8;
+    }
+    .card-label {
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--muted-foreground);
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .card-val {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--foreground);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .formula-bar {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px 14px;
+      font-size: 11.5px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    }
+    .formula-bar code {
+      font-family: var(--font-mono);
+      color: var(--foreground);
+      background: var(--muted);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 11.5px;
+    }
+
+    .ratio-expl-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      font-size: 12px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    }
+    .expl-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+      color: var(--foreground);
+      font-weight: 600;
+      font-size: 11.5px;
+      letter-spacing: -0.01em;
+    }
+    .expl-meaning {
+      color: var(--foreground);
+      margin-bottom: 8px;
+      line-height: 1.45;
+    }
+    .expl-reading-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 12px;
+    }
+    .expl-reading-badge {
+      display: inline-block;
+      background: var(--card);
+      color: var(--foreground);
+      border: 1px solid var(--border);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      white-space: nowrap;
+    }
+    .expl-reading-text {
+      color: var(--foreground);
+      font-size: 11.5px;
+      line-height: 1.45;
+    }
+
+    .legend-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px 14px;
+      margin-bottom: 18px;
+      font-size: 11.5px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    }
+    .legend-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5px 7px;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 9999px;
+      white-space: nowrap;
+    }
+    .badge-nm { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+    .badge-na { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+    .badge-unrec { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    .badge-nr { background: #f4f4f5; color: #71717a; border: 1px solid #e4e4e7; }
+
+    .legend-scale {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .gradient-bar {
+      width: 120px;
+      height: 10px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+
+    .table-container {
+      max-height: 720px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      position: relative;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11.5px;
+      text-align: left;
+    }
+    thead th {
+      position: sticky;
+      top: 0;
+      background: #fafafa;
+      color: var(--muted-foreground);
+      font-weight: 600;
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background-color 0.12s ease;
+    }
+    tbody tr:hover {
+      background: #fafafa;
+    }
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+    td {
+      padding: 4px 8px;
+      vertical-align: middle;
+    }
+    .col-idx {
+      width: 36px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+    }
+    .col-emiten {
+      width: 78px;
+      font-weight: 600;
+      color: #1d4ed8;
+      font-size: 11.5px;
+    }
+    .col-sector {
+      width: 125px;
+      color: var(--muted-foreground);
+      font-size: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 125px;
+    }
+    .col-subsector {
+      width: 135px;
+      color: var(--muted-foreground);
+      font-size: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 135px;
+    }
+    .col-period {
+      width: 100px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 4px;
+    }
+    .col-sortable {
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.15s ease;
+    }
+    .col-sortable:hover {
+      background: #f4f4f5 !important;
+    }
+    .sort-indicator {
+      display: inline-block;
+      margin-left: 2px;
+      font-size: 9px;
+      color: var(--foreground);
+    }
+    .heat-cell {
+      display: inline-block;
+      width: 96%;
+      padding: 3px 0;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      text-align: center;
+      cursor: default;
+    }
+
+    .badge-basis {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.1px;
+    }
+    .badge-stock { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+    .badge-flow-stock { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+    .badge-flow { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+
+    .badge-polarity {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      font-size: 10.5px;
+      font-weight: 600;
+    }
+    .badge-pol-higher { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+    .badge-pol-lower { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+    .badge-pol-neutral { background: #f4f4f5; color: #52525b; border: 1px solid #e4e4e7; }
+
+    .th-sub {
+      font-size: 9.5px;
+      font-weight: 400;
+      color: var(--muted-foreground);
+      margin-top: 2px;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+    .distribution-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    @media (min-width: 1080px) {
+      .distribution-grid {
+        grid-template-columns: 1.15fr 0.85fr;
+      }
+    }
+
+    .corridor-container, .ranking-container {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px 12px 18px;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    }
+    .corridor-header, .ranking-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      min-height: 26px;
+    }
+    .corridor-title, .ranking-title {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .corridor-title > span:first-child, .ranking-title > span:first-child {
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--foreground);
+    }
+    .corridor-subtitle, .ranking-subtitle {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--muted-foreground);
+    }
+    .corridor-legend {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .corridor-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--foreground);
+      user-select: none;
+    }
+    .corridor-legend-swatch {
+      width: 10px;
+      height: 8px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+    .corridor-legend-line {
+      width: 12px;
+      height: 2px;
+      border-radius: 1px;
+      display: inline-block;
+    }
+    .ranking-period-select {
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 500;
+      height: 28px;
+      padding: 0 8px;
+      border: 1px solid var(--input);
+      border-radius: 5px;
+      background: var(--card);
+      color: var(--foreground);
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+    .ranking-period-select:focus {
+      border-color: var(--ring);
+    }
+    .corridor-svg-wrapper, .ranking-svg-wrapper {
+      position: relative;
+      width: 100%;
+      height: 285px;
+    }
+    #corridorSvg, #rankingSvg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    #tooltip {
+      position: fixed;
+      display: none;
+      background: #09090b;
+      color: #fafafa;
+      border: 1px solid #27272a;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      line-height: 1.45;
+      pointer-events: none;
+      z-index: 9999;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      max-width: 290px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Matriks Heatmap Rasio Keuangan Emiten BEI
+    </h1>
+    <p>Analisis komparatif rasio keuangan emiten BEI (2025 Audit – 2026 TW3). Posisi neraca diukur per tanggal laporan, pos laba rugi dan arus kas diukur berbasis akumulasi 12 bulan (12M TTM) dengan penyebut saldo rata-rata untuk rasio campuran.</p>
+  </div>
+
+  <div class="controls">
+    <div class="control-group">
+      <label for="ratioSelect">Pilih Rasio Keuangan (52 Rasio)</label>
+      <select id="ratioSelect"></select>
+    </div>
+    <div class="control-group">
+      <label for="sectorSelect">Filter Sektor</label>
+      <select id="sectorSelect">
+        <option value="">Semua Sektor</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label for="subsectorSelect">Filter Subsektor</label>
+      <select id="subsectorSelect">
+        <option value="">Semua Subsektor</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label for="emitenSelect">Pilih Emiten</label>
+      <select id="emitenSelect">
+        <option value="">Semua Emiten</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="meta-cards">
+    <div class="card">
+      <div class="card-label">Valid / Total</div>
+      <div class="card-val" id="cardValid" style="color: #16a34a;">—</div>
+    </div>
+    <div class="card">
+      <div class="card-label">N/M (Not Meaningful)</div>
+      <div class="card-val" id="cardNM" style="color: #2563eb;">—</div>
+    </div>
+    <div class="card">
+      <div class="card-label">N/A (Incomplete History)</div>
+      <div class="card-val" id="cardNA" style="color: #d97706;">—</div>
+    </div>
+    <div class="card">
+      <div class="card-label">UNREC (Footing)</div>
+      <div class="card-val" id="cardUNREC" style="color: #dc2626;">—</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Median (p50)</div>
+      <div class="card-val" id="cardMedian" style="color: #7c3aed;">—</div>
+    </div>
+    <div class="card">
+      <div class="card-label">IQR (p25 – p75)</div>
+      <div class="card-val" id="cardIQR" style="color: #0f766e; font-size: 14px;">—</div>
+    </div>
+  </div>
+
+  <div class="formula-bar">
+    <span>Formula Rasio:</span>
+    <code id="formulaText">—</code>
+    <span style="margin-left: auto; display: inline-flex; align-items: center; gap: 8px;">
+      <span id="polarityBadge"></span>
+      <span id="basisBadge"></span>
+      <span style="color: var(--text-muted); font-size: 11px;" id="scopeBadge">—</span>
+    </span>
+  </div>
+
+  <div class="ratio-expl-box" id="ratioExplBox">
+    <div class="expl-header">
+      <span>Penjelasan &amp; Panduan Membaca Rasio</span>
+    </div>
+    <p id="explMeaning" class="expl-meaning">—</p>
+    <div class="expl-reading-row">
+      <span class="expl-reading-badge">PANDUAN MEMBACA</span>
+      <span id="explReading" class="expl-reading-text">—</span>
+    </div>
+  </div>
+
+  <div class="legend-bar">
+    <div class="legend-status">
+      <span style="font-weight: 600; color: var(--text-muted); font-size: 11px;">STATUS METRIK:</span>
+      <span><span class="badge badge-nm">N/M</span> Not Meaningful (Penyebut &le; 0)</span>
+      <span><span class="badge badge-na">N/A</span> Incomplete History</span>
+      <span><span class="badge badge-unrec">UNREC</span> Unreconciled Component</span>
+      <span><span class="badge badge-nr">—</span> Not Reported</span>
+    </div>
+    <div class="legend-scale">
+      <span id="scaleMin" style="font-size: 11.5px; font-weight: 500; color: var(--muted-foreground);">p05</span>
+      <div class="gradient-bar" id="gradientBar"></div>
+      <span id="scaleMax" style="font-size: 11.5px; font-weight: 500; color: var(--muted-foreground);">p95</span>
+    </div>
+  </div>
+
+  <div class="distribution-grid">
+    <div class="corridor-container" id="corridorContainer">
+      <div class="corridor-header">
+        <div class="corridor-title">
+          <span>Tren Koridor Persentil Multi-Periode</span>
+          <span class="corridor-subtitle" id="corridorSubtitle">Rentang Antarkuartil (P25–P75 IQR), Batas P05–P95, dan Median Kohort</span>
+        </div>
+        <div class="corridor-legend" id="corridorLegend"></div>
+      </div>
+      <div class="corridor-svg-wrapper">
+        <svg id="corridorSvg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 540 285"></svg>
+      </div>
+    </div>
+
+    <div class="ranking-container" id="rankingContainer">
+      <div class="ranking-header">
+        <div class="ranking-title">
+          <span>Peringkat &amp; Dispersi Peer</span>
+          <span class="ranking-subtitle" id="rankingSubtitle">Distribusi Kohort pada Periode Evaluasi</span>
+        </div>
+        <div>
+          <select id="rankingPeriodSelect" class="ranking-period-select"></select>
+        </div>
+      </div>
+      <div class="ranking-svg-wrapper">
+        <svg id="rankingSvg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 460 285"></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table id="heatmapTable">
+      <thead>
+        <tr>
+          <th class="col-idx">#</th>
+          <th class="col-sortable col-emiten" data-key="c">Emiten <span class="sort-indicator" id="sort_c">▲</span></th>
+          <th class="col-sortable col-sector" data-key="s">Sektor <span class="sort-indicator" id="sort_s"></span></th>
+          <th class="col-sortable col-subsector" data-key="sub">Subsektor <span class="sort-indicator" id="sort_sub"></span></th>
+          <th class="col-sortable col-period" data-key="0" id="th_col_0">2025 Audit <span class="sort-indicator" id="sort_0"></span></th>
+          <th class="col-sortable col-period" data-key="1" id="th_col_1">2026 TW1 <span class="sort-indicator" id="sort_1"></span></th>
+          <th class="col-sortable col-period" data-key="2" id="th_col_2">2026 TW2 <span class="sort-indicator" id="sort_2"></span></th>
+          <th class="col-sortable col-period" data-key="3" id="th_col_3">2026 TW3 <span class="sort-indicator" id="sort_3"></span></th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr><td colspan="25" style="text-align: center; padding: 32px; color: var(--text-muted);">Memuat matriks rasio keuangan...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="tooltip"></div>
+
+  <script>
+    let RATIOS_DATA = [];
+    let SECTORS_LIST = [];
+    let SUBSECTORS_DATA = {};
+    let PERIODS_INFO = [];
+
+    const ratioSelect = document.getElementById("ratioSelect");
+    const sectorSelect = document.getElementById("sectorSelect");
+    const subsectorSelect = document.getElementById("subsectorSelect");
+    const emitenSelect = document.getElementById("emitenSelect");
+    const rankingPeriodSelect = document.getElementById("rankingPeriodSelect");
+    const tableBody = document.getElementById("tableBody");
+    const tooltip = document.getElementById("tooltip");
+
+    let sortKey = "c";
+    let sortDir = "asc";
+
+    function closeAllCustomSelects(exceptWrapper) {
+      document.querySelectorAll(".cselect-wrapper.open").forEach(w => {
+        if (w !== exceptWrapper) {
+          w.classList.remove("open");
+          const btn = w.querySelector(".cselect-trigger");
+          if (btn) btn.setAttribute("aria-expanded", "false");
+        }
+      });
+    }
+
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".cselect-wrapper")) {
+        closeAllCustomSelects();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeAllCustomSelects();
+      }
+    });
+
+    function filterCustomSelect(wrapper, query) {
+      const q = query.trim().toLowerCase();
+      const options = wrapper.querySelectorAll(".cselect-option");
+      const groupHeaders = wrapper.querySelectorAll(".cselect-group-header");
+      let visibleCount = 0;
+
+      options.forEach(opt => {
+        const txt = (opt.textContent || "").toLowerCase();
+        const match = !q || txt.includes(q);
+        opt.style.display = match ? "flex" : "none";
+        if (match) visibleCount++;
+      });
+
+      groupHeaders.forEach(gh => {
+        let next = gh.nextElementSibling;
+        let anyVisible = false;
+        while (next && next.classList.contains("cselect-option")) {
+          if (next.style.display !== "none") {
+            anyVisible = true;
+            break;
+          }
+          next = next.nextElementSibling;
+        }
+        gh.style.display = anyVisible ? "block" : "none";
+      });
+
+      let emptyEl = wrapper.querySelector(".cselect-empty");
+      if (visibleCount === 0) {
+        if (!emptyEl) {
+          emptyEl = document.createElement("div");
+          emptyEl.className = "cselect-empty";
+          emptyEl.textContent = "Tidak ada hasil ditemukan";
+          const optsList = wrapper.querySelector(".cselect-options");
+          if (optsList) optsList.appendChild(emptyEl);
+        }
+        emptyEl.style.display = "block";
+      } else if (emptyEl) {
+        emptyEl.style.display = "none";
+      }
+    }
+
+    function buildCustomSelectOptions(wrapper, selectEl) {
+      const optsContainer = wrapper.querySelector(".cselect-options");
+      if (!optsContainer) return;
+      optsContainer.innerHTML = "";
+
+      const currentVal = selectEl.value;
+
+      function createOptionItem(opt) {
+        const item = document.createElement("div");
+        item.className = "cselect-option" + (opt.value === currentVal ? " selected" : "");
+        item.setAttribute("data-value", opt.value);
+        item.setAttribute("role", "option");
+        item.setAttribute("aria-selected", opt.value === currentVal ? "true" : "false");
+
+        const textSpan = document.createElement("span");
+        textSpan.style.overflow = "hidden";
+        textSpan.style.textOverflow = "ellipsis";
+        textSpan.style.whiteSpace = "nowrap";
+        textSpan.textContent = opt.textContent;
+        item.appendChild(textSpan);
+
+        const checkSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        checkSvg.setAttribute("class", "cselect-check");
+        checkSvg.setAttribute("width", "13");
+        checkSvg.setAttribute("height", "13");
+        checkSvg.setAttribute("viewBox", "0 0 24 24");
+        checkSvg.setAttribute("fill", "none");
+        checkSvg.setAttribute("stroke", "currentColor");
+        checkSvg.setAttribute("stroke-width", "2.5");
+        checkSvg.setAttribute("stroke-linecap", "round");
+        checkSvg.setAttribute("stroke-linejoin", "round");
+        const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+        polyline.setAttribute("points", "20 6 9 17 4 12");
+        checkSvg.appendChild(polyline);
+        item.appendChild(checkSvg);
+
+        item.addEventListener("click", (e) => {
+          e.stopPropagation();
+          selectEl.value = opt.value;
+          wrapper.classList.remove("open");
+          selectEl.dispatchEvent(new Event("change", { bubbles: true }));
+          syncCustomSelect(selectEl);
+        });
+
+        return item;
+      }
+
+      Array.from(selectEl.children).forEach(child => {
+        if (child.tagName === "OPTGROUP") {
+          const header = document.createElement("div");
+          header.className = "cselect-group-header";
+          header.textContent = child.label;
+          optsContainer.appendChild(header);
+
+          Array.from(child.children).forEach(opt => {
+            if (opt.tagName === "OPTION") {
+              optsContainer.appendChild(createOptionItem(opt));
+            }
+          });
+        } else if (child.tagName === "OPTION") {
+          optsContainer.appendChild(createOptionItem(child));
+        }
+      });
+
+      const valEl = wrapper.querySelector(".cselect-value");
+      if (valEl) {
+        const selOpt = selectEl.options[selectEl.selectedIndex];
+        valEl.textContent = selOpt ? selOpt.textContent : (selectEl.value || "Pilih...");
+      }
+    }
+
+    function initCustomSelect(selectEl, opts = {}) {
+      if (!selectEl) return;
+      const searchable = !!opts.searchable;
+
+      let wrapper = selectEl.nextElementSibling;
+      if (!wrapper || !wrapper.classList.contains("cselect-wrapper") || wrapper.getAttribute("data-for") !== selectEl.id) {
+        wrapper = document.createElement("div");
+        wrapper.className = "cselect-wrapper";
+        wrapper.setAttribute("data-for", selectEl.id);
+
+        const trigger = document.createElement("button");
+        trigger.type = "button";
+        trigger.className = "cselect-trigger";
+        trigger.setAttribute("aria-haspopup", "listbox");
+        trigger.setAttribute("aria-expanded", "false");
+
+        const valSpan = document.createElement("span");
+        valSpan.className = "cselect-value";
+        trigger.appendChild(valSpan);
+
+        const chevronSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        chevronSvg.setAttribute("class", "cselect-chevron");
+        chevronSvg.setAttribute("width", "13");
+        chevronSvg.setAttribute("height", "13");
+        chevronSvg.setAttribute("viewBox", "0 0 24 24");
+        chevronSvg.setAttribute("fill", "none");
+        chevronSvg.setAttribute("stroke", "currentColor");
+        chevronSvg.setAttribute("stroke-width", "2");
+        chevronSvg.setAttribute("stroke-linecap", "round");
+        chevronSvg.setAttribute("stroke-linejoin", "round");
+        const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+        polyline.setAttribute("points", "6 9 12 15 18 9");
+        chevronSvg.appendChild(polyline);
+        trigger.appendChild(chevronSvg);
+
+        const dropdown = document.createElement("div");
+        dropdown.className = "cselect-dropdown";
+
+        if (searchable) {
+          const sBox = document.createElement("div");
+          sBox.className = "cselect-search-box";
+
+          const sIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          sIcon.setAttribute("class", "cselect-search-icon");
+          sIcon.setAttribute("width", "12");
+          sIcon.setAttribute("height", "12");
+          sIcon.setAttribute("viewBox", "0 0 24 24");
+          sIcon.setAttribute("fill", "none");
+          sIcon.setAttribute("stroke", "currentColor");
+          sIcon.setAttribute("stroke-width", "2");
+          sIcon.setAttribute("stroke-linecap", "round");
+          sIcon.setAttribute("stroke-linejoin", "round");
+          const sCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          sCircle.setAttribute("cx", "11");
+          sCircle.setAttribute("cy", "11");
+          sCircle.setAttribute("r", "8");
+          const sLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          sLine.setAttribute("x1", "21");
+          sLine.setAttribute("y1", "21");
+          sLine.setAttribute("x2", "16.65");
+          sLine.setAttribute("y2", "16.65");
+          sIcon.appendChild(sCircle);
+          sIcon.appendChild(sLine);
+          sBox.appendChild(sIcon);
+
+          const fInput = document.createElement("input");
+          fInput.type = "text";
+          fInput.className = "cselect-filter-input";
+          fInput.placeholder = "Cari...";
+          fInput.autocomplete = "off";
+          fInput.addEventListener("input", (e) => {
+            filterCustomSelect(wrapper, e.target.value);
+          });
+          fInput.addEventListener("click", (e) => e.stopPropagation());
+          sBox.appendChild(fInput);
+
+          dropdown.appendChild(sBox);
+        }
+
+        const optsDiv = document.createElement("div");
+        optsDiv.className = "cselect-options";
+        optsDiv.setAttribute("role", "listbox");
+        dropdown.appendChild(optsDiv);
+
+        wrapper.appendChild(trigger);
+        wrapper.appendChild(dropdown);
+
+        selectEl.style.display = "none";
+        selectEl.parentNode.insertBefore(wrapper, selectEl.nextSibling);
+
+        trigger.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const isOpen = wrapper.classList.contains("open");
+          closeAllCustomSelects(wrapper);
+          if (!isOpen) {
+            wrapper.classList.add("open");
+            trigger.setAttribute("aria-expanded", "true");
+            if (searchable) {
+              const fi = wrapper.querySelector(".cselect-filter-input");
+              if (fi) {
+                fi.value = "";
+                filterCustomSelect(wrapper, "");
+                setTimeout(() => fi.focus(), 30);
+              }
+            }
+            const selOpt = wrapper.querySelector(".cselect-option.selected");
+            if (selOpt) {
+              selOpt.scrollIntoView({ block: "nearest" });
+            }
+          } else {
+            wrapper.classList.remove("open");
+            trigger.setAttribute("aria-expanded", "false");
+          }
+        });
+
+        wrapper.addEventListener("keydown", (e) => {
+          if (!wrapper.classList.contains("open")) return;
+          const visibleOpts = Array.from(wrapper.querySelectorAll(".cselect-option")).filter(
+            o => o.style.display !== "none"
+          );
+          if (visibleOpts.length === 0) return;
+
+          let focusedIdx = visibleOpts.findIndex(o => o.classList.contains("focused"));
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            if (focusedIdx >= 0) visibleOpts[focusedIdx].classList.remove("focused");
+            focusedIdx = (focusedIdx + 1) % visibleOpts.length;
+            visibleOpts[focusedIdx].classList.add("focused");
+            visibleOpts[focusedIdx].scrollIntoView({ block: "nearest" });
+          } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            if (focusedIdx >= 0) visibleOpts[focusedIdx].classList.remove("focused");
+            focusedIdx = (focusedIdx - 1 + visibleOpts.length) % visibleOpts.length;
+            visibleOpts[focusedIdx].classList.add("focused");
+            visibleOpts[focusedIdx].scrollIntoView({ block: "nearest" });
+          } else if (e.key === "Enter") {
+            e.preventDefault();
+            if (focusedIdx >= 0 && visibleOpts[focusedIdx]) {
+              visibleOpts[focusedIdx].click();
+            } else {
+              const sel = wrapper.querySelector(".cselect-option.selected");
+              if (sel && sel.style.display !== "none") sel.click();
+            }
+          }
+        });
+      }
+
+      buildCustomSelectOptions(wrapper, selectEl);
+    }
+
+    function syncCustomSelect(selectEl) {
+      if (!selectEl) return;
+      const wrapper = selectEl.nextElementSibling;
+      if (!wrapper || !wrapper.classList.contains("cselect-wrapper")) return;
+      buildCustomSelectOptions(wrapper, selectEl);
+    }
+
+    function updateSubsectorOptions(selectedSec) {
+      subsectorSelect.innerHTML = '<option value="">Semua Subsektor</option>';
+      let subsecs = [];
+      if (selectedSec && SUBSECTORS_DATA[selectedSec]) {
+        subsecs = SUBSECTORS_DATA[selectedSec];
+      } else {
+        const allSet = new Set();
+        Object.values(SUBSECTORS_DATA).forEach(list => list.forEach(s => allSet.add(s)));
+        subsecs = Array.from(allSet).sort();
+      }
+      subsecs.forEach(sub => {
+        const opt = document.createElement("option");
+        opt.value = sub;
+        opt.textContent = sub;
+        subsectorSelect.appendChild(opt);
+      });
+      syncCustomSelect(subsectorSelect);
+    }
+
+    function updateEmitenOptions(selectedSec, selectedSubsec) {
+      const allRows = RATIOS_DATA.length > 0 ? RATIOS_DATA[0].rows : [];
+      let filteredEmitens = allRows;
+      if (selectedSec) {
+        filteredEmitens = filteredEmitens.filter(r => r.s === selectedSec);
+      }
+      if (selectedSubsec) {
+        filteredEmitens = filteredEmitens.filter(r => r.sub === selectedSubsec);
+      }
+
+      const emitenCodes = Array.from(new Set(filteredEmitens.map(r => r.c))).sort();
+
+      const currentVal = emitenSelect.value;
+      emitenSelect.innerHTML = '<option value="">Semua Emiten</option>';
+      emitenCodes.forEach(code => {
+        const opt = document.createElement("option");
+        opt.value = code;
+        opt.textContent = code;
+        emitenSelect.appendChild(opt);
+      });
+      if (emitenCodes.includes(currentVal)) {
+        emitenSelect.value = currentVal;
+      } else {
+        emitenSelect.value = "";
+      }
+      syncCustomSelect(emitenSelect);
+    }
+
+    rankingPeriodSelect.addEventListener("change", () => {
+      const code = ratioSelect.value;
+      const rData = RATIOS_DATA.find(r => r.code === code);
+      if (!rData) return;
+      const secFilter = sectorSelect.value;
+      const subsecFilter = subsectorSelect.value;
+      let cohortRows = [...rData.rows];
+      if (secFilter) cohortRows = cohortRows.filter(r => r.s === secFilter);
+      if (subsecFilter) cohortRows = cohortRows.filter(r => r.sub === subsecFilter);
+      const activeEm = emitenSelect ? emitenSelect.value : "";
+      renderPeerRanking(rData, cohortRows, activeEm, parseInt(rankingPeriodSelect.value, 10));
+      syncCustomSelect(rankingPeriodSelect);
+    });
+
+    sectorSelect.addEventListener("change", () => {
+      updateSubsectorOptions(sectorSelect.value);
+      updateEmitenOptions(sectorSelect.value, subsectorSelect.value);
+      renderCurrentRatio();
+    });
+
+    subsectorSelect.addEventListener("change", () => {
+      updateEmitenOptions(sectorSelect.value, subsectorSelect.value);
+      renderCurrentRatio();
+    });
+
+    emitenSelect.addEventListener("change", renderCurrentRatio);
+    ratioSelect.addEventListener("change", renderCurrentRatio);
+
+    function initRatiosApp(payload) {
+      if (!payload) return;
+      RATIOS_DATA = payload.ratios_data || [];
+      SECTORS_LIST = payload.sectors_list || [];
+      SUBSECTORS_DATA = payload.subsectors_data || {};
+      PERIODS_INFO = payload.periods_info || [];
+
+      // Populate sector select
+      sectorSelect.innerHTML = '<option value="">Semua Sektor</option>';
+      SECTORS_LIST.forEach(sec => {
+        const opt = document.createElement("option");
+        opt.value = sec;
+        opt.textContent = sec;
+        sectorSelect.appendChild(opt);
+      });
+
+      updateSubsectorOptions("");
+      updateEmitenOptions("", "");
+
+      // Populate ranking period select
+      rankingPeriodSelect.innerHTML = "";
+      PERIODS_INFO.forEach((pInfo, idx) => {
+        const opt = document.createElement("option");
+        opt.value = idx;
+        opt.textContent = pInfo.label;
+        rankingPeriodSelect.appendChild(opt);
+      });
+      if (PERIODS_INFO.length > 0) {
+        rankingPeriodSelect.value = String(PERIODS_INFO.length - 1);
+      }
+
+      // Populate ratio select grouped by category
+      ratioSelect.innerHTML = "";
+      const catGroups = {};
+      RATIOS_DATA.forEach(r => {
+        if (!catGroups[r.cat]) catGroups[r.cat] = [];
+        catGroups[r.cat].push(r);
+      });
+
+      Object.keys(catGroups).sort().forEach(cat => {
+        const grp = document.createElement("optgroup");
+        grp.label = cat.toUpperCase();
+        catGroups[cat].forEach(r => {
+          const opt = document.createElement("option");
+          opt.value = r.code;
+          opt.textContent = `${r.name} (${r.code})`;
+          grp.appendChild(opt);
+        });
+        ratioSelect.appendChild(grp);
+      });
+
+      initCustomSelect(ratioSelect, { searchable: true });
+      initCustomSelect(sectorSelect, { searchable: true });
+      initCustomSelect(subsectorSelect, { searchable: true });
+      initCustomSelect(emitenSelect, { searchable: true });
+      initCustomSelect(rankingPeriodSelect, { searchable: false });
+
+      if (ratioSelect.options.length > 0) {
+        ratioSelect.selectedIndex = 0;
+        renderCurrentRatio();
+      }
+    }
+
+    function fmtVal(val, unit) {
+      if (val === null || val === undefined) return "—";
+      if (unit === "currency") return (val / 1e9).toFixed(2) + " B";
+      if (unit === "percent") return (val * 100).toFixed(2) + "%";
+      if (unit === "multiplier") return val.toFixed(2) + "x";
+      return val.toFixed(2);
+    }
+
+    function getColor(val, p05, p95, polarity, canNeg) {
+      if (val === null || val === undefined) return { bg: "#f6f8fa", fg: "#656d76" };
+
+      if (polarity === "lower_is_better") {
+        // Nilai rendah = Aman / Efisien (Teal lembut)
+        // Nilai tinggi = Inefisiensi / Risiko (Amber -> Oranye -> Merah)
+        const span = Math.max(1e-6, p95 - p05);
+        const norm = Math.max(0, Math.min(1, (val - p05) / span));
+        if (norm < 0.4) {
+          const t = norm / 0.4;
+          const r = Math.round(230 + t * 20);
+          const g = Math.round(250 + t * 2);
+          const b = Math.round(240 + t * 15);
+          return { bg: `rgb(${r},${g},${b})`, fg: "#0f5132" };
+        } else if (norm < 0.7) {
+          const t = (norm - 0.4) / 0.3;
+          const r = Math.round(255);
+          const g = Math.round(250 - t * 45);
+          const b = Math.round(230 - t * 130);
+          return { bg: `rgb(${r},${g},${b})`, fg: "#7c5300" };
+        } else {
+          const t = (norm - 0.7) / 0.3;
+          const r = Math.round(255 - t * 20);
+          const g = Math.round(205 - t * 160);
+          const b = Math.round(180 - t * 140);
+          const fg = t > 0.5 ? "#ffffff" : "#cf222e";
+          return { bg: `rgb(${r},${g},${b})`, fg };
+        }
+      } else if (polarity === "higher_is_better") {
+        // Nilai tinggi = Kuat (Biru pekat), Nilai defisit / rugi = Merah
+        if (val < 0) {
+          const norm = Math.min(1, Math.abs(val) / Math.max(1e-6, Math.abs(p05)));
+          const r = Math.round(255 - norm * 20);
+          const g = Math.round(235 - norm * 150);
+          const b = Math.round(233 - norm * 150);
+          const fg = norm > 0.5 ? "#ffffff" : "#cf222e";
+          return { bg: `rgb(${r},${g},${b})`, fg };
+        } else {
+          const span = Math.max(1e-6, p95 - Math.max(0, p05));
+          const norm = Math.max(0, Math.min(1, (val - Math.max(0, p05)) / span));
+          const r = Math.round(240 - norm * 231);
+          const g = Math.round(248 - norm * 143);
+          const b = Math.round(255 - norm * 37);
+          const fg = norm > 0.6 ? "#ffffff" : "#09244b";
+          return { bg: `rgb(${r},${g},${b})`, fg };
+        }
+      } else {
+        // Neutral / Monochromatic Quantile (Slate Blue)
+        const span = Math.max(1e-6, p95 - p05);
+        const norm = Math.max(0, Math.min(1, (val - p05) / span));
+        const r = Math.round(245 - norm * 180);
+        const g = Math.round(248 - norm * 165);
+        const b = Math.round(252 - norm * 140);
+        const fg = norm > 0.5 ? "#ffffff" : "#24292f";
+        return { bg: `rgb(${r},${g},${b})`, fg };
+      }
+    }
+
+    function getPercentile(sortedArr, p) {
+      const len = sortedArr.length;
+      if (len === 0) return null;
+      if (len === 1) return sortedArr[0];
+      const index = (len - 1) * p;
+      const lower = Math.floor(index);
+      const upper = Math.ceil(index);
+      const weight = index - lower;
+      return sortedArr[lower] * (1 - weight) + sortedArr[upper] * weight;
+    }
+
+    function renderQuantileCorridor(rData, cohortRows, activeEmitenCode) {
+      const svg = document.getElementById("corridorSvg");
+      const legendContainer = document.getElementById("corridorLegend");
+      const subtitle = document.getElementById("corridorSubtitle");
+      if (!svg || !legendContainer || !subtitle) return;
+
+      const numPeriods = PERIODS_INFO.length;
+      if (numPeriods === 0) {
+        svg.innerHTML = "";
+        legendContainer.innerHTML = "";
+        return;
+      }
+
+      // 1. Hitung distribusi persentil per periode dari kohort
+      const periodStats = [];
+      const allP05 = [];
+      const allP95 = [];
+
+      for (let pIdx = 0; pIdx < numPeriods; pIdx++) {
+        const vals = [];
+        cohortRows.forEach(row => {
+          const val = row.v[pIdx];
+          const st = row.st[pIdx];
+          if (st === "VALID" && val !== null && !isNaN(val)) {
+            vals.push(val);
+          }
+        });
+        vals.sort((a, b) => a - b);
+        const n = vals.length;
+        if (n >= 1) {
+          const p05 = getPercentile(vals, 0.05);
+          const p25 = getPercentile(vals, 0.25);
+          const p50 = getPercentile(vals, 0.50);
+          const p75 = getPercentile(vals, 0.75);
+          const p95 = getPercentile(vals, 0.95);
+          periodStats.push({ pIdx, n, p05, p25, p50, p75, p95 });
+          allP05.push(p05);
+          allP95.push(p95);
+        } else {
+          periodStats.push({ pIdx, n: 0, p05: null, p25: null, p50: null, p75: null, p95: null });
+        }
+      }
+
+      // Emiten aktif jika dipilih atau dihover
+      let activeRow = null;
+      if (activeEmitenCode) {
+        activeRow = rData.rows.find(r => r.c === activeEmitenCode) || null;
+      }
+
+      const validP05 = allP05.filter(v => v !== null);
+      const validP95 = allP95.filter(v => v !== null);
+
+      if (validP05.length === 0 || validP95.length === 0) {
+        svg.innerHTML = '<text x="400" y="90" text-anchor="middle" font-size="12" fill="#656d76" font-family="sans-serif">Data numerik valid tidak mencukupi untuk koridor persentil</text>';
+        legendContainer.innerHTML = "";
+        return;
+      }
+
+      // 2. Tentukan skala Y berbasis rentang inti P05 – P95
+      let yMin = Math.min(...validP05);
+      let yMax = Math.max(...validP95);
+      let coreSpan = yMax - yMin;
+      if (coreSpan <= 0) coreSpan = Math.abs(yMax) > 0 ? Math.abs(yMax) * 0.2 : 1.0;
+
+      // Berikan ruang untuk emiten aktif jika masih dalam toleransi wajar (1.2x span)
+      if (activeRow) {
+        activeRow.v.forEach((val, idx) => {
+          if (activeRow.st[idx] === "VALID" && val !== null && !isNaN(val)) {
+            if (val < yMin && val >= yMin - 1.2 * coreSpan) yMin = val;
+            if (val > yMax && val <= yMax + 1.2 * coreSpan) yMax = val;
+          }
+        });
+      }
+
+      const padding = (yMax - yMin) * 0.12;
+      const scaleMin = yMin - padding;
+      const scaleMax = yMax + padding;
+      const scaleSpan = scaleMax - scaleMin || 1.0;
+
+      // 3. Geometri SVG
+      const W = 540;
+      const H = 285;
+      const ml = 56;
+      const mr = 20;
+      const mt = 18;
+      const mb = 28;
+      const pw = W - ml - mr;
+      const ph = H - mt - mb;
+
+      function px(pIdx) {
+        if (numPeriods <= 1) return ml + pw / 2;
+        return ml + (pIdx / (numPeriods - 1)) * pw;
+      }
+
+      function py(val) {
+        return mt + ph - ((val - scaleMin) / scaleSpan) * ph;
+      }
+
+      // 4. Render elemen SVG
+      let svgContent = "";
+
+      // Gridlines horizontal sumbu Y (5 ticks)
+      const numYTicks = 5;
+      for (let i = 0; i < numYTicks; i++) {
+        const tickVal = scaleMin + i * (scaleSpan / (numYTicks - 1));
+        const y = py(tickVal);
+        svgContent += `<line x1="${ml}" y1="${y}" x2="${ml + pw}" y2="${y}" stroke="#f0f2f5" stroke-dasharray="2,2" stroke-width="1" />`;
+        svgContent += `<text x="${ml - 8}" y="${y + 3.5}" text-anchor="end" font-size="9.5" fill="#64748b" font-family="var(--font-sans), sans-serif">${fmtVal(tickVal, rData.unit)}</text>`;
+      }
+
+      // Gridlines vertical & label periode sumbu X
+      for (let pIdx = 0; pIdx < numPeriods; pIdx++) {
+        const x = px(pIdx);
+        const pInfo = PERIODS_INFO[pIdx];
+        const pLabel = pInfo ? pInfo.label : `P${pIdx}`;
+        svgContent += `<line x1="${x}" y1="${mt}" x2="${x}" y2="${mt + ph}" stroke="#eaeef2" stroke-width="1" />`;
+        svgContent += `<text x="${x}" y="${mt + ph + 17}" text-anchor="middle" font-size="10" fill="#64748b" font-family="var(--font-sans), sans-serif">${pLabel}</text>`;
+      }
+
+      // Baseline sumbu X
+      const baseLineY = mt + ph;
+      svgContent += `<line x1="${ml}" y1="${baseLineY}" x2="${ml + pw}" y2="${baseLineY}" stroke="#d0d7de" stroke-width="1" />`;
+
+      // Area Koridor Luar (P05 – P95)
+      const validPeriods = periodStats.filter(s => s.n > 0);
+      if (validPeriods.length > 1) {
+        let p05_95_upper = "";
+        let p05_95_lower = "";
+        validPeriods.forEach((s, idx) => {
+          const x = px(s.pIdx);
+          const yUpper = py(s.p95);
+          const yLower = py(s.p05);
+          if (idx === 0) {
+            p05_95_upper += `M ${x} ${yUpper}`;
+            p05_95_lower = `L ${x} ${yLower}`;
+          } else {
+            p05_95_upper += ` L ${x} ${yUpper}`;
+            p05_95_lower = ` L ${x} ${yLower}` + p05_95_lower;
+          }
+        });
+        svgContent += `<path d="${p05_95_upper} ${p05_95_lower} Z" fill="#f0f7ff" stroke="#c8e1ff" stroke-width="1" stroke-dasharray="3,3" />`;
+
+        // Area Koridor IQR (P25 – P75)
+        let p25_75_upper = "";
+        let p25_75_lower = "";
+        validPeriods.forEach((s, idx) => {
+          const x = px(s.pIdx);
+          const yUpper = py(s.p75);
+          const yLower = py(s.p25);
+          if (idx === 0) {
+            p25_75_upper += `M ${x} ${yUpper}`;
+            p25_75_lower = `L ${x} ${yLower}`;
+          } else {
+            p25_75_upper += ` L ${x} ${yUpper}`;
+            p25_75_lower = ` L ${x} ${yLower}` + p25_75_lower;
+          }
+        });
+        svgContent += `<path d="${p25_75_upper} ${p25_75_lower} Z" fill="#ddf4ff" stroke="#79c0ff" stroke-width="1.2" />`;
+
+        // Garis Median (P50)
+        let medianD = "";
+        validPeriods.forEach((s, idx) => {
+          const x = px(s.pIdx);
+          const yMed = py(s.p50);
+          if (idx === 0) medianD += `M ${x} ${yMed}`;
+          else medianD += ` L ${x} ${yMed}`;
+        });
+        svgContent += `<path d="${medianD}" fill="none" stroke="#0969da" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />`;
+
+        // Nodes Titik Median (P50)
+        validPeriods.forEach(s => {
+          const x = px(s.pIdx);
+          const yMed = py(s.p50);
+          svgContent += `<circle cx="${x}" cy="${yMed}" r="3.5" fill="#ffffff" stroke="#0969da" stroke-width="2" />`;
+        });
+      }
+
+      // Garis & Titik Trayektori Emiten Aktif (jika ada)
+      if (activeRow) {
+        const actPoints = [];
+        for (let pIdx = 0; pIdx < numPeriods; pIdx++) {
+          const val = activeRow.v[pIdx];
+          const st = activeRow.st[pIdx];
+          if (st === "VALID" && val !== null && !isNaN(val)) {
+            const rawY = py(val);
+            const clampedY = Math.max(mt + 6, Math.min(mt + ph - 6, rawY));
+            const isClamped = val < scaleMin || val > scaleMax;
+            actPoints.push({ pIdx, val, x: px(pIdx), y: clampedY, rawY, isClamped });
+          }
+        }
+
+        if (actPoints.length > 0) {
+          let emD = "";
+          actPoints.forEach((pt, idx) => {
+            if (idx === 0) emD += `M ${pt.x} ${pt.y}`;
+            else emD += ` L ${pt.x} ${pt.y}`;
+          });
+          svgContent += `<path d="${emD}" fill="none" stroke="#cf222e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />`;
+
+          actPoints.forEach(pt => {
+            svgContent += `<circle cx="${pt.x}" cy="${pt.y}" r="4" fill="#cf222e" stroke="#ffffff" stroke-width="1.5" />`;
+            const labelY = pt.y - 8 < mt ? pt.y + 13 : pt.y - 8;
+            const arrow = pt.isClamped ? (pt.val > scaleMax ? " ▲" : " ▼") : "";
+            svgContent += `<text x="${pt.x}" y="${labelY}" text-anchor="middle" font-size="10" font-weight="700" fill="#cf222e" font-family="var(--font-sans), sans-serif">${fmtVal(pt.val, rData.unit)}${arrow}</text>`;
+          });
+        }
+      }
+
+      // Kolom interaktif pelacak mouseover
+      const colW = numPeriods > 1 ? (pw / (numPeriods - 1)) : pw;
+      for (let pIdx = 0; pIdx < numPeriods; pIdx++) {
+        const x = px(pIdx);
+        const leftX = x - colW / 2;
+        const stat = periodStats[pIdx];
+        const pInfo = PERIODS_INFO[pIdx];
+        const pName = pInfo ? pInfo.label : `Period ${pIdx}`;
+
+        svgContent += `
+          <rect x="${leftX}" y="${mt}" width="${colW}" height="${ph}"
+                fill="transparent"
+                class="corridor-col-hover"
+                data-pidx="${pIdx}"
+                data-pname="${pName}"
+                data-n="${stat.n}"
+                data-p50="${stat.p50 !== null ? fmtVal(stat.p50, rData.unit) : '—'}"
+                data-iqr="${stat.p25 !== null ? fmtVal(stat.p25, rData.unit) + ' – ' + fmtVal(stat.p75, rData.unit) : '—'}"
+                data-p0595="${stat.p05 !== null ? fmtVal(stat.p05, rData.unit) + ' – ' + fmtVal(stat.p95, rData.unit) : '—'}"
+                style="cursor: crosshair;" />
+        `;
+      }
+
+      svg.innerHTML = svgContent;
+
+      // 5. Render Legend & Subtitle
+      let legHtml = `
+        <div class="corridor-legend-item">
+          <span class="corridor-legend-swatch" style="background:#f0f7ff; border:1px solid #c8e1ff;"></span>
+          <span>Rentang Mayoritas (P05–P95)</span>
+        </div>
+        <div class="corridor-legend-item">
+          <span class="corridor-legend-swatch" style="background:#ddf4ff; border:1px solid #79c0ff;"></span>
+          <span>Interquartile Range (P25–P75)</span>
+        </div>
+        <div class="corridor-legend-item">
+          <span class="corridor-legend-line" style="background:#0969da;"></span>
+          <span>Median Sektoral (P50)</span>
+        </div>
+      `;
+
+      if (activeRow) {
+        legHtml += `
+          <div class="corridor-legend-item" style="color:#cf222e;">
+            <span class="corridor-legend-line" style="background:#cf222e; height:3px;"></span>
+            <span>Emiten: <strong>${activeRow.c}</strong></span>
+          </div>
+        `;
+        subtitle.innerHTML = `Trayektori <strong>${activeRow.c}</strong> terhadap Koridor Kohort (${cohortRows.length} emiten)`;
+      } else {
+        subtitle.innerHTML = `Rentang Antarkuartil (P25–P75 IQR), Batas P05–P95, dan Median Kohort (${cohortRows.length} emiten)`;
+      }
+      legendContainer.innerHTML = legHtml;
+
+      // Event listener tooltip kolom
+      svg.querySelectorAll(".corridor-col-hover").forEach(col => {
+        col.addEventListener("mouseenter", () => {
+          const pName = col.getAttribute("data-pname");
+          const n = col.getAttribute("data-n");
+          const p50 = col.getAttribute("data-p50");
+          const iqr = col.getAttribute("data-iqr");
+          const p0595 = col.getAttribute("data-p0595");
+          const pIdx = parseInt(col.getAttribute("data-pidx"), 10);
+
+          let msg = `<strong>${pName}</strong> (Kohort: ${n} emiten)<br/>`;
+          msg += `Median (P50): <strong>${p50}</strong><br/>`;
+          msg += `IQR (P25–P75): <strong>${iqr}</strong><br/>`;
+          msg += `Rentang Inti (P05–P95): <span style="color:#8c959f;">${p0595}</span>`;
+
+          if (activeRow) {
+            const actVal = activeRow.v[pIdx];
+            const actSt = activeRow.st[pIdx];
+            if (actSt === "VALID" && actVal !== null) {
+              const stat = periodStats[pIdx];
+              let pos = "Dalam IQR (P25–P75)";
+              if (stat.p75 !== null && actVal > stat.p75) pos = "Kuartil Teratas (&gt; P75)";
+              else if (stat.p25 !== null && actVal < stat.p25) pos = "Kuartil Terbawah (&lt; P25)";
+              msg += `<br/><hr style="border:none; border-top:1px solid #30363d; margin:6px 0;"/>`;
+              msg += `<span style="color:#ff8182; font-weight:700;">${activeRow.c}</span>: <strong>${fmtVal(actVal, rData.unit)}</strong><br/>`;
+              msg += `<span style="color:#54aeff; font-size:10px;">Posisi: ${pos}</span>`;
+            }
+          }
+
+          tooltip.innerHTML = msg;
+          tooltip.style.display = "block";
+        });
+
+        col.addEventListener("mouseleave", () => {
+          tooltip.style.display = "none";
+        });
+
+        col.addEventListener("click", () => {
+          const pIdx = parseInt(col.getAttribute("data-pidx"), 10);
+          if (rankingPeriodSelect) {
+            rankingPeriodSelect.value = String(pIdx);
+            syncCustomSelect(rankingPeriodSelect);
+          }
+          renderPeerRanking(rData, cohortRows, activeRow ? activeRow.c : "", pIdx);
+        });
+      });
+    }
+
+    function renderPeerRanking(rData, cohortRows, activeEmitenCode, selectedPeriodIdx) {
+      const svg = document.getElementById("rankingSvg");
+      const subtitle = document.getElementById("rankingSubtitle");
+      if (!svg || !subtitle) return;
+
+      const numPeriods = PERIODS_INFO.length;
+      if (numPeriods === 0) {
+        svg.innerHTML = "";
+        return;
+      }
+
+      if (selectedPeriodIdx === undefined || selectedPeriodIdx === null || isNaN(selectedPeriodIdx)) {
+        const rps = document.getElementById("rankingPeriodSelect");
+        selectedPeriodIdx = rps ? parseInt(rps.value, 10) : numPeriods - 1;
+      }
+      if (selectedPeriodIdx < 0 || selectedPeriodIdx >= numPeriods) {
+        selectedPeriodIdx = numPeriods - 1;
+      }
+
+      const pInfo = PERIODS_INFO[selectedPeriodIdx];
+      const pLabel = pInfo ? pInfo.label : `Period ${selectedPeriodIdx}`;
+
+      // 1. Kumpulkan seluruh data numerik valid di periode ini
+      const validRows = [];
+      cohortRows.forEach(r => {
+        const val = r.v[selectedPeriodIdx];
+        const st = r.st[selectedPeriodIdx];
+        if (st === "VALID" && val !== null && !isNaN(val)) {
+          validRows.push({ c: r.c, s: r.s, sub: r.sub, val });
+        }
+      });
+
+      if (validRows.length === 0) {
+        svg.innerHTML = `<text x="230" y="125" text-anchor="middle" font-size="12" fill="#656d76" font-family="sans-serif">Tidak ada data emiten valid pada ${pLabel}</text>`;
+        subtitle.innerHTML = `Tidak ada observasi valid pada ${pLabel}`;
+        return;
+      }
+
+      // Urutkan berdasarkan polaritas rasio
+      if (rData.polarity === "lower_is_better") {
+        validRows.sort((a, b) => a.val - b.val);
+      } else {
+        validRows.sort((a, b) => b.val - a.val);
+      }
+
+      const totalValid = validRows.length;
+      const sortedAsc = [...validRows].map(r => r.val).sort((a, b) => a - b);
+      const p05 = getPercentile(sortedAsc, 0.05);
+      const p25 = getPercentile(sortedAsc, 0.25);
+      const p50 = getPercentile(sortedAsc, 0.50);
+      const p75 = getPercentile(sortedAsc, 0.75);
+      const p95 = getPercentile(sortedAsc, 0.95);
+
+      const activeIdx = activeEmitenCode ? validRows.findIndex(r => r.c === activeEmitenCode) : -1;
+      const activeItem = activeIdx !== -1 ? validRows[activeIdx] : null;
+
+      subtitle.innerHTML = `Distribusi Kohort pada <strong>${pLabel}</strong> (${totalValid} emiten valid)`;
+
+      // Geometri SVG: W=460, H=250
+      let svgContent = "";
+
+      // -------------------------------------------------------------
+      // SECTION ATAS: Gauge Rentang Persentil (y = 14..68)
+      // -------------------------------------------------------------
+      const gx = 45;
+      const gx2 = 415;
+      const gw = gx2 - gx;
+      let gMin = p05 !== null ? p05 : sortedAsc[0];
+      let gMax = p95 !== null ? p95 : sortedAsc[sortedAsc.length - 1];
+      if (activeItem) {
+        if (activeItem.val < gMin) gMin = activeItem.val;
+        if (activeItem.val > gMax) gMax = activeItem.val;
+      }
+      let gSpan = gMax - gMin;
+      if (gSpan <= 0) gSpan = Math.abs(gMax) > 0 ? Math.abs(gMax) * 0.2 : 1.0;
+
+      function gpx(v) {
+        return gx + Math.max(0, Math.min(1, (v - gMin) / gSpan)) * gw;
+      }
+
+      // Judul Spektrum Kohort dengan padding ke bawah
+      if (activeItem) {
+        const rankNum = activeIdx + 1;
+        svgContent += `<text x="230" y="15" text-anchor="middle" font-size="10.5" font-weight="700" fill="#cf222e" font-family="var(--font-sans), sans-serif">${activeItem.c}: ${fmtVal(activeItem.val, rData.unit)} (Peringkat #${rankNum} dari ${totalValid})</text>`;
+      } else {
+        svgContent += `<text x="230" y="15" text-anchor="middle" font-size="10.5" font-weight="600" fill="#475569" font-family="var(--font-sans), sans-serif">Posisi Spektrum Kohort (${totalValid} emiten)</text>`;
+      }
+
+      // Label Median di bagian atas track (y = 35) dengan penunjuk ke track
+      if (p50 !== null) {
+        const medX = gpx(p50);
+        const medTextX = Math.max(gx + 36, Math.min(gx2 - 36, medX));
+        svgContent += `<text x="${medTextX}" y="35" font-size="9.5" fill="#0969da" font-weight="700" text-anchor="middle" font-family="var(--font-sans), sans-serif">Median: ${fmtVal(p50, rData.unit)}</text>`;
+        svgContent += `<line x1="${medX}" y1="38" x2="${medX}" y2="46" stroke="#0969da" stroke-width="1.5" />`;
+      }
+
+      // Background Track & Ticks (y = 50)
+      svgContent += `<line x1="${gx}" y1="50" x2="${gx2}" y2="50" stroke="#e1e4e8" stroke-width="5" stroke-linecap="round" />`;
+      if (p25 !== null && p75 !== null) {
+        svgContent += `<line x1="${gpx(p25)}" y1="50" x2="${gpx(p75)}" y2="50" stroke="#79c0ff" stroke-width="7" stroke-linecap="round" />`;
+      }
+      if (p50 !== null) {
+        svgContent += `<line x1="${gpx(p50)}" y1="43" x2="${gpx(p50)}" y2="57" stroke="#0969da" stroke-width="2.5" />`;
+      }
+
+      // Labels persentil p05 & p95 di bagian bawah track (y = 65)
+      svgContent += `<text x="${gx}" y="65" font-size="9" fill="#64748b" text-anchor="start" font-family="var(--font-sans), sans-serif">p05: ${fmtVal(p05, rData.unit)}</text>`;
+      svgContent += `<text x="${gx2}" y="65" font-size="9" fill="#64748b" text-anchor="end" font-family="var(--font-sans), sans-serif">p95: ${fmtVal(p95, rData.unit)}</text>`;
+
+      if (activeItem) {
+        const ax = gpx(activeItem.val);
+        svgContent += `<circle cx="${ax}" cy="50" r="5.5" fill="#cf222e" stroke="#ffffff" stroke-width="2" />`;
+        svgContent += `<polygon points="${ax},58 ${ax - 3.5},64 ${ax + 3.5},64" fill="#cf222e" />`;
+      }
+
+      // Garis pemisah horizontal
+      svgContent += `<line x1="20" y1="76" x2="440" y2="76" stroke="#f0f2f5" stroke-width="1" />`;
+
+      // -------------------------------------------------------------
+      // SECTION BAWAH: Daftar Peer Ranking (y = 96..270)
+      // -------------------------------------------------------------
+      let displayedIndices = [];
+      if (totalValid <= 7) {
+        displayedIndices = validRows.map((_, i) => i);
+      } else if (activeIdx !== -1) {
+        const idxSet = new Set();
+        idxSet.add(0); // #1
+        if (totalValid > 1) idxSet.add(1); // #2
+        if (activeIdx - 1 >= 0) idxSet.add(activeIdx - 1);
+        idxSet.add(activeIdx);
+        if (activeIdx + 1 < totalValid) idxSet.add(activeIdx + 1);
+        idxSet.add(totalValid - 1); // #terakhir
+
+        let fillOffset = 1;
+        while (idxSet.size < 7 && (activeIdx - fillOffset >= 0 || activeIdx + fillOffset < totalValid)) {
+          if (activeIdx - fillOffset >= 0) idxSet.add(activeIdx - fillOffset);
+          if (activeIdx + fillOffset < totalValid) idxSet.add(activeIdx + fillOffset);
+          fillOffset++;
+        }
+        displayedIndices = Array.from(idxSet).sort((a, b) => a - b).slice(0, 7);
+      } else {
+        displayedIndices = [0, 1, 2, 3, 4, 5, 6].filter(i => i < totalValid);
+      }
+
+      const bx = 95;
+      const bx2 = 380;
+      const bw = bx2 - bx;
+      const minVal = validRows[validRows.length - 1].val;
+      const maxVal = validRows[0].val;
+      let barSpan = Math.abs(maxVal - minVal);
+      if (barSpan <= 0) barSpan = Math.abs(maxVal) > 0 ? Math.abs(maxVal) * 0.2 : 1.0;
+
+      displayedIndices.forEach((rowIdx, k) => {
+        const peer = validRows[rowIdx];
+        const isActive = activeItem && peer.c === activeItem.c;
+        const ry = 98 + k * 26;
+        const peerRank = rowIdx + 1;
+
+        if (isActive) {
+          svgContent += `<rect x="15" y="${ry - 10}" width="430" height="20" rx="4" fill="rgba(207, 34, 46, 0.08)" />`;
+        }
+
+        const tickerCol = isActive ? "#cf222e" : "#1d4ed8";
+        const tickerWeight = isActive ? "700" : "600";
+        svgContent += `<text x="20" y="${ry + 4}" font-size="10.5" font-weight="${tickerWeight}" fill="${tickerCol}" font-family="var(--font-sans), sans-serif">#${peerRank} ${peer.c}</text>`;
+
+        const norm = Math.max(0, Math.min(1, (peer.val - minVal) / barSpan));
+        const barW = Math.max(4, norm * bw);
+        const barCol = isActive ? "#cf222e" : "#0969da";
+        const barStrokeW = isActive ? 2.2 : 1.6;
+        const dotR = isActive ? 4 : 3;
+
+        svgContent += `<line x1="${bx}" y1="${ry}" x2="${bx + barW}" y2="${ry}" stroke="${barCol}" stroke-width="${barStrokeW}" stroke-linecap="round" />`;
+        svgContent += `<circle cx="${bx + barW}" cy="${ry}" r="${dotR}" fill="${barCol}" stroke="#ffffff" stroke-width="1.5" />`;
+
+        const valCol = isActive ? "#cf222e" : "#475569";
+        const valWeight = isActive ? "700" : "500";
+        svgContent += `<text x="440" y="${ry + 4}" font-size="10.5" text-anchor="end" font-weight="${valWeight}" fill="${valCol}" font-family="var(--font-sans), sans-serif">${fmtVal(peer.val, rData.unit)}</text>`;
+
+        svgContent += `<rect x="15" y="${ry - 10}" width="430" height="20" fill="transparent" class="peer-click-row" data-em="${peer.c}" style="cursor: pointer;" />`;
+      });
+
+      svg.innerHTML = svgContent;
+
+      svg.querySelectorAll(".peer-click-row").forEach(rect => {
+        rect.addEventListener("click", () => {
+          const targetEm = rect.getAttribute("data-em");
+          if (emitenSelect && targetEm) {
+            emitenSelect.value = targetEm;
+            syncCustomSelect(emitenSelect);
+            renderCurrentRatio();
+          }
+        });
+      });
+    }
+
+    function renderCurrentRatio() {
+      const code = ratioSelect.value;
+      const secFilter = sectorSelect.value;
+      const subsecFilter = subsectorSelect.value;
+
+      syncCustomSelect(ratioSelect);
+      syncCustomSelect(sectorSelect);
+      syncCustomSelect(subsectorSelect);
+      syncCustomSelect(emitenSelect);
+      syncCustomSelect(rankingPeriodSelect);
+
+      const rData = RATIOS_DATA.find(r => r.code === code);
+      if (!rData) return;
+
+      const { stats, p05, p95, p50, p25, p75 } = {
+        stats: rData.stats,
+        p05: rData.stats.p05,
+        p95: rData.stats.p95,
+        p50: rData.stats.p50,
+        p25: rData.stats.p25,
+        p75: rData.stats.p75,
+      };
+
+      // Update Summary Cards
+      const validPct = stats.total > 0 ? ((stats.valid / stats.total) * 100).toFixed(1) : 0;
+      document.getElementById("cardValid").textContent = `${stats.valid} / ${stats.total} (${validPct}%)`;
+      document.getElementById("cardNM").textContent = `${stats.nm}`;
+      document.getElementById("cardNA").textContent = `${stats.na}`;
+      document.getElementById("cardUNREC").textContent = `${stats.unrec}`;
+      document.getElementById("cardMedian").textContent = fmtVal(p50, rData.unit);
+      document.getElementById("cardIQR").textContent = `${fmtVal(p25, rData.unit)} – ${fmtVal(p75, rData.unit)}`;
+
+      document.getElementById("formulaText").textContent = rData.formula;
+      document.getElementById("scopeBadge").textContent = `Scope: ${rData.scope} | Unit: ${rData.unit}`;
+      document.getElementById("explMeaning").textContent = rData.desc || "Penjelasan belum tersedia.";
+      document.getElementById("explReading").textContent = rData.how_to_read || "Panduan membaca belum tersedia.";
+
+      const basisBadge = document.getElementById("basisBadge");
+      const polBadge = document.getElementById("polarityBadge");
+
+      // Polarity Badge
+      if (rData.polarity === "lower_is_better") {
+        polBadge.innerHTML = "<span class='badge-polarity badge-pol-lower'>▼ Semakin Rendah Semakin Baik</span>";
+      } else if (rData.polarity === "higher_is_better") {
+        polBadge.innerHTML = "<span class='badge-polarity badge-pol-higher'>▲ Semakin Tinggi Semakin Baik</span>";
+      } else {
+        polBadge.innerHTML = "<span class='badge-polarity badge-pol-neutral'>◆ Tolok Ukur / Konteks Industri</span>";
+      }
+
+      // Basis Badge
+      if (rData.basis === "stock_to_stock") {
+        basisBadge.innerHTML = "<span class='badge-basis badge-stock'>Posisi Neraca (Per Tanggal)</span>";
+      } else if (rData.basis === "flow_to_stock") {
+        basisBadge.innerHTML = "<span class='badge-basis badge-flow-stock'>Aliran 12M / Rata-rata Neraca</span>";
+      } else {
+        basisBadge.innerHTML = "<span class='badge-basis badge-flow'>Akumulasi 12 Bulan (12M TTM)</span>";
+      }
+
+      // Dynamic Column Subheaders
+      PERIODS_INFO.forEach((pInfo, idx) => {
+        const th = document.getElementById(`th_col_${idx}`);
+        if (!th) return;
+        const subText = rData.basis === "stock_to_stock" ? pInfo.stock_sub : pInfo.flow_sub;
+        th.innerHTML = `${pInfo.label} <span class='sort-indicator' id='sort_${idx}'></span><div class='th-sub'>${subText}</div>`;
+      });
+
+      // Scale & Gradient
+      const grad = document.getElementById("gradientBar");
+      const scaleMin = document.getElementById("scaleMin");
+      const scaleMax = document.getElementById("scaleMax");
+
+      if (rData.polarity === "lower_is_better") {
+        grad.style.background = "linear-gradient(to right, #dafbe1, #fff8c5, #ff8182, #cf222e)";
+        scaleMin.textContent = `p05: ${fmtVal(p05, rData.unit)} (Efisien/Aman)`;
+        scaleMax.textContent = `p95: ${fmtVal(p95, rData.unit)} (Risiko/Inefisien)`;
+      } else if (rData.polarity === "higher_is_better") {
+        grad.style.background = rData.can_neg
+          ? "linear-gradient(to right, #cf222e, #ffebe9, #ebf8ff, #0969da)"
+          : "linear-gradient(to right, #ebf8ff, #0969da)";
+        scaleMin.textContent = `p05: ${fmtVal(p05, rData.unit)} (${rData.can_neg ? "Defisit" : "Rendah"})`;
+        scaleMax.textContent = `p95: ${fmtVal(p95, rData.unit)} (Kuat)`;
+      } else {
+        grad.style.background = "linear-gradient(to right, #f6f8fa, #959da5, #484f58)";
+        scaleMin.textContent = `p05: ${fmtVal(p05, rData.unit)}`;
+        scaleMax.textContent = `p95: ${fmtVal(p95, rData.unit)}`;
+      }
+
+      // Filter rows
+      let filtered = [...rData.rows];
+      if (secFilter) {
+        filtered = filtered.filter(row => row.s === secFilter);
+      }
+      if (subsecFilter) {
+        filtered = filtered.filter(row => row.sub === subsecFilter);
+      }
+      const cohortRows = [...filtered];
+
+      const emFilter = emitenSelect ? emitenSelect.value : "";
+      if (emFilter) {
+        filtered = filtered.filter(row => row.c === emFilter);
+      }
+
+      // Sort rows
+      filtered.sort((a, b) => {
+        if (sortKey === "c") {
+          return sortDir === "asc" ? a.c.localeCompare(b.c) : b.c.localeCompare(a.c);
+        }
+        if (sortKey === "s") {
+          const cmp = a.s.localeCompare(b.s);
+          return sortDir === "asc" ? cmp : -cmp;
+        }
+        if (sortKey === "sub") {
+          const cmp = a.sub.localeCompare(b.sub);
+          return sortDir === "asc" ? cmp : -cmp;
+        }
+        const pIdx = parseInt(sortKey);
+        const valA = (a.st[pIdx] === "VALID" && a.v[pIdx] !== null) ? a.v[pIdx] : null;
+        const valB = (b.st[pIdx] === "VALID" && b.v[pIdx] !== null) ? b.v[pIdx] : null;
+        if (valA === null && valB === null) return 0;
+        if (valA === null) return 1; // null always at bottom
+        if (valB === null) return -1;
+        return sortDir === "asc" ? valA - valB : valB - valA;
+      });
+
+      // Update sort indicators
+      const sortKeys = ["c", "s", "sub", ...PERIODS_INFO.map((_, i) => String(i))];
+      sortKeys.forEach(k => {
+        const el = document.getElementById("sort_" + k);
+        if (el) el.textContent = (k === sortKey) ? (sortDir === "asc" ? "▲" : "▼") : "";
+      });
+
+      // Render Table Rows
+      const htmlRows = [];
+
+      filtered.forEach((row, idx) => {
+        let cellsHtml = "";
+        for (let pIdx = 0; pIdx < PERIODS_INFO.length; pIdx++) {
+          const val = row.v[pIdx];
+          const st = row.st[pIdx];
+          const pInfo = PERIODS_INFO[pIdx];
+          const pName = pInfo ? pInfo.label : `Period ${pIdx}`;
+
+          if (st === "VALID" && val !== null) {
+            const col = getColor(val, p05, p95, rData.polarity, rData.can_neg);
+            const txt = fmtVal(val, rData.unit);
+            cellsHtml += `<td class="col-period"><span class="heat-cell" style="background:${col.bg}; color:${col.fg};" data-em="${row.c}" data-p="${pName}" data-val="${val}" data-txt="${txt}" data-st="VALID">${txt}</span></td>`;
+          } else if (st === "NOT_MEANINGFUL") {
+            cellsHtml += `<td class="col-period"><span class="badge badge-nm" data-em="${row.c}" data-p="${pName}" data-st="NM">N/M</span></td>`;
+          } else if (st === "INCOMPLETE_HISTORY") {
+            cellsHtml += `<td class="col-period"><span class="badge badge-na" data-em="${row.c}" data-p="${pName}" data-st="NA">N/A</span></td>`;
+          } else if (st === "UNRECONCILED_COMPONENT") {
+            cellsHtml += `<td class="col-period"><span class="badge badge-unrec" data-em="${row.c}" data-p="${pName}" data-st="UNREC">UNREC</span></td>`;
+          } else {
+            cellsHtml += `<td class="col-period"><span class="badge badge-nr" data-em="${row.c}" data-p="${pName}" data-st="NR">—</span></td>`;
+          }
+        }
+
+        htmlRows.push(`<tr class="heatmap-row" data-em="${row.c}">
+          <td class="col-idx">${idx + 1}</td>
+          <td class="col-emiten">${row.c}</td>
+          <td class="col-sector" title="${row.s}">${row.s}</td>
+          <td class="col-subsector" title="${row.sub}">${row.sub}</td>
+          ${cellsHtml}
+        </tr>`);
+      });
+
+      tableBody.innerHTML = htmlRows.join("");
+
+      // Hover baris tabel untuk preview trayektori di koridor
+      tableBody.querySelectorAll("tr.heatmap-row").forEach(tr => {
+        tr.addEventListener("mouseenter", () => {
+          const em = tr.getAttribute("data-em");
+          renderQuantileCorridor(rData, cohortRows, em);
+          renderPeerRanking(rData, cohortRows, em, parseInt(rankingPeriodSelect.value, 10));
+        });
+        tr.addEventListener("mouseleave", () => {
+          const activeEm = emitenSelect ? emitenSelect.value : "";
+          renderQuantileCorridor(rData, cohortRows, activeEm);
+          renderPeerRanking(rData, cohortRows, activeEm, parseInt(rankingPeriodSelect.value, 10));
+        });
+      });
+
+      // Render Dynamic Quantile Corridor & Peer Ranking across evaluation periods
+      renderQuantileCorridor(rData, cohortRows, emFilter);
+      renderPeerRanking(rData, cohortRows, emFilter, parseInt(rankingPeriodSelect.value, 10));
+    }
+
+    // Sort Click Listeners
+    document.querySelectorAll(".col-sortable").forEach(th => {
+      th.addEventListener("click", () => {
+        const key = th.getAttribute("data-key");
+        if (sortKey === key) {
+          sortDir = sortDir === "asc" ? "desc" : "asc";
+        } else {
+          sortKey = key;
+          const isNumericCol = !isNaN(parseInt(key, 10));
+          sortDir = isNumericCol ? "desc" : "asc";
+        }
+        renderCurrentRatio();
+      });
+    });
+
+    // Tooltip handler
+    document.addEventListener("mouseover", e => {
+      const target = e.target.closest(".col-period [data-em][data-p][data-st]");
+      if (!target) {
+        if (!e.target.closest(".corridor-col-hover")) {
+          tooltip.style.display = "none";
+        }
+        return;
+      }
+      const em = target.dataset.em;
+      const p = target.dataset.p;
+      const st = target.dataset.st;
+      const val = target.dataset.val;
+      const txt = target.dataset.txt;
+
+      if (!em || !p || !st) {
+        tooltip.style.display = "none";
+        return;
+      }
+
+      let msg = `<strong>${em}</strong> (${p})<br/>`;
+      if (st === "VALID") {
+        msg += `Nilai Rasio: <strong>${txt}</strong><br/><span style="color:#8c959f; font-size:10px;">Exact: ${parseFloat(val).toFixed(6)}</span>`;
+      } else if (st === "NM") {
+        msg += `<span style="color:#54aeff; font-weight: 600;">NOT_MEANINGFUL (N/M)</span><br/>Penyebut bernilai nol atau negatif (misal defisiensi modal). Rasio tidak memiliki makna ekonomis.`;
+      } else if (st === "NA") {
+        msg += `<span style="color:#d4a72c; font-weight: 600;">INCOMPLETE_HISTORY (N/A)</span><br/>Data historis pembanding tahun lalu (t-1) belum tersedia untuk akumulasi 12M TTM.`;
+      } else if (st === "UNREC") {
+        msg += `<span style="color:#ff8182; font-weight: 600;">UNRECONCILED_COMPONENT (UNREC)</span><br/>Pos komponen akun tidak lolos verifikasi penjumlahan vertikal (footing hierarki).`;
+      } else if (st === "NR") {
+        msg += `<span style="color:#8c959f; font-weight: 600;">NOT_REPORTED</span><br/>Emiten belum mempublikasikan laporan keuangan periode ini.`;
+      } else {
+        tooltip.style.display = "none";
+        return;
+      }
+
+      tooltip.innerHTML = msg;
+      tooltip.style.display = "block";
+    });
+
+    document.addEventListener("mousemove", e => {
+      if (tooltip.style.display === "block") {
+        tooltip.style.left = (e.clientX + 14) + "px";
+        tooltip.style.top = (e.clientY + 14) + "px";
+      }
+    });
+
+    document.addEventListener("mouseout", e => {
+      if (e.target.closest(".col-period [data-em]")) {
+        tooltip.style.display = "none";
+      }
+    });
+
+    // Dual loading pattern: window.__RATIOS_PAYLOAD__ for offline file://, fetch for HTTP/Pages
+    if (window.__RATIOS_PAYLOAD__) {
+      initRatiosApp(window.__RATIOS_PAYLOAD__);
+    } else {
+      fetch('ratios_data.json')
+        .then(res => res.json())
+        .then(payload => {
+          initRatiosApp(payload);
+        })
+        .catch(err => {
+          console.error("Gagal memuat ratios_data.json:", err);
+          tableBody.innerHTML = `<tr><td colspan="25" style="text-align: center; color: var(--danger); padding: 32px;">Gagal memuat ratios_data.json: ${err.message}</td></tr>`;
+        });
+    }
+  </script>
+</body>
+</html>

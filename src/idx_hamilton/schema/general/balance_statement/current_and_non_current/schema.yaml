@@ -1,0 +1,517 @@
+$schema: "./schema.extension.yaml"
+
+entry_point: general
+statement: balance_statement
+variant: current_and_non_current
+
+chart_of_accounts:
+  - account: Assets
+    code: A
+    is_total: true
+    children:
+      - account: CurrentAssets
+        code: CA
+        is_total: true
+        children:
+          - account: CashAndCashEquivalents
+            code: CA.010
+          - account: NotesReceivable
+            code: CA.020
+          - account: ShortTermInvestments
+            code: CA.030
+          - account: CurrentRestrictedFunds
+            code: CA.040
+          - account: CurrentFinancialAssetsAtFairValueThroughProfitOrLoss
+            code: CA.05A
+          - account: CurrentFinancialAssetsFairValueThroughOtherComprehensiveIncome
+            code: CA.05B
+            deprecated_tags:
+              - tag: CurrentFinancialAssetsAvailableForSale
+          - account: CurrentFinancialAssetsAmortizedCostInvestments
+            code: CA.05C
+            deprecated_tags:
+              - tag: CurrentFinancialAssetsHeldToMaturityInvestments
+          - account: OtherCurrentFinancialAssets
+            code: CA.05D
+          - account: CurrentDerivativeFinancialAssets
+            code: CA.060
+          - account: TradeReceivablesThirdParties
+            code: CA.07A
+          - account: TradeReceivablesRelatedParties
+            code: CA.07B
+          - account: CurrentFinanceLeaseReceivables
+            code: CA.080
+          - account: RetentionReceivablesThirdParties
+            code: CA.09A
+          - account: RetentionReceivablesRelatedParties
+            code: CA.09B
+          - account: UnbilledReceivablesThirdParties
+            code: CA.10A
+          - account: UnbilledReceivablesRelatedParties
+            code: CA.10B
+          - account: ReceivablesOnSubsidy
+            code: CA.110
+          - account: CurrentCustomerReceivablesThirdParties
+            code: CA.12A
+          - account: CurrentCustomerReceivablesRelatedParties
+            code: CA.12B
+          - account: MarginReceivables
+            code: CA.130
+          - account: ReceivablesFromClearingAndSettlementGuaranteeInstitution
+            code: CA.140
+          - account: PremiumAndReinsuranceReceivables
+            code: CA.150
+          - account: DividendsAndInterestReceivables
+            code: CA.160
+          - account: OtherReceivablesThirdParties
+            code: CA.17A
+          - account: OtherReceivablesRelatedParties
+            code: CA.17B
+          - account: CurrentLivestockInventories
+            code: CA.18A
+          - account: CurrentRealEstateAssets
+            code: CA.18B
+          - account: CurrentInventories
+            code: CA.18C
+          - account: CurrentBiologicalAssets
+            code: CA.190
+          - account: CurrentPrepaidExpenses
+            code: CA.200
+          - account: CurrentGuarantees
+            code: CA.210
+            deprecated_tags:
+              - tag: Guarantees
+          - account: CurrentAdvancesOnInvestments
+            code: CA.22A
+          - account: CurrentAdvancesOnPurchaseOfPropertyPlantAndEquipment
+            code: CA.22B
+          - account: OtherCurrentAdvances
+            code: CA.22C
+          - account: CurrentPrepaidTaxes
+            code: CA.230
+          - account: CurrentClaimsForTaxRefund
+            code: CA.240
+          - account: CurrentDeferredStrippingCosts
+            code: CA.250
+          - account: CurrentDeferredMobilisationCosts
+            code: CA.260
+          - account: CurrentTaxAmnestyAssets
+            code: CA.270
+          - account: OtherCurrentNonFinancialAssets
+            code: CA.280
+          - account: NonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForSale
+            code: CA.290
+          - account: NonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForDistributionToOwners
+            code: CA.300
+      - account: NonCurrentAssets
+        code: NCA
+        is_total: true
+        children:
+          - account: NonCurrentFinanceLeaseReceivables
+            code: NCA.010
+          - account: NonCurrentRestrictedFunds
+            code: NCA.020
+          - account: AircraftMaintenanceReserveFunds
+            code: NCA.030
+          - account: ReceivablesFromRelatedParties
+            code: NCA.040
+          - account: ReceivablesFromStockholders
+            code: NCA.050
+          - account: NonCurrentCustomerReceivablesThirdParties
+            code: NCA.06A
+          - account: NonCurrentCustomerReceivablesRelatedParties
+            code: NCA.06B
+          - account: OtherNonCurrentReceivablesThirdParties
+            code: NCA.07A
+          - account: OtherNonCurrentReceivablesRelatedParties
+            code: NCA.07B
+          - account: InvestmentsAccountedForUsingEquityMethod
+            code: NCA.080
+          - account: InvestmentsInSubsidiaries
+            code: NCA.09A
+          - account: InvestmentsInJointVentures
+            code: NCA.09B
+          - account: InvestmentsInAssociates
+            code: NCA.09C
+          - account: NonCurrentGuarantees
+            code: NCA.100
+          - account: NonCurrentAdvancesOnInvestments
+            code: NCA.11A
+          - account: NonCurrentAdvancesOnPurchaseOfPropertyPlantAndEquipment
+            code: NCA.11B
+          - account: OtherNonCurrentAdvances
+            code: NCA.11C
+          - account: NonCurrentFinancialAssetsAtFairValueThroughProfitOrLoss
+            code: NCA.12A
+          - account: NonCurrentFinancialAssetsFairValueThroughOtherComprehensiveIncome
+            code: NCA.12B
+            deprecated_tags:
+              - tag: NonCurrentFinancialAssetsAvailableForSale
+          - account: NonCurrentFinancialAssetsAmortizedCost
+            code: NCA.12C
+            deprecated_tags:
+              - tag: NonCurrentFinancialAssetsHeldToMaturity
+          - account: OtherNonCurrentFinancialAssets
+            code: NCA.12D
+          - account: NonCurrentDerivativeFinancialAssets
+            code: NCA.130
+          - account: NonCurrentPrepaidExpenses
+            code: NCA.140
+          - account: NonCurrentPrepaidTaxes
+            code: NCA.150
+          - account: DeferredTaxAssets
+            code: NCA.160
+          - account: NonCurrentLivestockInventories
+            code: NCA.17A
+          - account: NonCurrentRealEstateAssets
+            code: NCA.17B
+          - account: NonCurrentInventories
+            code: NCA.17C
+          - account: LivestockProduction
+            code: NCA.180
+          - account: IndustrialTimberPlantationsMature
+            code: NCA.19A
+          - account: IndustrialTimberPlantationsImmature
+            code: NCA.19B
+          - account: PlantationAssetsMature
+            code: NCA.20A
+          - account: PlantationAssetsImmature
+            code: NCA.20B
+          - account: Non-CurrentBiologicalAssets
+            code: NCA.210
+          - account: PlasmaPlantations
+            code: NCA.220
+          - account: ReinsuranceAssets
+            code: NCA.230
+          - account: InvestmentProperties
+            code: NCA.240
+          - account: UndevelopedLand
+            code: NCA.250
+          - account: PropertyPlantAndEquipment
+            code: NCA.260
+          - account: RightOfUseAssets
+            code: NCA.270
+          - account: IjarahAssets
+            code: NCA.280
+          - account: ForeclosedAssets
+            code: NCA.290
+          - account: OilAndGasAssets
+            code: NCA.300
+          - account: ExplorationAndEvaluationAssets
+            code: NCA.310
+          - account: TollRoadConcessionRights
+            code: NCA.320
+          - account: MiningProperties
+            code: NCA.330
+          - account: NonCurrentDeferredStrippingCosts
+            code: NCA.340
+          - account: NonCurrentDeferredMobilisationCosts
+            code: NCA.350
+          - account: DeferredChargesOnLandrights
+            code: NCA.36A
+          - account: DeferredChargesOnExplorationAndDevelopmentExpenditures
+            code: NCA.36B
+          - account: DeferredChargesOnCostOnForest
+            code: NCA.36C
+          - account: DeferredChargesOnEnvironmentalAndReclamationExpenditures
+            code: NCA.36D
+          - account: OtherDeferredCharges
+            code: NCA.36E
+          - account: NonCurrentClaimsForTaxRefund
+            code: NCA.380
+          - account: PostEmploymentBenefitAssets
+            code: NCA.390
+          - account: Goodwill
+            code: NCA.400
+          - account: IntangibleAssetsOtherThanGoodwill
+            code: NCA.410
+          - account: NonCurrentTaxAmnestyAssets
+            code: NCA.420
+          - account: OtherNonCurrentNonFinancialAssets
+            code: NCA.430
+  - account: LiabilitiesAndEquity
+    code: LE
+    is_total: true
+    children:
+      - account: Liabilities
+        code: L
+        is_total: true
+        children:
+          - account: CurrentLiabilities
+            code: CL
+            is_total: true
+            children:
+              - account: ShortTermBankLoans
+                code: CL.010
+                deprecated_tags:
+                  - tag: ShortTermLoans
+              - account: TrustReceiptsPayables
+                code: CL.020
+              - account: TradePayablesThirdParties
+                code: CL.03A
+              - account: TradePayablesRelatedParties
+                code: CL.03B
+              - account: OtherPayablesThirdParties
+                code: CL.04A
+              - account: OtherPayablesRelatedParties
+                code: CL.04B
+              - account: CurrentAdvancesFromCustomersThirdParties
+                code: CL.05A
+              - account: CurrentAdvancesFromCustomersRelatedParties
+                code: CL.05B
+              - account: DividendsPayable
+                code: CL.060
+              - account: OtherCurrentFinancialLiabilities
+                code: CL.070
+              - account: CurrentAccruedExpenses
+                code: CL.080
+              - account: ShortTermPostEmploymentBenefitObligations
+                code: CL.090
+              - account: TaxesPayable
+                code: CL.100
+              - account: ExcisePayable
+                code: CL.110
+              - account: ProjectPayables
+                code: CL.120
+              - account: PayablesToClearingAndSettlementGuaranteeInstitution
+                code: CL.130
+              - account: PayablesToCustomersThirdParties
+                code: CL.14A
+              - account: PayablesToCustomersRelatedParties
+                code: CL.14B
+              - account: CoinsuranceLiabilities
+                code: CL.150
+              - account: ReinsurancePayables
+                code: CL.160
+              - account: FactoringPayables
+                code: CL.170
+              - account: CurrentDeposits
+                code: CL.180
+              - account: CurrentUnearnedRevenue
+                code: CL.190
+              - account: DueToCustomersThirdParties
+                code: CL.20A
+              - account: DueToCustomersRelatedParties
+                code: CL.20B
+              - account: CurrentDeferredRevenue
+                code: CL.210
+              - account: CurrentProvisionsForOverlay
+                code: CL.22A
+              - account: CurrentProvisionsForAircraftReturnAndMaintenanceFunds
+                code: CL.22B
+              - account: CurrentProvisionsForInfrastructureDevelopmentPublicAndSocialFacilities
+                code: CL.23C
+              - account: CurrentProvisionsForAssetDismantlingCosts
+                code: CL.23D
+              - account: CurrentProvisionsForRestorationAndRehabilitation
+                code: CL.23E
+              - account: OtherCurrentProvisions
+                code: CL.23F
+              - account: ShareBasedPaymentLiabilities
+                code: CL.240
+              - account: CurrentContractLiabilities
+                code: CL.250
+              - account: LiabilitiesDirectlyAssociatedWithNonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForSaleOrAsHeldForDistributionToOwners
+                code: CL.260
+              - account: CurrentMaturitiesOfBankLoans
+                code: CL.27A
+              - account: CurrentMaturitiesOfNon-BankFinancialInstitutionsLoan
+                code: CL.27B
+              - account: CurrentMaturitiesOfSecuredLoans
+                code: CL.27C
+              - account: CurrentMaturitiesOfUnsecuredLoans
+                code: CL.27D
+              - account: CurrentMaturitiesOfStepLoans
+                code: CL.27E
+              - account: CurrentMaturitiesOfLoansFromGovernmentOfTheRepublicOfIndonesia
+                code: CL.27F
+              - account: CurrentMaturitiesOfSubordinatedLoans
+                code: CL.27G
+              - account: CurrentMaturitiesOfJointOperationsLiabilities
+                code: CL.27H
+              - account: CurrentMaturitiesOfLandAcquisitionLiabilities
+                code: CL.27I
+              - account: CurrentMaturitiesOfConsumerFinancingPayables
+                code: CL.27J
+              - account: CurrentMaturitiesOfFinanceLeaseLiabilities
+                code: CL.27K
+              - account: CurrentMaturitiesOfElectricityPurchasePayables
+                code: CL.27L
+              - account: CurrentMaturitiesOfRetentionPayables
+                code: CL.27M
+              - account: CurrentMaturitiesOfNotesPayable
+                code: CL.27N
+              - account: CurrentMaturitiesOfMediumTermNotes
+                code: CL.27O
+              - account: CurrentMaturitiesOfBondsPayable
+                code: CL.27P
+              - account: CurrentMaturitiesOfSukuk
+                code: CL.27Q
+              - account: CurrentMaturitiesOfSubordinatedBonds
+                code: CL.27R
+              - account: CurrentMaturitiesOfOtherBorrowings
+                code: CL.27S
+              - account: CurrentDueToRelatedParties
+                code: CL.280
+              - account: CurrentDueToStockholders
+                code: CL.290
+              - account: ShortTermDerivativeFinancialLiabilities
+                code: CL.300
+              - account: CurrentTaxAmnestyLiabilities
+                code: CL.310
+              - account: OtherCurrentNonFinancialLiabilities
+                code: CL.320
+          - account: NonCurrentLiabilities
+            code: NCL
+            is_total: true
+            children:
+              - account: LongTermDerivativeFinancialLiabilities
+                code: NCL.010
+              - account: DeferredTaxLiabilities
+                code: NCL.020
+              - account: NonCurrentDueToRelatedParties
+                code: NCL.030
+              - account: NonCurrentDueToStockholders
+                code: NCL.040
+              - account: Non-CurrentContractLiabilities
+                code: NCL.050
+              - account: LongTermBankLoans
+                code: NCL.06A
+              - account: LongTermNon-BankFinancialInstitutionsLoan
+                code: NCL.06B
+              - account: LongTermStepLoans
+                code: NCL.06C
+              - account: LongTermSecuredLoans
+                code: NCL.06D
+              - account: LongTermUnsecuredLoans
+                code: NCL.06E
+              - account: LongTermLoansFromGovernmentOfTheRepublicOfIndonesia
+                code: NCL.06F
+              - account: LongTermSubordinatedLoans
+                code: NCL.06G
+              - account: LongTermJointOperationsLiabilities
+                code: NCL.06H
+              - account: LongTermLandAcquisitionLiabilities
+                code: NCL.06I
+              - account: LongTermConsumerFinancingPayables
+                code: NCL.06J
+              - account: LongTermFinanceLeaseLiabilities
+                code: NCL.06K
+              - account: LongTermElectricityPurchasePayables
+                code: NCL.06L
+              - account: LongTermRetentionPayables
+                code: NCL.06M
+              - account: LongTermNotesPayable
+                code: NCL.06N
+              - account: LongTermMediumTermNotes
+                code: NCL.06O
+              - account: LongTermBondsPayable
+                code: NCL.06P
+              - account: LongTermSukuk
+                code: NCL.06Q
+              - account: LongTermSubordinatedBonds
+                code: NCL.06R
+              - account: LongTermOtherBorrowings
+                code: NCL.06S
+              - account: ConvertibleBonds
+                code: NCL.070
+              - account: NonCurrentUnearnedRevenue
+                code: NCL.080
+              - account: NonCurrentDeposits
+                code: NCL.090
+              - account: NonCurrentAdvancesFromCustomersThirdParties
+                code: NCL.10A
+              - account: NonCurrentAdvancesFromCustomersRelatedParties
+                code: NCL.10B
+              - account: NonCurrentDeferredRevenue
+                code: NCL.110
+              - account: InsuranceContractLiabilities
+                code: NCL.120
+              - account: NonCurrentProvisionsForOverlay
+                code: NCL.13A
+              - account: NonCurrentProvisionsForAircraftReturnAndMaintenanceFunds
+                code: NCL.13B
+              - account: NonCurrentProvisionsForInfrastructureDevelopmentPublicAndSocialFacilities
+                code: NCL.13C
+              - account: NonCurrentProvisionsForAssetDismantlingCosts
+                code: NCL.13D
+              - account: NonCurrentProvisionsForRestorationAndRehabilitation
+                code: NCL.13E
+              - account: OtherNonCurrentProvisions
+                code: NCL.13F
+              - account: AccruedStrippingCosts
+                code: NCL.140
+              - account: LiabilitiesToPolicyholders
+                code: NCL.150
+              - account: LongTermPostEmploymentBenefitObligations
+                code: NCL.160
+              - account: NonCurrentTaxAmnestyLiabilities
+                code: NCL.170
+              - account: OtherNonCurrentFinancialLiabilities
+                code: NCL.18A
+              - account: OtherNonCurrentNonFinancialLiabilities
+                code: NCL.18B
+      - account: Equity
+        code: E
+        is_total: true
+        children:
+          - account: EquityAttributableToEquityOwnersOfParentEntity
+            is_total: true
+            code: E.PE
+            children:
+              - account: CommonStocks
+                code: E.PE.010
+              - account: PreferredStocks
+                code: E.PE.020
+              - account: AdditionalPaidInCapital
+                code: E.PE.030
+              - account: TreasuryStocks
+                code: E.PE.040
+                weight: -1
+              - account: AdvancesInCapitalStock
+                code: E.PE.050
+              - account: StockOptions
+                code: E.PE.060
+              - account: RevaluationReserves
+                code: E.PE.070
+              - account: ReserveOfExchangeDifferencesOnTranslation
+                code: E.PE.080
+              - account: ReserveForChangesInFairValueOfFairValueThroughOtherComprehensiveIncomeFinancialAssets
+                code: E.PE.090
+                deprecated_tags:
+                  - tag: ReserveForChangesInFairValueOfAvailableForSaleFinancialAssets
+              - account: ReserveOfGainsLossesFromInvestmentsInEquityInstruments
+                code: E.PE.100
+              - account: ReserveOfShareBasedPayments
+                code: E.PE.110
+              - account: ReserveOfCashFlowHedges
+                code: E.PE.120
+              - account: ReserveOfRemeasurementsOfDefinedBenefitPlans
+                code: E.PE.130
+              - account: OtherReserves
+                code: E.PE.140
+              - account: DifferenceDueToChangesOfEquityInSubsidiaryAssociates
+                code: E.PE.150
+              - account: OtherComponentsOfEquity
+                code: E.PE.160
+              - account: AppropriatedRetainedEarnings
+                code: E.PE.17A
+              - account: UnappropriatedRetainedEarnings
+                code: E.PE.17B
+          - account: ProformaEquity
+            code: E.PFE
+          - account: NonControllingInterests
+            code: E.NCI
+
+assertions:
+  - assertion_id: balance_sheet_identity
+    description: "Assets must equal Liabilities plus Equity."
+    terms:
+      - account: Assets
+        weight: 1
+      - account: Liabilities
+        weight: -1
+      - account: Equity
+        weight: -1
+    target: 0.0
+    tolerance: 1.0

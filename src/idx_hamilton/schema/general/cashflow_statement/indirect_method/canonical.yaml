@@ -1,0 +1,47 @@
+$schema: ./canonical.extension.yaml
+entry_point: general
+statement: cashflow_statement
+variant: indirect_method
+mappings:
+- canonical_account: OperatingCashFlow
+  components:
+  - account: NetCashFlowsReceivedFromUsedInOperatingActivities
+    weight: 1
+- canonical_account: InvestingCashFlow
+  components:
+  - account: NetCashFlowsReceivedFromUsedInInvestingActivities
+    weight: 1
+- canonical_account: FinancingCashFlow
+  components:
+  - account: NetCashFlowsReceivedFromUsedInFinancingActivities
+    weight: 1
+- canonical_account: CapitalExpenditure
+  components:
+  - account: PaymentsForAcquisitionOfPropertyPlantAndEquipment
+    weight: 1
+  - account: PaymentsForAdvancesForPurchaseOfPropertyPlantAndEquipment
+    weight: 1
+  - account: PaymentsForAcquisitionOfInvestmentProperties
+    weight: 1
+  - account: PaymentsForAcquisitionOfIntangibleAssets
+    weight: 1
+  - account: PaymentsForAcquisitionOfLandForDevelopment
+    weight: 1
+  - account: PaymentsForAcquisitionOfOilAndGasAssets
+    weight: 1
+  - account: PaymentsForAcquisitionOfExplorationAndEvaluationAssets
+    weight: 1
+  - account: PaymentsForAcquisitionOfTollRoadConcessionRights
+    weight: 1
+  - account: PaymentsForAcquisitionOfMiningProperties
+    weight: 1
+  - account: PaymentsForAcquisitionOfPlantationAssets
+    weight: 1
+  - account: PaymentsForAcquisitionOfIndustrialTimberPlantations
+    weight: 1
+  - account: PaymentsForAcquisitionOfPlasmaPlantations
+    weight: 1
+  - account: PaymentsForAcquisitionOfLivestockProduction
+    weight: 1
+  - account: PaymentsForAcquisitionOfOtherNonFinancialAssets
+    weight: 1

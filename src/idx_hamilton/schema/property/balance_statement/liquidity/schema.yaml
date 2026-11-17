@@ -1,0 +1,240 @@
+$schema: ./schema.extension.yaml
+entry_point: property
+statement: balance_statement
+variant: liquidity
+chart_of_accounts:
+- account: Assets
+  code: A
+  is_total: true
+  children:
+  - account: CashAndCashEquivalents
+    code: A.001
+  - account: NotesReceivable
+    code: A.002
+  - account: ShortTermInvestments
+    code: A.003
+  - account: FinancialAssetsAtFairValueThroughProfitOrLoss
+    code: A.004
+  - account: OtherFinancialAssets
+    code: A.007
+  - account: DerivativeFinancialAssets
+    code: A.008
+  - account: TradeReceivablesThirdParties
+    code: A.009
+  - account: TradeReceivablesRelatedParties
+    code: A.010
+  - account: RetentionReceivablesThirdParties
+    code: A.011
+  - account: RetentionReceivablesRelatedParties
+    code: A.012
+  - account: UnbilledReceivablesThirdParties
+    code: A.013
+  - account: UnbilledReceivablesRelatedParties
+    code: A.014
+  - account: OtherReceivablesThirdParties
+    code: A.015
+  - account: OtherReceivablesRelatedParties
+    code: A.016
+  - account: RealEstateAssets
+    code: A.017
+  - account: Inventories
+    code: A.018
+  - account: PrepaidExpenses
+    code: A.019
+  - account: Guarantees
+    code: A.020
+  - account: FinanceLeaseReceivables
+    code: A.021
+  - account: AdvancesOnInvestments
+    code: A.022
+  - account: AdvancesOnPurchaseOfPropertyAndEquipment
+    code: A.023
+  - account: OtherAdvances
+    code: A.024
+  - account: PrepaidTaxes
+    code: A.025
+  - account: ClaimsForTaxRefund
+    code: A.026
+  - account: NonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForSale
+    code: A.027
+  - account: NonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForDistributionToOwners
+    code: A.028
+  - account: RestrictedFunds
+    code: A.029
+  - account: ReceivablesFromRelatedParties
+    code: A.030
+  - account: ReceivablesFromStockholders
+    code: A.031
+  - account: InvestmentsAccountedForUsingEquityMethod
+    code: A.032
+  - account: InvestmentsInAssociates
+    code: A.033
+  - account: InvestmentsInJointVentures
+    code: A.034
+  - account: DeferredTaxAssets
+    code: A.035
+  - account: InvestmentProperties
+    code: A.036
+  - account: DeferredChargesOnLandrights
+    code: A.040
+  - account: OtherDeferredCharges
+    code: A.041
+  - account: PostEmploymentBenefitAssets
+    code: A.042
+  - account: Goodwill
+    code: A.043
+  - account: IntangibleAssetsOtherThanGoodwill
+    code: A.044
+  - account: TaxAmnestyAssets
+    code: A.045
+  - account: OtherNonFinancialAssets
+    code: A.046
+  - account: PropertyAndEquipment
+    code: A.PPE
+  - account: FinancialAssetsAvailableForSale
+    code: A.AFS
+  - account: FinancialAssetsHeldToMaturity
+    code: A.HTM
+  - account: InvestmentsInSubsidiaries
+    code: A.INV_SUB
+- account: Liabilities
+  code: L
+  is_total: true
+  children:
+  - account: TradePayablesThirdParties
+    code: L.002
+  - account: TradePayablesRelatedParties
+    code: L.003
+  - account: OtherPayablesThirdParties
+    code: L.004
+  - account: OtherPayablesRelatedParties
+    code: L.005
+  - account: AdvancesFromCustomers
+    code: L.006
+  - account: DividendsPayable
+    code: L.007
+  - account: OtherFinancialLiabilities
+    code: L.008
+  - account: DerivativeFinancialLiabilities
+    code: L.009
+  - account: AccruedExpenses
+    code: L.010
+  - account: TaxesPayable
+    code: L.011
+  - account: ProjectPayables
+    code: L.012
+  - account: Deposits
+    code: L.013
+  - account: UnearnedRevenue
+    code: L.014
+  - account: DueToCustomersThirdParties
+    code: L.015
+  - account: DueToCustomersRelatedParties
+    code: L.016
+  - account: DeferredRevenue
+    code: L.017
+  - account: ProvisionsForInfrastructureDevelopmentPublicAndSocialFacilities
+    code: L.018
+  - account: OtherProvisions
+    code: L.019
+  - account: LiabilitiesDirectlyAssociatedWithNonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForSaleOrAsHeldForDistributionToOwners
+    code: L.021
+  - account: DueToRelatedParties
+    code: L.022
+  - account: DueToStockholders
+    code: L.023
+  - account: DeferredTaxLiabilities
+    code: L.024
+  - account: BankLoans
+    code: L.025
+  - account: SecuredLoans
+    code: L.026
+  - account: UnsecuredLoans
+    code: L.027
+  - account: StepLoans
+    code: L.028
+  - account: SubordinatedLoans
+    code: L.029
+  - account: LandAcquisitionLiabilities
+    code: L.030
+  - account: FinanceLeaseLiabilities
+    code: L.031
+  - account: RetentionPayables
+    code: L.032
+  - account: NotesPayable
+    code: L.034
+  - account: BondsPayable
+    code: L.035
+  - account: Sukuk
+    code: L.036
+  - account: OtherBorrowings
+    code: L.038
+  - account: PostEmploymentBenefitObligations
+    code: L.039
+  - account: TaxAmnestyLiabilities
+    code: L.040
+  - account: OtherNonFinancialLiabilities
+    code: L.041
+  - account: ShortTermLoans
+    code: L.ST_LOAN
+- account: Equity
+  code: E
+  is_total: true
+  children:
+  - account: EquityAttributableToEquityOwnersOfParentEntity
+    code: E.001
+    is_total: true
+    children:
+    - account: CommonStocks
+      code: E.001.001
+    - account: PreferredStocks
+      code: E.001.002
+    - account: AdditionalPaidInCapital
+      code: E.001.003
+    - account: TreasuryStocks
+      code: E.001.004
+      weight: -1
+    - account: AdvancesInCapitalStock
+      code: E.001.005
+    - account: StockOptions
+      code: E.001.006
+    - account: RevaluationReserves
+      code: E.001.008
+    - account: ReserveOfExchangeDifferencesOnTranslation
+      code: E.001.009
+    - account: ReserveOfGainsLossesFromInvestmentsInEquityInstruments
+      code: E.001.010
+    - account: ReserveOfShareBasedPayments
+      code: E.001.011
+    - account: ReserveOfCashFlowHedges
+      code: E.001.012
+    - account: ReserveOfRemeasurementsOfDefinedBenefitPlans
+      code: E.001.013
+    - account: OtherReserves
+      code: E.001.014
+    - account: OtherComponentsOfEquity
+      code: E.001.016
+    - account: AppropriatedRetainedEarnings
+      code: E.001.017
+    - account: UnappropriatedRetainedEarnings
+      code: E.001.018
+    - account: ReserveForChangesInFairValueOfAvailableForSaleFinancialAssets
+      code: E.RES_AFS
+  - account: ProformaEquity
+    code: E.002
+  - account: NonControllingInterests
+    code: E.003
+- account: LiabilitiesAndEquity
+  code: PROP.LIQ.DISC.04
+assertions:
+- assertion_id: balance_sheet_identity
+  description: Assets must equal Liabilities plus Equity.
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: Assets
+    weight: 1
+  - account: Liabilities
+    weight: -1
+  - account: Equity
+    weight: -1

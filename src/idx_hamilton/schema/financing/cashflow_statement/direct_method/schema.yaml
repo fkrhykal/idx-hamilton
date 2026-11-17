@@ -1,0 +1,240 @@
+$schema: ./schema.extension.yaml
+entry_point: financing
+statement: cashflow_statement
+variant: direct_method
+chart_of_accounts:
+- account: NetIncreaseDecreaseInCashAndCashEquivalents
+  code: CF.NET
+  is_total: true
+  children:
+  - account: NetCashFlowsReceivedFromUsedInOperatingActivities
+    code: CF.OPS
+    is_total: true
+    children:
+    - account: CashGeneratedFromUsedInOperations
+      code: CF.OPS.GEN
+      is_total: true
+      children:
+      - account: ReceiptsFromFinanceLeases
+        code: CF.OPS.GEN.001
+      - account: ReceiptsFromConsumerFinancing
+        code: CF.OPS.GEN.002
+      - account: ReceiptsFromFactoring
+        code: CF.OPS.GEN.003
+      - account: PaymentsForFinanceLeases
+        code: CF.OPS.GEN.004
+        weight: -1
+      - account: PaymentsForConsumerFinancing
+        code: CF.OPS.GEN.005
+        weight: -1
+      - account: PaymentsForFactoring
+        code: CF.OPS.GEN.006
+        weight: -1
+      - account: PaymentsForGeneralAndAdministrativeExpense
+        code: CF.OPS.GEN.007
+        weight: -1
+    - account: ReceiptsFromLoanChannelingAndJointFinancingCooperation
+      code: CF.OPS.002
+    - account: PaymentsForLoanChannelingAndJointFinancingCooperation
+      code: CF.OPS.003
+      weight: -1
+    - account: InterestsReceivedFromOperatingActivities
+      code: CF.OPS.004
+    - account: InterestsPaidFromOperatingActivities
+      code: CF.OPS.005
+      weight: -1
+    - account: PaymentsForCorporateIncomeTax
+      code: CF.OPS.006
+      weight: -1
+    - account: IncomeTaxesRefundedPaidFromOperatingActivities
+      code: CF.OPS.007
+    - account: RepaymentPlacementOfRefundableDeposits
+      code: CF.OPS.008
+    - account: ReceiptsOfInterestFromLoanReceivable
+      code: CF.OPS.009
+    - account: OtherCashInflowsOutflowsFromOperatingActivities
+      code: CF.OPS.010
+    - account: DecreaseIncreaseFromSecurities
+      code: CF.OPS.011
+    - account: DecreaseIncreaseFromCredit
+      code: CF.OPS.012
+    - account: DecreaseIncreaseFromOtherAssets
+      code: CF.OPS.013
+    - account: IncreaseDecreaseFromDepositsAndDepositsFromOtherBanks
+      code: CF.OPS.014
+    - account: IncreaseDecreaseFromOtherLiabilities
+      code: CF.OPS.015
+  - account: NetCashFlowsReceivedFromUsedInInvestingActivities
+    code: CF.INV
+    is_total: true
+    children:
+    - account: ProceedsFromDisposalOfInvestmentProperties
+      code: CF.INV.001
+    - account: PaymentsForAcquisitionOfInvestmentProperties
+      code: CF.INV.002
+      weight: -1
+    - account: ProceedsFromDisposalOfPropertyAndEquipment
+      code: CF.INV.003
+    - account: PaymentsForAcquisitionOfPropertyAndEquipment
+      code: CF.INV.004
+      weight: -1
+    - account: ProceedsFromDisposalOfForeclosedAssets
+      code: CF.INV.005
+    - account: ProceedsFromDisposalOfOtherNonFinancialAssets
+      code: CF.INV.006
+    - account: PaymentsForAcquisitionOfOtherNonFinancialAssets
+      code: CF.INV.007
+      weight: -1
+    - account: ProceedsFromDisposalOfSubsidiaries
+      code: CF.INV.008
+    - account: PaymentsForAcquisitionOfSubsidiaries
+      code: CF.INV.009
+      weight: -1
+    - account: ProceedsFromSalesOfInterestsInSubsidiariesWithoutLossOfControlFromInvestingActivities
+      code: CF.INV.010
+    - account: PaymentsForAcquisitionOfAdditionalInterestsInSubsidiaries
+      code: CF.INV.011
+      weight: -1
+    - account: ProceedsFromSalesOfInterestsInJointVentures
+      code: CF.INV.012
+    - account: PaymentsForAcquisitionOfInterestsInJointVentures
+      code: CF.INV.013
+      weight: -1
+    - account: ProceedsFromSalesOfInterestsInAssociates
+      code: CF.INV.014
+    - account: PaymentsForAcquisitionOfInterestsInAssociates
+      code: CF.INV.015
+      weight: -1
+    - account: ProceedsFromDisposalOfNonCurrentAssetsOrDisposalGroupsClassifiedAsHeldForSaleAndDiscontinuedOperations
+      code: CF.INV.016
+    - account: DividendsReceivedFromInvestingActivities
+      code: CF.INV.017
+    - account: InterestsReceivedFromInvestingActivities
+      code: CF.INV.018
+    - account: InterestsPaidFromInvestingActivities
+      code: CF.INV.019
+      weight: -1
+    - account: IncomeTaxesRefundedPaidFromInvestingActivities
+      code: CF.INV.020
+    - account: OtherCashInflowsOutflowsFromInvestingActivities
+      code: CF.INV.021
+    - account: PlacementOfFinancialAssetsAmortizedCostInvestments
+      code: CF.INV.022
+      weight: -1
+    - account: WithdrawalOfFinancialAssetsAmortizedCostInvestments
+      code: CF.INV.023
+    - account: WithdrawalPlacementOfFinancialAssetsFairValueThroughOtherComprehensiveIncome
+      code: CF.INV.024
+  - account: NetCashFlowsReceivedFromUsedInFinancingActivities
+    code: CF.FIN
+    is_total: true
+    children:
+    - account: ProceedsFromNotesPayable
+      code: CF.FIN.001
+    - account: PaymentsOfNotesPayable
+      code: CF.FIN.002
+      weight: -1
+    - account: ProceedsFromBankLoans
+      code: CF.FIN.003
+    - account: PaymentsOfBankLoans
+      code: CF.FIN.004
+      weight: -1
+    - account: ProceedsFromFinanceLeaseLiabilities
+      code: CF.FIN.005
+    - account: PaymentsOfFinanceLeaseLiabilities
+      code: CF.FIN.006
+      weight: -1
+    - account: IssuanceOfMudharabahSukuk
+      code: CF.FIN.007
+    - account: PaymentsOfMudharabahSukuk
+      code: CF.FIN.008
+      weight: -1
+    - account: ProceedsFromDebtSecurities
+      code: CF.FIN.009
+    - account: PaymentsOfDebtSecurities
+      code: CF.FIN.010
+      weight: -1
+    - account: ProceedsFromOtherBorrowings
+      code: CF.FIN.011
+    - account: PaymentsOfOtherBorrowings
+      code: CF.FIN.012
+      weight: -1
+    - account: PaymentsOfDebtSecuritiesIssuanceCosts
+      code: CF.FIN.013
+      weight: -1
+    - account: ProceedsFromIssuanceOfCommonStocks
+      code: CF.FIN.014
+    - account: ProceedsFromIssuanceOfPreferredStocks
+      code: CF.FIN.015
+    - account: ProceedsFromIssuingOtherEquityInstruments
+      code: CF.FIN.016
+    - account: PaymentsOfStockIssuanceCosts
+      code: CF.FIN.017
+      weight: -1
+    - account: ProceedsFromSalesOfInterestsInSubsidiariesWithoutLossOfControlFromFinancingActivities
+      code: CF.FIN.018
+    - account: PaymentsForAcquisitionOfNoncontrollingInterestsInSubsidiaries
+      code: CF.FIN.019
+      weight: -1
+    - account: InterestsReceivedFromFinancingActivities
+      code: CF.FIN.020
+    - account: InterestsPaidFromFinancingActivities
+      code: CF.FIN.021
+      weight: -1
+    - account: IncomeTaxesRefundedPaidFromFinancingActivities
+      code: CF.FIN.022
+    - account: DividendsPaidFromFinancingActivities
+      code: CF.FIN.023
+      weight: -1
+    - account: OtherCashInflowsOutflowsFromFinancingActivities
+      code: CF.FIN.024
+    - account: ProceedsFromNon-BankFinancialInstitutionLoan
+      code: CF.FIN.025
+    - account: PaymentsOfNon-BankFinancialInstitutionLoan
+      code: CF.FIN.026
+      weight: -1
+    - account: ProceedsFromMediumTermNotes
+      code: CF.FIN.027
+    - account: PaymentsOfMediumTermNotes
+      code: CF.FIN.028
+      weight: -1
+    - account: ProceedsFromSubordinatedLoans
+      code: CF.FIN.029
+    - account: PaymentsOfSubordinatedLoans
+      code: CF.FIN.030
+      weight: -1
+    - account: ProceedFromIncreaseOfNonControllingInterest
+      code: CF.FIN.031
+    - account: SubordinatedBondsIssued
+      code: CF.FIN.032
+    - account: PaymentsOfSubordinatedBonds
+      code: CF.FIN.033
+      weight: -1
+    - account: PaymentsOfBondsIssuanceCosts
+      code: CF.FIN.034
+      weight: -1
+- account: CashAndCashEquivalentOfDeconsolidatedSubsidiaries
+  code: DISC.CF.01
+- account: CashAndCashEquivalentsCashFlows
+  code: DISC.CF.02
+- account: EffectOfExchangeRateChangesOnCashAndCashEquivalents
+  code: DISC.CF.03
+- account: NetCashFlowsReceivedFromUsedInOperatingActivitiesBeforeChangesInAssetsAndLiabilities
+  code: DISC.CF.04
+- account: OtherIncreaseDecreaseInCashAndCashEquivalents
+  code: DISC.CF.05
+assertions:
+- assertion_id: net_cash_flows_identity
+  description: NetIncreaseDecreaseInCashAndCashEquivalents must equal Operating +
+    Investing + Financing.
+  target: 0.0
+  tolerance: 1.0
+  terms:
+  - account: NetIncreaseDecreaseInCashAndCashEquivalents
+    weight: 1
+  - account: NetCashFlowsReceivedFromUsedInOperatingActivities
+    weight: -1
+  - account: NetCashFlowsReceivedFromUsedInInvestingActivities
+    weight: -1
+  - account: NetCashFlowsReceivedFromUsedInFinancingActivities
+    weight: -1

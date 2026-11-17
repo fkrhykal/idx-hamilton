@@ -4,23 +4,16 @@ import itertools
 import logging
 import os
 import zipfile
-from abc import ABC
+from abc import ABC, abstractmethod
 from collections.abc import Sequence
 from concurrent.futures import ProcessPoolExecutor
 from dataclasses import dataclass
 from enum import StrEnum
 from pathlib import Path
-from typing import IO, ClassVar, cast
+from typing import IO, ClassVar, cast, override
 
 import patito as pt
 import polars as pl
-from hamilton.function_modifiers import (
-    extract_fields,
-    parameterize,
-    source,
-    value,
-)
-from hamilton.function_modifiers.dependencies import ParametrizedDependency
 from ixbrlparse import IXBRL, ixbrlNumeric
 
 from idx_hamilton.models import Model
@@ -31,6 +24,8 @@ type FilePath = str
 type StatementCode = str
 
 type Variant = str
+
+type StatementType = str
 
 type Variants = dict[StatementCode, Variant]
 
@@ -53,13 +48,10 @@ class EntryPoint(StrEnum):
             return cls(char)
         return None
 
-    def slug(self) -> str:
-        return self._name_.lower()
-
 
 @dataclass(frozen=True)
 class Statement(ABC):
-    statement_type: ClassVar[str]
+    statement_type: ClassVar[StatementType]
     variants: ClassVar[Variants]
 
     filling: IxbrlFilling
@@ -104,8 +96,8 @@ class Statement(ABC):
 
 @dataclass(frozen=True)
 class BalanceStatement(Statement):
-    statement_type: ClassVar[str] = "balance_statement"
-    variants: ClassVar[dict[str, str]] = {
+    statement_type: ClassVar[StatementType] = "balance_statement"
+    variants: ClassVar[Variants] = {
         "210000": "current_and_non_current",
         "220000": "liquidity",
     }
@@ -113,8 +105,8 @@ class BalanceStatement(Statement):
 
 @dataclass(frozen=True)
 class IncomeStatement(Statement):
-    statement_type: ClassVar[str] = "income_statement"
-    variants: ClassVar[dict[str, str]] = {
+    statement_type: ClassVar[StatementType] = "income_statement"
+    variants: ClassVar[Variants] = {
         "311000": "by_function_after_tax",
         "321000": "by_function_before_tax",
         "312000": "by_nature_after_tax",
@@ -124,11 +116,28 @@ class IncomeStatement(Statement):
 
 @dataclass(frozen=True)
 class CashFlowStatement(Statement):
-    statement_type: ClassVar[str] = "cash_flow_statement"
-    variants: ClassVar[dict[str, str]] = {
+    statement_type: ClassVar[StatementType] = "cashflow_statement"
+    variants: ClassVar[Variants] = {
         "510000": "direct_method",
         "520000": "indirect_method",
     }
+
+
+class TuplePartitionKey(ABC):
+    @abstractmethod
+    def to_tuple(self) -> tuple[str, ...]:
+        pass
+
+
+@dataclass(frozen=True)
+class StatementClassification(TuplePartitionKey):
+    entry_point: str
+    statement: StatementType
+    variant: Variant
+
+    @override
+    def to_tuple(self) -> tuple[str, str, str]:
+        return (self.entry_point, self.statement, self.variant)
 
 
 class Account(Model):
@@ -140,16 +149,6 @@ class Account(Model):
     context: str
     account: str
     value: float
-
-    class c:
-        statement: pl.Expr
-        variant: pl.Expr
-        emiten_code: pl.Expr
-        year: pl.Expr
-        period: pl.Expr
-        context: pl.Expr
-        account: pl.Expr
-        value: pl.Expr
 
 
 STATEMENTS = (
@@ -163,12 +162,10 @@ STATEMENT_REGISTRY = {code: cls for cls in STATEMENTS for code in cls.variants}
 DEI = "1000000.html"
 
 
-@extract_fields({ep.slug(): list[Statement] for ep in EntryPoint})
-def route_statements(
+def statements(
     ixbrl_fillings: list[IxbrlFilling],
-) -> dict[str, list[Statement]]:
-    routed: dict[str, list[Statement]] = {ep.slug(): [] for ep in EntryPoint}
-
+) -> list[Statement]:
+    statements = []
     for filling in ixbrl_fillings:
         with zipfile.ZipFile(filling.zip_path) as z:
             for filepath in z.namelist():
@@ -183,9 +180,8 @@ def route_statements(
                 if not ep:
                     continue
                 stmt_instance = stmt_cls(filling=filling, filepath=filepath)
-                routed[ep.slug()].append(stmt_instance)
-
-    return routed
+                statements.append(stmt_instance)
+    return statements
 
 
 def _parse_statement(stmt: Statement) -> list[Account]:
@@ -213,6 +209,9 @@ def _parse_statement(stmt: Statement) -> list[Account]:
     return records
 
 
+type StatementPartition[T] = dict[StatementClassification, T]
+
+
 class ParquetTarget(tuple[int, Period]):
     @property
     def year(self):
@@ -227,12 +226,12 @@ class ParquetTarget(tuple[int, Period]):
 
 
 def parse_accounts_with_cache(
-    statements: Sequence[Statement], statement_partition: tuple[str, str]
+    statements: Sequence[Statement], classification: StatementClassification
 ) -> pt.DataFrame[Account]:
     if not statements:
         return Account.DataFrame()
 
-    cache_dir = Path(".data/stagings/statements").joinpath(*statement_partition)
+    cache_dir = Path(".data/stagings/statements").joinpath(*classification.to_tuple())
 
     cache_dir.mkdir(parents=True, exist_ok=True)
 
@@ -252,11 +251,11 @@ def parse_accounts_with_cache(
     if pending_tasks:
         cores = os.cpu_count() or 4
         with ProcessPoolExecutor(max_workers=cores) as executor:
-            for target, stmts in tasks.items():
+            for target, stmts in pending_tasks.items():
                 target_file = target.target_path(cache_dir)
                 log.info(
                     "[PARSING] %s %d %s (%d filings)",
-                    statement_partition,
+                    classification,
                     target.year,
                     target.period,
                     len(stmts),
@@ -276,35 +275,17 @@ def parse_accounts_with_cache(
     return accounts
 
 
-STATEMENT_NODES: dict[str, dict[str, ParametrizedDependency]] = {
-    f"{ep.slug()}_{stmt.statement_type}": {
-        "statements": source(ep.slug()),
-        "target_cls": value(stmt),
-    }
-    for ep in EntryPoint
-    for stmt in STATEMENTS
-}
-
-
-@parameterize(**STATEMENT_NODES)
-def filter_statement_type(
-    statements: list[Statement], target_cls: type[Statement]
-) -> list[Statement]:
-    return [s for s in statements if isinstance(s, target_cls)]
-
-
-ACCOUNT_NODES: dict[str, dict[str, ParametrizedDependency]] = {
-    f"{ep.slug()}_{stmt.statement_type}_accounts": {
-        "statements": source(f"{ep.slug()}_{stmt.statement_type}"),
-        "statement_partition": value((ep.slug(), stmt.statement_type)),
-    }
-    for ep in EntryPoint
-    for stmt in STATEMENTS
-}
-
-
-@parameterize(**ACCOUNT_NODES)
 def staged_accounts(
-    statements: list[Statement], statement_partition: tuple[str, str]
-) -> pt.DataFrame[Account]:
-    return parse_accounts_with_cache(statements, statement_partition)
+    statements: list[Statement],
+) -> StatementPartition[pt.DataFrame[Account]]:
+    partitions: StatementPartition[list[Statement]] = collections.defaultdict(list)
+    for statement in statements:
+        classification = StatementClassification(
+            entry_point=statement.entry_point.name.lower(),
+            statement=statement.statement_type,
+            variant=statement.variant,
+        )
+        partitions[classification].append(statement)
+    return {
+        key: parse_accounts_with_cache(value, key) for key, value in partitions.items()
+    }

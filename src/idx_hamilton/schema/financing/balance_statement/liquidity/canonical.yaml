@@ -1,0 +1,183 @@
+$schema: ./canonical.extension.yaml
+entry_point: financing
+statement: balance_statement
+variant: liquidity
+mappings:
+- canonical_account: TotalAssets
+  components:
+  - account: Assets
+    weight: 1
+- canonical_account: TotalLiabilities
+  components:
+  - account: Liabilities
+    weight: 1
+- canonical_account: TotalEquity
+  components:
+  - account: Equity
+    weight: 1
+- canonical_account: EquityAttributableToParent
+  components:
+  - account: EquityAttributableToEquityOwnersOfParentEntity
+    weight: 1
+- canonical_account: CashAndCashEquivalents
+  components:
+  - account: CashAndCashEquivalents
+    weight: 1
+  - account: CurrentAccountsWithBankIndonesia
+    weight: 1
+  - account: CurrentAccountsWithOtherBanksThirdParties
+    weight: 1
+  - account: CurrentAccountsWithOtherBanksRelatedParties
+    weight: 1
+- canonical_account: EarningAssets
+  components:
+  - account: PlacementsWithBankIndonesiaAndOtherBanksThirdParties
+    weight: 1
+  - account: PlacementsWithBankIndonesiaAndOtherBanksRelatedParties
+    weight: 1
+  - account: SecuritiesPurchasedUnderAgreementToResale
+    weight: 1
+  - account: FinancialAssetsAtFairValueThroughProfitOrLoss
+    weight: 1
+  - account: FinancialAssetsFairValueThroughOtherComprehensiveIncome
+    weight: 1
+  - account: FinancialAssetsAmortizedCost
+    weight: 1
+  - account: FinancialAssetsAvailableForSale
+    weight: 1
+  - account: FinancialAssetsHeldToMaturity
+    weight: 1
+  - account: BillsAndOtherReceivables
+    weight: 1
+  - account: AcceptanceReceivables
+    weight: 1
+  - account: DerivativeReceivables
+    weight: 1
+  - account: LoansThirdParties
+    weight: 1
+  - account: LoansRelatedParties
+    weight: 1
+  - account: MurabahahReceivablesThirdParties
+    weight: 1
+  - account: MurabahahReceivablesRelatedParties
+    weight: 1
+  - account: IstishnaReceivablesThirdParties
+    weight: 1
+  - account: IstishnaReceivablesRelatedParties
+    weight: 1
+  - account: IjarahReceivablesThirdParties
+    weight: 1
+  - account: IjarahReceivablesRelatedParties
+    weight: 1
+  - account: ConsumerFinancingReceivablesThirdParties
+    weight: 1
+  - account: ConsumerFinancingReceivablesRelatedParties
+    weight: 1
+  - account: QardhFundsThirdParties
+    weight: 1
+  - account: QardhFundsRelatedParties
+    weight: 1
+  - account: MudharabahFinancingThirdParties
+    weight: 1
+  - account: MudharabahFinancingRelatedParties
+    weight: 1
+  - account: MusyarakahFinancingThirdParties
+    weight: 1
+  - account: MusyarakahFinancingRelatedParties
+    weight: 1
+  - account: LeaseInvestmentsThirdParties
+    weight: 1
+  - account: LeaseInvestmentsRelatedParties
+    weight: 1
+  - account: LeaseInvestmentInFinanceLeases
+    weight: 1
+  - account: FactoringReceivablesThirdParties
+    weight: 1
+  - account: FactoringReceivablesRelatedParties
+    weight: 1
+- canonical_account: GrossLoansAndFinancing
+  components:
+  - account: LoansThirdParties
+    weight: 1
+  - account: LoansRelatedParties
+    weight: 1
+  - account: MurabahahReceivablesThirdParties
+    weight: 1
+  - account: MurabahahReceivablesRelatedParties
+    weight: 1
+  - account: IstishnaReceivablesThirdParties
+    weight: 1
+  - account: IstishnaReceivablesRelatedParties
+    weight: 1
+  - account: IjarahReceivablesThirdParties
+    weight: 1
+  - account: IjarahReceivablesRelatedParties
+    weight: 1
+  - account: ConsumerFinancingReceivablesThirdParties
+    weight: 1
+  - account: ConsumerFinancingReceivablesRelatedParties
+    weight: 1
+  - account: QardhFundsThirdParties
+    weight: 1
+  - account: QardhFundsRelatedParties
+    weight: 1
+  - account: MudharabahFinancingThirdParties
+    weight: 1
+  - account: MudharabahFinancingRelatedParties
+    weight: 1
+  - account: MusyarakahFinancingThirdParties
+    weight: 1
+  - account: MusyarakahFinancingRelatedParties
+    weight: 1
+  - account: LeaseInvestmentsThirdParties
+    weight: 1
+  - account: LeaseInvestmentsRelatedParties
+    weight: 1
+  - account: LeaseInvestmentInFinanceLeases
+    weight: 1
+  - account: FactoringReceivablesThirdParties
+    weight: 1
+  - account: FactoringReceivablesRelatedParties
+    weight: 1
+- canonical_account: AllowanceForImpairmentLosses
+  components:
+  - account: AllowanceForImpairmentLossesForLoans
+    weight: 1
+- canonical_account: TotalBorrowingsAndDebtIssued
+  components:
+  - account: BorrowingsThirdParties
+    weight: 1
+  - account: BorrowingsRelatedParties
+    weight: 1
+  - account: SecuritiesSoldWithRepurchaseAgreement
+    weight: 1
+  - account: BankLoans
+    weight: 1
+  - account: ShortTermBankLoans
+    weight: 1
+  - account: LongTermBankLoans
+    weight: 1
+  - account: MidTermLoans
+    weight: 1
+  - account: NotesPayable
+    weight: 1
+  - account: Bonds
+    weight: 1
+  - account: BondsPayable
+    weight: 1
+  - account: IjarahSukuk
+    weight: 1
+  - account: MudharabahSukuk
+    weight: 1
+  - account: Sukuk
+    weight: 1
+  - account: MediumTermNotes
+    weight: 1
+  - account: SubordinatedBonds
+    weight: 1
+  - account: SubordinatedLoans
+    weight: 1
+  - account: OthersSecuritiesIssued
+    weight: 1
+  - account: FinanceLeaseLiabilities
+    weight: 1

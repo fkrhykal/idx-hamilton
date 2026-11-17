@@ -1,0 +1,315 @@
+$schema: ./canonical.extension.yaml
+entry_point: financial_and_sharia
+statement: income_statement
+variant: by_nature_before_tax
+mappings:
+- canonical_account: ProfitBeforeTax
+  components:
+  - account: ProfitLossBeforeIncomeTax
+    weight: 1
+- canonical_account: IncomeTaxExpense
+  components:
+  - account: TaxBenefitExpenses
+    weight: 1
+- canonical_account: NetIncome
+  components:
+  - account: ProfitLoss
+    weight: 1
+- canonical_account: NetIncomeAttributableToParent
+  components:
+  - account: ProfitLossAttributableToParentEntity
+    weight: 1
+- canonical_account: InterestAndShariaIncome
+  components:
+  - account: InterestIncome
+    weight: 1
+  - account: RevenueFromFundManagementAsMudharib
+    weight: 1
+  - account: RevenueFromConsumerFinancing
+    weight: 1
+  - account: RevenueFromFinanceLease
+    weight: 1
+  - account: RevenueFromOperatingLease
+    weight: 1
+  - account: RevenueFromFactoring
+    weight: 1
+  - account: RevenueFromFinancingTransactions
+    weight: 1
+  - account: UjrahReceived
+    weight: 1
+- canonical_account: InterestAndShariaExpenses
+  components:
+  - account: InterestExpenses
+    weight: 1
+  - account: ThirdPartiesShareOnReturnOfTemporarySyirkahFunds
+    weight: -1
+  - account: UjrahPaid
+    weight: 1
+- canonical_account: NetInterestAndShariaIncome
+  components:
+  - account: InterestIncome
+    weight: 1
+  - account: RevenueFromFundManagementAsMudharib
+    weight: 1
+  - account: RevenueFromConsumerFinancing
+    weight: 1
+  - account: RevenueFromFinanceLease
+    weight: 1
+  - account: RevenueFromOperatingLease
+    weight: 1
+  - account: RevenueFromFactoring
+    weight: 1
+  - account: RevenueFromFinancingTransactions
+    weight: 1
+  - account: UjrahReceived
+    weight: 1
+  - account: InterestExpenses
+    weight: -1
+  - account: ThirdPartiesShareOnReturnOfTemporarySyirkahFunds
+    weight: 1
+  - account: UjrahPaid
+    weight: -1
+- canonical_account: NonInterestOperatingIncome
+  components:
+  - account: ProvisionsAndCommissionsIncomeFromTransactionsOtherThanLoan
+    weight: 1
+  - account: RevenueFromTradingTransactions
+    weight: 1
+  - account: RealisedGainsLossesOnTradingOfMarketableSecurities
+    weight: 1
+  - account: GainsLossesOnChangesInFairValueOfMarketableSecurities
+    weight: 1
+  - account: RealisedGainsLossesFromDerivativeInstruments
+    weight: 1
+  - account: GainsLossesOnChangesInForeignExchangeRates
+    weight: 1
+  - account: InvestmentsIncome
+    weight: 1
+  - account: DividendsIncome
+    weight: 1
+  - account: RevenueFromUnderwritingActivitiesAndSellingFees
+    weight: 1
+  - account: RevenueFromSecuritiesAdministrationService
+    weight: 1
+  - account: RevenueFromInvestmentManagementServices
+    weight: 1
+  - account: RevenueFromFinancialAdvisoryServices
+    weight: 1
+  - account: RevenueFromRecoveryOfWrittenOffAssets
+    weight: 1
+  - account: OtherOperatingIncome
+    weight: 1
+- canonical_account: ImpairmentProvisionExpenses
+  components:
+  - account: AllowancesForImpairmentLossesOnEarningsAssets
+    weight: 1
+  - account: AllowancesForImpairmentLossesOnNonEarningsAssets
+    weight: 1
+  - account: ReversalExpenseOfEstimatedLossesOnCommitmentsAndContingencies
+    weight: -1
+  - account: RecoveryOfImpairmentLossesOfFinancialAssets
+    weight: -1
+  - account: RecoveryOfImpairmentLossesOfFinancialAssetsFinanceLease
+    weight: -1
+  - account: RecoveryOfImpairmentLossesOfFinancialAssetsConsumerFinancingReceivables
+    weight: -1
+  - account: RecoveryOfImpairmentLossesOfNonfinancialAssets
+    weight: -1
+  - account: RecoveryOfImpairmentLossesOfNonfinancialAssetsRepossessedCollaterals
+    weight: -1
+  - account: RecoveryOfEstimatedLossesOfCommitmentsAndContingency
+    weight: -1
+- canonical_account: NonInterestOperatingExpenses
+  components:
+  - account: GeneralAndAdministrativeExpenses
+    weight: 1
+  - account: SellingExpenses
+    weight: 1
+  - account: RentMaintenanceAndImprovementExpenses
+    weight: 1
+  - account: OtherFeesAndCommissionsExpenses
+    weight: 1
+  - account: OtherOperatingExpenses
+    weight: 1
+- canonical_account: FinancialOperatingRevenue
+  components:
+  - &id001
+    account: InterestIncome
+    weight: 1
+  - &id002
+    account: RevenueFromFundManagementAsMudharib
+    weight: 1
+  - &id003
+    account: RevenueFromConsumerFinancing
+    weight: 1
+  - &id004
+    account: RevenueFromFinanceLease
+    weight: 1
+  - &id005
+    account: RevenueFromOperatingLease
+    weight: 1
+  - &id006
+    account: RevenueFromFactoring
+    weight: 1
+  - &id007
+    account: RevenueFromFinancingTransactions
+    weight: 1
+  - &id008
+    account: UjrahReceived
+    weight: 1
+  - &id009
+    account: ProvisionsAndCommissionsIncomeFromTransactionsOtherThanLoan
+    weight: 1
+  - &id010
+    account: RevenueFromTradingTransactions
+    weight: 1
+  - &id011
+    account: RealisedGainsLossesOnTradingOfMarketableSecurities
+    weight: 1
+  - &id012
+    account: GainsLossesOnChangesInFairValueOfMarketableSecurities
+    weight: 1
+  - &id013
+    account: RealisedGainsLossesFromDerivativeInstruments
+    weight: 1
+  - &id014
+    account: GainsLossesOnChangesInForeignExchangeRates
+    weight: 1
+  - &id015
+    account: InvestmentsIncome
+    weight: 1
+  - &id016
+    account: DividendsIncome
+    weight: 1
+  - &id017
+    account: RevenueFromUnderwritingActivitiesAndSellingFees
+    weight: 1
+  - &id018
+    account: RevenueFromSecuritiesAdministrationService
+    weight: 1
+  - &id019
+    account: RevenueFromInvestmentManagementServices
+    weight: 1
+  - &id020
+    account: RevenueFromFinancialAdvisoryServices
+    weight: 1
+  - &id021
+    account: RevenueFromRecoveryOfWrittenOffAssets
+    weight: 1
+  - &id022
+    account: OtherOperatingIncome
+    weight: 1
+  - &id023
+    account: RevenueFromInsurancePremiums
+    weight: 1
+  - &id024
+    account: ReinsurancePremiums
+    weight: -1
+  - &id025
+    account: RetrocessionPremiums
+    weight: -1
+  - &id026
+    account: DecreaseIncreaseInUnearnedPremiums
+    weight: 1
+  - &id027
+    account: DecreaseIncreaseInPremiumIncomeCededToReinsurancer
+    weight: -1
+  - &id028
+    account: InsuranceCommissionIncome
+    weight: 1
+  - &id029
+    account: NetInvestmentIncome
+    weight: 1
+  - &id030
+    account: OtherInsuranceIncome
+    weight: 1
+- canonical_account: DirectFinancialAndUnderwritingCosts
+  components:
+  - account: InterestExpenses
+    weight: 1
+  - account: ThirdPartiesShareOnReturnOfTemporarySyirkahFunds
+    weight: -1
+  - account: UjrahPaid
+    weight: 1
+  - account: ClaimExpenses
+    weight: 1
+  - account: ReinsuranceClaims
+    weight: -1
+  - account: RetrocessionClaims
+    weight: -1
+  - account: IncreaseDecreaseInEstimatedClaimsLiability
+    weight: 1
+  - account: IncreaseDecreaseInLiabilityForFuturePolicyBenefit
+    weight: 1
+  - account: IncreaseDecreaseInProvisionForLossesArisingFromLiabilityAdequacyTest
+    weight: 1
+  - account: IncreaseDecreaseInInsuranceLiabilitiesCededToReinsurers
+    weight: -1
+  - account: IncreaseDecreaseInLiabilitiesToPolicyholderInUnitLinkedContracts
+    weight: 1
+  - account: InsuranceCommissionExpenses
+    weight: 1
+  - account: AcquisitionCostsOfInsuranceContracts
+    weight: 1
+  - account: OtherInsuranceExpenses
+    weight: 1
+- canonical_account: NetFinancialOperatingIncome
+  components:
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - *id008
+  - *id009
+  - *id010
+  - *id011
+  - *id012
+  - *id013
+  - *id014
+  - *id015
+  - *id016
+  - *id017
+  - *id018
+  - *id019
+  - *id020
+  - *id021
+  - *id022
+  - *id023
+  - *id024
+  - *id025
+  - *id026
+  - *id027
+  - *id028
+  - *id029
+  - *id030
+  - account: InterestExpenses
+    weight: -1
+  - account: ThirdPartiesShareOnReturnOfTemporarySyirkahFunds
+    weight: 1
+  - account: UjrahPaid
+    weight: -1
+  - account: ClaimExpenses
+    weight: -1
+  - account: ReinsuranceClaims
+    weight: 1
+  - account: RetrocessionClaims
+    weight: 1
+  - account: IncreaseDecreaseInEstimatedClaimsLiability
+    weight: -1
+  - account: IncreaseDecreaseInLiabilityForFuturePolicyBenefit
+    weight: -1
+  - account: IncreaseDecreaseInProvisionForLossesArisingFromLiabilityAdequacyTest
+    weight: -1
+  - account: IncreaseDecreaseInInsuranceLiabilitiesCededToReinsurers
+    weight: 1
+  - account: IncreaseDecreaseInLiabilitiesToPolicyholderInUnitLinkedContracts
+    weight: -1
+  - account: InsuranceCommissionExpenses
+    weight: -1
+  - account: AcquisitionCostsOfInsuranceContracts
+    weight: -1
+  - account: OtherInsuranceExpenses
+    weight: -1
